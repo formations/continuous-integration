@@ -1,0 +1,86 @@
+= Travaux pratiques - Testing et qualité
+Nicolas Frankel
+:doctype: article
+:encoding: utf-8
+:lang: fr
+:toc:
+:toc-placement!:
+:numbered:
+:sectanchors:
+:icons: font
+
+image::https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png[Licence Creative Commons, link="http://creativecommons.org/licenses/by-nc-sa/4.0/"]
+
+Ce cours est mis à disposition selon les termes de la http://creativecommons.org/licenses/by-nc-sa/4.0/[Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International].
+
+toc::[]
+
+== Objectif
+
+L'objectif de cette fiche est d'améliorer la qualité du code par la mise en place de tests et d'analyse du code.
+
+== Implémenter des tests unitaires
+
+Cette section est dédiée au développement de tests *unitaires*.
+
+=== Concevoir un code testable
+
+Afin de pouvoir tester le code, il faut que celui-ci soit conçu pour cela. Supprimer les obstacles qui s'opposent au tests :
+
+* Supprimer les méthodes statiques
+* Implémenter les principes link:https://fr.wikipedia.org/wiki/SOLID_(informatique)[SOLID], plus précisement l'link:https://fr.wikipedia.org/wiki/Inversion_des_d%C3%A9pendances[inversion des dépendances]. Le code métier ne doit finalement pas comporter de `new()`.
+
+=== Tester les classes sans dépendances
+
+Les tests les plus simples à implémenter sont ceux qui testent les classes qui n'ont pas de dépendances. Commencer par développer ces tests.
+
+1. Ajouter la dernière version de TestNG comme dépendance Maven de test au projet.
+1. Implémenter les tests dans le répertoire Maven adapté.
+
+[TIP]
+====
+Un bon test unitaire vérifie une *unique* condition de manière à ce que si le test échoue, l'on sache immédiatement la raison de l'échec.
+====
+
+=== Tester les classes avec dépendances
+
+Développer maintenant les tests qui testent les classes qui possèdent des dépendances.
+
+Pour ce faire, ajouter la dernière version de Mockito comme dépendance Maven de test au projet.
+
+[TIP]
+====
+Un bon test unitaire isole la classe à tester de ses dépendances.
+====
+
+== Vérifier la qualité des tests
+
+Une fois les tests développés, il est nécessaire de s'assurer de leur utilité. Ceci passe par la mesure du _code coverage_ et du _mutation coverage_.
+
+=== Calculer le _code coverage_
+
+Il existe plusieurs outils en Java pour calculer le _code coverage_. Dans le cadre de ce TP, l'outil recommandé est link:http://eclemma.org/jacoco/[Jacoco].
+
+Configurer le link:http://eclemma.org/jacoco/trunk/doc/maven.html[plugin Jacoco] dans le projet, notamment :
+
+* les _goals_ à exécuter
+* si nécessaire, les classes à ignorer
+
+Générer le rapport Jacoco puis en fonction des résultats, améliorer la couverture de test. Exécuter ces étapes jusqu'à ce que la métrique soit acceptable.
+
+[NOTE]
+====
+La notion d'acceptabilité est très dépendante du projet, ainsi que des classes éventuellement ignorées.
+====
+
+=== Calculer le _mutation coverage_
+
+link:http://pitest.org/[Pit] est un outil de _mutation coverage_ pour Java.
+
+Configurer le link:http://pitest.org/quickstart/maven/[plugin Pit] pour le projet ainsi :
+
+* suppression de l'historisation des rapports - le rapport généré prend la place du précédent
+* génération les formats HTML et XML
+* utilisation de l'link:http://pitest.org/quickstart/incremental_analysis/[analyse incrémentale]
+
+Comme pour Jacoco, générer le rapport Pit et améliorer la couverture de mutation. Exécuter de manière continue ces étapes pour atteindre le résultat souhaité.

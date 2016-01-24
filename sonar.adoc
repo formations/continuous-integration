@@ -1,0 +1,67 @@
+= Travaux pratiques - SonarQube
+Nicolas Frankel
+:doctype: article
+:encoding: utf-8
+:lang: fr
+:toc:
+:toc-placement!:
+:numbered:
+:experimental:
+:sectanchors:
+:icons: font
+:imagesdir: images/vcs
+
+image::https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png[Licence Creative Commons, link="http://creativecommons.org/licenses/by-nc-sa/4.0/"]
+
+Ce cours est mis à disposition selon les termes de la http://creativecommons.org/licenses/by-nc-sa/4.0/[Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International].
+
+toc::[]
+
+== Objectif
+
+L'objectif de cette fiche est de paramétrer un projet Maven pour lancer une analyse SonarQube et envoyer les résultats à un serveur Sonar.
+
+== Références
+
+* http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Maven[Analyzing with SonarQube Scanner for Maven (EN)]
+* https://nemo.sonarqube.org[Nemo, l'instance SonarQube publique]
+
+== Téléchargement de SonarQube
+
+Avant toute modification du projet, il est nécessaire de disposer d'un serveur SonarQube.
+
+Si aucun serveur SonarQube distant n'est disponible, il est possible de télécharger le logiciel pour lancer une instance locale.
+
+* Télécharger la http://www.sonarqube.org/downloads/[dernière version de SonarQube]
+* Décompresser l'archive
+* Lancer SonarQube
++
+[source,bash]
+----
+$SONAR_QUBE_HOME/bin/[OS]/sonar.sh start
+----
++
+[WARNING]
+====
+Sans configuration plus poussée, la base de données utilisée par défaut est http://www.h2database.com/html/main.html[H2], qui n'est pas destinée à un usge en production.
+====
+
+=== Lancement de l'analyse SonarQube
+
+Configure le POM pour disposer de la dernière version du plugin SonarQube pour Maven.
+
+Puis, pour lancer l'analyse SonarQube, exécuter la commande suivante dans le répertoire du projet :
+
+[source,bash]
+----
+mvn sonar:sonar
+----
+
+Par défaut, l'analyse est envoyée au serveur SonarQube local.
+
+=== Consultation des résultats
+
+Les résultats sont disponibles à http://localhost:9000.
+
+Corriger les violations par ordre de priorité, re-lancer l'analyse. Répéter autant de fois que nécessaire.
+

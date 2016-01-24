@@ -1,0 +1,374 @@
+= Travaux pratiques - Système de Contrôle de Version
+Nicolas Frankel
+:doctype: article
+:encoding: utf-8
+:lang: fr
+:toc:
+:toc-placement!:
+:numbered:
+:experimental:
+:sectanchors:
+:icons: font
+:imagesdir: images/vcs
+
+image::https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png[Licence Creative Commons, link="http://creativecommons.org/licenses/by-nc-sa/4.0/"]
+
+Ce cours est mis à disposition selon les termes de la http://creativecommons.org/licenses/by-nc-sa/4.0/[Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International].
+
+toc::[]
+
+== Objectif
+
+L'objectif de cette fiche est de se familiariser avec Github, un système de contrôle de version distribué.
+
+== Références
+
+* https://git-scm.com/[Git - documentation officielle (EN)]
+* https://training.github.com/kit/downloads/github-git-cheat-sheet.pdf[Aide-mémoire Git (EN)]
+* http://zeroturnaround.com/wp-content/uploads/2016/02/Git-Cheat-Sheet.png[Un autre aide-mémoire Git Cheat Sheet (EN)]
+* http://liris.cnrs.fr/~pchampin/enseignement/intro-git[Introduction à Git]
+
+== Premiers pas avec Github 
+
+Cette section est dédiée au passage du projet sous Github.
+
+Les étapes à exécuter sont les suivantes :
+
+=== Créer un compte Github
+
+Cette étape est optionnelle si vous disposez déjà d'un compte Github. Dans le cas contraire, accéder au site https://github.com/[Github].
+
+image::signup.png[Sign up]
+    
+Cliquer sur le bouton btn:[Sign up] pour créer un nouveau compte. Remplissez les champs de manière adéquate.
+    
+image::join.png[Join Github]
+    
+Cliquez sur btn:[Create an account] Le plan sélectionné par défaut est gratuit ; il est suffisant dans le cadre de ce cours. La limitation principale d'un tel plan est que vos dépôts sont publics et consultables par tous. Il est toujours possible d'en changer par la suite. 
+    
+image::welcome.png[Welcome to Github]
+    
+Cliquez sur btn:[Finish sign up] pour terminer la création de votre compte. Bravo, vous venez de créer votre compte Github.
+    
+image::learn.png[Learn Github]
+    
+Pour passer à l'étape suivante, il faudra avant tout valider votre adresse électronique : référez-vous au courriel qui vous a été adressé.
+
+=== Créer un dépôt sur Github
+
+Un dépôt est un dépôt pour le code. En général, la cardinalité entre un dépôt et un projet est de 1 pour 1. Nous nous contenterons de ce cas général : un dépôt nous permettra de stocker les sources d'un unique projet.
+
+Cliquez sur le bouton btn:[+ New repository] de l'écran précédent. Si un autre écran est affiché, il est possible de créer un nouveau dépôt à l'aide du bouton btn:[+] dans la barre de tâches affichée sur le site (une fois connecté).
+    
+Sélectionnez un nom de projet et la description. Laissez les autres valeur par défaut.
+    
+image::newrepo.png[Create a new repository]
+    
+Cliquez sur "Create repository".
+    
+image::setuprepo.png[Quick setup]
+
+[[infos-utiles]]Conservez cette page ouverte, elle contient des informations utiles pour la suite.
+    
+Cette étape conclut la configuration de Github via l'interface graphique. La suite est identique quel que soit l'hébergeur.
+
+=== Initialiser le dépôt local
+
+L'initialisation d'un dépôt git local se fait via la commande `init` :
+
+[source, bash]
+----
+git init
+----
+
+Vérifiez que cette commande ajoute un répertoire `.git` au répertoire local. Notamment, regardez le contenu du fichier `.git/config` qui doit ressembler au fichier suivant :
+
+[source]
+----
+[core]
+    repositoryformatversion = 0
+    filemode = true
+    bare = false
+    logallrefupdates = true
+    ignorecase = true
+    precomposeunicode = true
+----
+
+=== Ajouter le dépôt distant
+
+Allez sur Github pour visualiser la link:#infos-utiles[page d'information]. Recherchez la section intitulées "...or push an existing repository from the command line".
+
+L'exécution de la première ligne de commande permet de référencer le dépôt distant dans la configuration locale.
+
+[source, bash]
+----
+git remote add origin git@github.com:user/repo.git
+----
+
+Dans le fichier `.git/config`, les lignes suivantes ont maintenant été ajoutées :
+
+----
+[remote "origin"]
+        url = git@github.com:xxx/yyy.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+----
+
+=== Gérer l'authentification
+
+Chaque opération d'*écriture* dans le dépôt distant nécessite une authentification et l'autorisation en écriture - une vérification que l'utilisateur dispose de tels droits.
+
+Dans la link:#trueajouter_le_d_p_t_distant[section précédente], nous avons ajouté une URL de la forme `git@github.com:xxx/yyy.git`.
+
+Cette forme implique l'utilisation d'une communication SSH pour la synchronisation entre le dépôt local et le dépôt distant. L'authentification d'une telle communication se fait via un mécanisme asymétrique de type clé privé-clé publique.
+
+[NOTE]
+====
+Si vous préférez ne pas mettre en place l'infrastructure décrite dans cette section et acceptez une authentification par login/mot de passe à **chaque** écriture, utilisez plutôt HTTPS et une URL du type `https://github.com/xxx/yyy.git`.
+====
+
+En fonction de votre système d'exploitation, voici la marche à suivre :
+
+Pour Unix, Linux et Mac OSX::
+La documentation est disponible https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-mac-os-x[ici (EN)]. [NOTE]
+====
+L'article mentionne Mac OS X mais est également applicable aux autres systèmes d'exploitation de type *Nix.
+====
+Pour Windows::
+Il est d'abord nécessaire d'installer http://www.putty.org/[Putty]. La documentation est disponible https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-windows[ici (EN)].
+
+Une fois la clé privée générée, il est nécessaire d'ajouter la clé publique dans votre compte Github. Pour cela, cliquer sur votre profil en haut à droite.
+
+image::profileandmore.png[Menu]
+
+Puis cliquer sur l'élémént https://github.com/settings/profile[Settings] du menu déroulant.
+
+image::profile.png[Profil]
+
+Enfin, dans le menu de droite, cliquer sur l'élément SSH. Dans l'écran, cliquer sur le bouton btn:[New SSH Key]. Ajouter la clé publique.
+
+image::sshkeys.png[SSH Keys]
+
+=== Visualiser le statut des fichiers
+
+Pour mémoire, le schéma suivant résume les états possibles dans git :
+    
+image:https://git-scm.com/images/about/index1@2x.png[Fig. 1 - Etats git]
+
+Pour vérifier l'état des fichiers du dépôt local, utilisez la commande `status` :
+    
+[source, bash]
+----
+git status
+----
+
+Voici un exemple de sortie d'une telle commande :
+
+....
+On branch master
+
+Initial commit
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+ .idea/
+ pom.xml
+ securitymanager-example.iml
+ src/
+ target/
+
+nothing added to commit but untracked files present (use "git add" to track)
+....
+
+La liste exacte des fichiers est bien sûr dépendante du projet et de l'Atelier de Génie Logiciel utilisé pour le développement.
+    
+=== Configurer les fichiers à exclure
+
+Certains fichiers n'ont pas vocation à être gérés par le Système de Gestion de Version. Parmi ceux-ci, on peut citer les fichier de _bytecode_ générés par la compilation Java, les fichiers de configuration de l'AGL, etc. 
+
+Cette exclusion se base sur le contenu de fichiers `.gitignore` dans le dépôt. Dans le cadre de ces travaux pratiques, nous nous bornerons à l'utilisation d'un unique fichier de ce type situé à la *racine* du dépôt local.
+
+Le format du fichier est basé sur des modèles d'exclusion, un modèle par ligne. L'intégralité des règle de formation des modèles est disponible dans la https://git-scm.com/docs/gitignore#_pattern_format[documentation officielle].
+
+Par exemple, pour exclure les fichiers inutiles, le fichier `.gitignore` suivant peut être utilisé :
+
+----
+.idea
+*.iml
+target
+----
+
+La commande `status` renvoye alors un résultat différent du résultat précédent :
+
+....
+On branch master
+
+Initial commit
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+.gitignore
+pom.xml
+src/
+
+nothing added to commit but untracked files present (use "git add" to track)
+....
+
+=== Ajouter les fichiers à l'index
+
+Avant de committer les fichiers, il est nécessaire de les ajouter comme le montre la figure 1 ci-dessus. L'ajout se fait à l'aide de la commande `add` qui prend en paramètre un modèle de chemin.
+    
+Le premier ajout incluant tous les fichiers, on peut en général utiliser le modèle `*` :
+
+[source, bash]
+----
+git add *
+----
+
+Les modifications suivantes de l'index se font généralement en ajoutant un fichier particulier. Il est nécessaire d'indiquer le chemin du (des) fichier(s) à ajouter :
+
+[source, bash]
+----
+git add path/to/file
+git add path/to/directory/*.java
+----
+
+=== Committer
+
+Une fois les fichiers ajoutés à l'index, il est alors possible de committer celui-ci. Cela est géré par la commande `commit`.
+
+[source, bash]
+----
+git commit
+----
+
+[TIP]
+====
+La bonne granularité d'un commit est celle qui permet de revenir sur ce commit avec le minimum d'impacts.
+====
+
+=== Pousser le dépôt local sur Github
+
+Dès lors qu'au moins un commit a été effectué, il est possible de pousser les commits non encore poussés sur le dépôt distant. Pousser est possible par l'intermédiaire de la commande `push`:
+
+[source, bash]
+----
+git push
+----
+
+[WARNING]
+====
+Mis à part le premier `push`, il existe un risque que les arbres de travail locaux et distants soient désynchronisés - par exemple si quelqu'un d'autre a déjà poussé des commits sur le même dépôt distant. Pour le moment, ce risque est nul car il s'agit du premier commit.
+====
+
+== Pull requests
+
+Dans la première sections, nous avons vu comment réaliser des commits et pousser ceux-ci sur le dépôt distants. L'objectif de cette seconde section est d'apprendre à réaliser des _pull requests_.
+
+Pour cela, il est nécessaire de travailler en binôme. Si le nombre d'étudiants est impair, un groupe de trois travaillera en permutation circulaire.
+
+=== Fork
+
+La première étape pour réaliser une _pull request_ sur Github est de copier le dépôt de votre binôme dans votre propre compte. Allez sur l'URL du dépôt de votre binôme.
+
+image::fork.png[Fork]
+
+Cliquer sur le bouton btn:[Fork] en haut à droite pour copier le dépôt dans votre compte.
+
+=== Clonez le dépôt
+
+Maintenant qu'une copie du dépôt est associée à votre compte, vous pouvez le cloner en local en utilisant la commande `clone` :
+
+[source, bash]
+----
+git clone url_du_depot
+----
+
+[NOTE]
+====
+Par rapport à `git init`, il n'est pas nécessaire d'ajouter un dépôt distant avec `git remote add`, la commande `clone` ajoute le paramétrage du dépôt distant à la configuration locale. 
+====
+
+=== Effectuez des modifications
+
+Effectuez maintennt les modifications pertinentes sur le dépôt local copié. Réalisez les opérations de `commit` et de `push` comme dans la link:#trueajouter_les_fichiers_l_index[section précédente].
+
+=== Faire une pull request
+
+La _pull request_ elle-même s'effectue via l'interface graphique de Github. Naviguez vers la page de la *copie* du dépôt - celle qui est sur votre compte.
+
+image::pullrequest.png[Faire une pull request]
+
+Cliquez sur le bouton btn:[Pull Request] et suivez les instructions.
+
+=== Traiter une pull request
+
+Une fois que votre binôme a effectué la _pull request_, allez sur votre dépôt via l'interface graphique de Github. Regardez l'onglet Pull Request. Une pastille doit indiquer que vous avez une _pull request_ en attente.
+
+image::pullrequest2.png[Gérer une pull request]
+
+Cliquez sur l'onglet. La liste des _pull request_ en attente de traitement s'affiche.
+
+image::pullrequest3.png[Liste des pull request]
+
+Cliquez sur la _pull request_. Le détail de la pull request s'affiche.
+
+image::pullrequest4.png[Détail de la pull request]
+
+Si vous disposez des permissions *et* qu'il n'y a pas de conflits, cliquez sur btn:[Merge Pull Request] pour fusionner l'intégralité des commits de la _pull request_ dans votre dépôt.
+
+== Récupération des commits distants
+
+Jusqu'à présent, nous avons pris comme postulat qu'il n'y avait pas eu de commits sur le dépôt distant et que celui-ci était uniquement modifiés par nos _push_. Malheureusement, ce cas de figure idéal n'est rencontré que très rarement.
+
+=== Récupérez les commits distants - cas simple
+
+La première étape consiste à récupérer les commits distants dans le cas où aucune commit local n'a eu lieu.
+
+Cela se fait à l'aide des commandes suivantes :
+
+* `fetch` récupère les modifications distantes dans une branche locale temporaire (appelée `FETCH_HEAD`)
+* il suffit alors d'utiliser la commande `merge` pour fusionner cette branche temporaire dans la branche courante
+
+[source, bash]
+----
+git fetch
+git merge
+----
+
+=== Récupérez les commits distantes - cas avancé
+
+Dans le cas où des commits ont été passés en local, le parents des commits distants et locaux n'est pas les même : il y a divergence. Git fusionne cette divergence automatiquement avec la commande `pull`. Malheureusement, cela rend l'historique non linéaire.
+
+image::https://gitmap.files.wordpress.com/2010/12/git-pull.png?w=620[git pull rebase]
+
+Afin de réintégrer de manière linéaire l'ensemble des commits, Git permet d'abord d'appliquer les commits distants puis les commits locaux en remontant jusqu'au parent commun avec l'option `--rebase`.
+
+image::https://gitmap.files.wordpress.com/2010/12/pull-rebase.png?w=620[git pull rebase]
+
+Dans la vraie vie, il est conseillé d'exécuter la commande suivante dans tous les cas :
+
+[source, bash]
+----
+git pull --rebase
+----
+
+Récupérez les commits effectuées sur votre dépôt distant via la _pull request_ dans la link:#truepull_requests[section précédente].
+
+N'oubliez pas d'utiliser la commande `push` afin d'envoyer vos modifications locales vers le dépôt distant !
+
+=== Gérez les conflits
+
+Lorsqu'un conflit intervient lors de la fusion, Git l'indique sur la ligne de commande, avec la liste des fichiers qui comportent un tel conflit.
+
+Il faut alors :
+
+* Pour chaque fichier :
+** Résoudre le conflit
+** Ajouter le fichier ainsi modifié à l'index avec la commande `add`
+* Exécuter la commande `commit` lorsque tous les conflits ont été résolus *et* tous les fichiers corrigés ajoutés à l'index
+
+En accord avec votre binôme, introduisez des conflits entre les dépôts local et distant puis entraînez vous à les résoudre.
+
+N'oubliez pas d'utiliser la commande `push` afin d'envoyer vos modifications locales vers le dépôt distant !
