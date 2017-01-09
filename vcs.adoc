@@ -23,10 +23,13 @@ L'objectif de ce _workshop_ est de se familiariser avec Git, un système de cont
 
 == Références
 
-* https://git-scm.com/[Git - documentation officielle (EN)]
-* https://training.github.com/kit/downloads/github-git-cheat-sheet.pdf[Aide-mémoire Git (EN)]
-* http://zeroturnaround.com/wp-content/uploads/2016/02/Git-Cheat-Sheet.png[Un autre aide-mémoire Git Cheat Sheet (EN)]
-* http://liris.cnrs.fr/~pchampin/enseignement/intro-git[Introduction à Git]
+* https://git-scm.com/[Git - documentation officielle (EN)^]
+* https://git-scm.com/book/fr/v2[Pro Git^]
+* https://training.github.com/kit/downloads/github-git-cheat-sheet.pdf[Aide-mémoire Git (EN)^]
+* http://zeroturnaround.com/wp-content/uploads/2016/02/Git-Cheat-Sheet.png[Un autre aide-mémoire Git Cheat Sheet (EN)^]
+* http://liris.cnrs.fr/~pchampin/enseignement/intro-git[Introduction à Git^]
+* https://www.atlassian.com/git/tutorials/[Tutorials Git par Atlassian (EN)^]
+* https://try.github.io/[Apprentissage interactif (EN)^]
 
 == Premiers pas avec Git
 
