@@ -155,7 +155,7 @@ Puis cliquer sur l'élémént https://github.com/settings/profile[Settings] du m
 
 image::profile.png[Profil]
 
-Enfin, dans le menu de droite, cliquer sur l'élément SSH. Dans l'écran, cliquer sur le bouton btn:[New SSH Key]. Ajouter la clé publique.
+Enfin, dans le menu de gauche, cliquer sur l'élément SSH. Dans l'écran, cliquer sur le bouton btn:[New SSH Key]. Ajouter la clé publique.
 
 image::sshkeys.png[SSH Keys]
 
