@@ -62,7 +62,7 @@ Cliquer sur btn:[Finish sign up] pour terminer la création du compte. Bravo, le
     
 image::learn.png[Learn Github]
     
-Pour passer à l'étape suivante, il est avant tout nécessaire de valider l'adresse électronique : se référez au courriel qui a été envoyé.
+Pour passer à l'étape suivante, il est avant tout nécessaire de valider l'adresse électronique : se référer au courriel qui a été envoyé.
 
 === Créer un dépôt sur Github
 
