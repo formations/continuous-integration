@@ -1,0 +1,137 @@
+= Travaux pratiques - Intégration Continue
+Nicolas Frankel
+:doctype: article
+:encoding: utf-8
+:lang: fr
+:toc:
+:toc-placement!:
+:numbered:
+:experimental:
+:sectanchors:
+:icons: font
+:imagesdir: images/ci
+
+image::https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png[Licence Creative Commons, link="http://creativecommons.org/licenses/by-nc-sa/4.0/"]
+
+Ce cours est mis à disposition selon les termes de la http://creativecommons.org/licenses/by-nc-sa/4.0/[Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International].
+
+toc::[]
+
+== Objectif
+
+L'objectif de cette fiche est d'utiliser le serveur d'Intégration Continue Jenkins pour automatiser le processus de construction.
+
+== Références
+
+* https://jenkins.io/doc/[Jenkins Documentation [EN\]]
+
+== Installation de Jenkins
+
+Avant d'utiliser Jenkins, il est nécessaire de le télécharger depuis le site :
+
+1. Télécharger l'https://jenkins.io/download/[archive] en fonction du système d'exploitation
+2. Décompresser celui-ci dans le dossier standard des applications pour le système d'exploitation
++
+[NOTE]
+====
+Pour Window, il est fortement conseillé que le chemin ne comporte pas d'espaces.
+====
++
+3. Si ce n'est pas le cas, ajouter une variable d'environnement `JAVA_HOME` et la faire pointer vers le répertoire d'installation de Java
+4. Ajouter le chemin de vers le répertoire d'installation de Jenkins à la variable d'environnement `PATH`
+
+[NOTE]
+====
+Sous OSX, le plus simple est d'utiliser https://brew.sh/[Homebrew] - `brew install jenkins`
+====
+
+== Lancement
+
+Une fois l'installation réalisée, il est possible de démarrer Jenkins depuis n'importe quel emplacement du système de fichiers avec la commande suivante :
+
+[source, bash]
+jenkins
+
+== Configuration générale
+
+Naviguer à la page de démarrage de Jenkins <http://localhost:8080>.
+
+image::welcome.png[Page d'accueil de Jenkins]
+
+L'objectif de cette section consiste à configurer Maven, auquel Jenkins va déléguer la construction.
+
+Cliquer sur btn:[Administrer Jenkins], puis sur btn:[Configuration globale des outils].
+
+image::configtools.png[Configuration globale des outils]
+
+Localiser la section Maven (tout en bas), puis cliquer sur btn:[Installations Maven].
+
+image::maven.png[Ajout d'une installation Maven]
+
+Normalement, Maven est déjà présent sur le système. Remplir les champs ainsi :
+
+MAVEN_HOME:: Chemin vers l'installation Maven locale _p.e._ `/usr/local/Cellar/maven/3.3.9/libexec`
+Nom:: Libellé unique, comprenant la version de Maven _p.e._ Maven 3.3.9
+
+[WARNING]
+Au moment de l'écriture du tutoriel, la version 3.5.0 de Maven n'est pas compatible avec Jenkins.
+
+Cliquer sur btn:[Enregistrer].
+
+== Création d'un nouveau job
+
+Retourner à la page d'accueil. Cliquer sur btn:[Nouveau Item]
+
+image::newjob.png[Nouvel item]
+
+* Remplir le champ Nom avec le nom du projet
+* Sélectionner le Projet Maven
+* Puis cliquer sur btn:[OK]
+
+image::config.png[Configuration du nouveau projet]
+
+Il faut maintenant configurer chaque section.
+
+=== Configuration du dépôt de code
+
+La première section concerne le dépôt de code pour indiquer à Jenkins où aller chercher le code. Il suffit d'indiquer l'URL du dépôt Github.
+
+image::coderepo.png[Configuration du dépôt de code]
+
+Dans le champ Repository URL, indiquer l'URL `https` du dépôt _p.e._ https://github.com/nfrankel/<repo>
+
+Les valeurs par défaut des autres paramètres peuvent être conservées.
+
+=== Configuration du déclenchement
+
+La section suivante indique à Jenkins quel est l'élément qui va déclencher la construction.
+
+image::trigger.png[Configuration du déclenchement]
+
+Dans le contexte actuel :
+
+* Désélectionner Lance un build à chaque fois qu'une dépendance SNAPSHOT est construite
+* Sélectionner Scrutation de l'outil de gestion de version
+* Dans le champ Planning, indiquer `* * * * *` pour une scrutation chaque minute
+
+De cette manière, Jenkins vérifiera toutes les minutes si un nouveau _commit_ a été poussé.
+
+=== Configuration de la construction
+
+Cette étape consiste à configurer la phase (ou le _goal_ Maven) qui sera exécuté par Jenkins.
+
+image::build.png[Configuration du build]
+
+Il suffit de remplir le champ Goals and options avec la valeur `package`. Puis, cliquer sur btn:[Sauver] pour créer le _job_.
+
+== Test du build
+
+=== Build manuel
+
+Afin de tester la configuration, cliquer sur btn:[Lancer un build].
+
+Une nouvelle ligne doit apparaître dans la section Historique des builds. Si le build a échoué, l'icône est rouge. Afin de diagnostiquer les raisons de l'échec, cliquer sur le build puis aller sur btn:[Console Output].
+
+=== Build automatique
+
+Si l'intégralité de la procédure a été correctement réalisée, tout nouveau _commit_ poussé sur `HEAD` (ou sur toute branche configurée) donnera lieu à un nouveau _build_.
