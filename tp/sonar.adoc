@@ -21,8 +21,10 @@ L'objectif de cette fiche est de paramétrer un projet Maven pour lancer une ana
 
 == Références
 
-* http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Maven[Analyzing with SonarQube Scanner for Maven (EN)]
-* https://nemo.sonarqube.org[Nemo, l'instance SonarQube publique]
+En anglais: ::
++
+* http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Maven[Analyzing with SonarQube Scanner for Maven^]
+* https://about.sonarcloud.io/[SonarCloud^]
 
 == Téléchargement de SonarQube
 

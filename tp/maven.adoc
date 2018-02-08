@@ -21,8 +21,8 @@ L'objectif de cette fiche est de porter un projet sous Maven pour automatiser le
 
 == Références
 
-* https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference[Lifecycle Reference]
 * http://maven-guide-fr.erwan-alliaume.com/maven-guide-fr/site/reference/public-book.html[Maven, le guide final]
+* https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference[Lifecycle Reference]
 
 == Installation de Maven
 

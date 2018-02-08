@@ -21,7 +21,7 @@ L'objectif de cette fiche est d'utiliser le serveur d'Intégration Continue Jenk
 
 == Références
 
-* https://jenkins.io/doc/[Jenkins Documentation [EN\]]
+* https://jenkins.io/doc/[Jenkins Documentation]
 
 == Installation de Jenkins
 
