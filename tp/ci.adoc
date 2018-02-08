@@ -27,16 +27,16 @@ L'objectif de cette fiche est d'utiliser le serveur d'Intégration Continue Jenk
 
 Avant d'utiliser Jenkins, il est nécessaire de le télécharger depuis le site :
 
-1. Télécharger l'https://jenkins.io/download/[archive] en fonction du système d'exploitation
-2. Décompresser celui-ci dans le dossier standard des applications pour le système d'exploitation
+. Télécharger l'https://jenkins.io/download/[archive] en fonction du système d'exploitation
+. Décompresser celui-ci dans le dossier standard des applications pour le système d'exploitation
 +
 [NOTE]
 ====
 Pour Window, il est fortement conseillé que le chemin ne comporte pas d'espaces.
 ====
 +
-3. Si ce n'est pas le cas, ajouter une variable d'environnement `JAVA_HOME` et la faire pointer vers le répertoire d'installation de Java
-4. Ajouter le chemin de vers le répertoire d'installation de Jenkins à la variable d'environnement `PATH`
+. Si ce n'est pas le cas, ajouter une variable d'environnement `JAVA_HOME` et la faire pointer vers le répertoire d'installation de Java
+. Ajouter le chemin de vers le répertoire d'installation de Jenkins à la variable d'environnement `PATH`
 
 [NOTE]
 ====

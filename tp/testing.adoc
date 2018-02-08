@@ -35,8 +35,8 @@ Le code métier ne doit finalement pas comporter de `new()`.
 Les tests les plus simples à implémenter sont ceux qui testent les classes qui n'ont pas de dépendances.
 Commencer par développer ces tests.
 
-1. Ajouter la dernière version de TestNG comme dépendance Maven de test au projet.
-1. Implémenter les tests dans le répertoire Maven adapté.
+. Ajouter la dernière version de TestNG comme dépendance Maven de test au projet.
+. Implémenter les tests dans le répertoire Maven adapté.
 
 [TIP]
 ====

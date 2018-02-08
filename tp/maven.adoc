@@ -30,15 +30,15 @@ Avant d'utiliser Maven, il est d'abord nécessaire de le mettre à disposition s
 
 En fonction du système d'exploitation, les méthodes d'installation de Maven sont différentes mais il existe une méthode commune :
 
-1. https://maven.apache.org/download.cgi[Télécharger] le zip de Maven
-1. Décompresser celui-ci dans le dossier standard des applications pour le système d'exploitation
+. https://maven.apache.org/download.cgi[Télécharger] le zip de Maven
+. Décompresser celui-ci dans le dossier standard des applications pour le système d'exploitation
 +
 [NOTE]
 ====
 Pour Window, il est fortement conseillé que le chemin ne comporte pas d'espaces.
 ====
-1. Si ce n'est pas le cas, ajouter une variable d'environnement `JAVA_HOME` et la faire pointer vers le répertoire d'installation de Java
-1. Ajouter le chemin de vers le répertoire d'installation de Maven à la variable d'environnement `PATH`
+. Si ce n'est pas le cas, ajouter une variable d'environnement `JAVA_HOME` et la faire pointer vers le répertoire d'installation de Java
+. Ajouter le chemin de vers le répertoire d'installation de Maven à la variable d'environnement `PATH`
 
 Une fois ces étapes réalisées, il est possible d'invoquer Maven depuis n'importe quel chemin du système de fichiers avec la commande `mvn` _p.e._ `mvn compile`. 
 
@@ -190,8 +190,8 @@ Parmi toutes ces options, la solution http://www.slf4j.org[SLF4J] est particuli�
 
 image::http://www.slf4j.org/images/concrete-bindings.png[Principe de fonctionnement]
 
-1. Ajouter l'API SLF4J - `org.slf4j:slf4j-api`, comme dépendance simple
-1. Ajouter quelques logs à l'application, _p.e._ :
+. Ajouter l'API SLF4J - `org.slf4j:slf4j-api`, comme dépendance simple
+. Ajouter quelques logs à l'application, _p.e._ :
 +
 [source, java]
 ----
@@ -199,9 +199,9 @@ Logger logger = LoggerFactory.getLogger(MaClass.class);
 logger.info("Ecrire quelque chose d'utile");
 ----
 +
-1. Ajouter l'implémentation `org.slf4j:slf4j-simple` comme dépendance à l'exécution
-1. Exécuter l'application soit dans l'IDE, soit via l'exéuction du JAR packagé
-1. Vérifier le résultat dans la console pendant l'exécution
+. Ajouter l'implémentation `org.slf4j:slf4j-simple` comme dépendance à l'exécution
+. Exécuter l'application soit dans l'IDE, soit via l'exéuction du JAR packagé
+. Vérifier le résultat dans la console pendant l'exécution
 
 [TIP]
 ====
@@ -351,11 +351,11 @@ Votre fichier doit ressembler à l'extrait suivant :
 
 Afin d'afficher la version dans une application graphique (client lourd ou client web), les étapes suivantes sont nécessaires :
 
-1. Activer le filtrage Maven
-1. Créer un fichier de _properties_ à la racine du répertoire de ressources, _p.e._ `application.properties`
-1. Créer une propriété avec une clé définie, _p.e._ `application.version`
-1. Lui affecter une valeur de telle sorte que le filtrage Maven la remplace par la version de l'application pendant le build
-1. Développer une fonctionnalité de l'application pour lire cette valeur. Voici un exemple d'un tel code :
+. Activer le filtrage Maven
+. Créer un fichier de _properties_ à la racine du répertoire de ressources, _p.e._ `application.properties`
+. Créer une propriété avec une clé définie, _p.e._ `application.version`
+. Lui affecter une valeur de telle sorte que le filtrage Maven la remplace par la version de l'application pendant le build
+. Développer une fonctionnalité de l'application pour lire cette valeur. Voici un exemple d'un tel code :
 +
 [source,java]
 ----
@@ -366,7 +366,7 @@ try (InputStream stream = new FileInputStream("application.properties")) {
     // Do something meaningful here
 }
 ----
-1. Finalement, afficher cette valeur à l'écran
+. Finalement, afficher cette valeur à l'écran
 
 [NOTE]
 ====
