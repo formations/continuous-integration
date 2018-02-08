@@ -1,0 +1,28 @@
+language: ruby
+
+cache:
+  paths:
+    - .bundle
+
+before_install:
+  - mkdir -p output/cours output/tp output/images
+  - bundle config --local github.https true
+  - bundle --path=.bundle/gems --binstubs=.bundle/.bin
+  - cp common/course.css output/cours/style.css
+  - cp common/stylesheets/asciidoctor.css output/asciidoctor.css
+
+script:
+  - bundle exec asciidoctor -D output README.adoc -a linkcss -a stylesheet=asciidoctor.css
+  - bundle exec asciidoctor -D output/tp tp/*.adoc -a linkcss -a stylesheet=../asciidoctor.css
+
+after_success:      
+  - cd output
+  - mv README.html index.html
+  - cp -R ../cours/images cours
+  - cp -R ../tp/images tp
+  - git init
+  - git config user.name "${GH_USER_NAME}"
+  - git config user.email "{GH_USER_EMAIL}"
+  - git add .
+  - git commit -m "Deploy to GitHub Pages"
+  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:gh-pages > /dev/null 2>&1

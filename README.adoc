@@ -1,0 +1,20 @@
+= Intégration Continue
+Nicolas Frankel
+:doctype: article
+:encoding: utf-8
+:lang: fr
+
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+include::common/license.adoc[]
+
+. Système de Contrôle de Version
+* <<tp/vcs.adoc#,Travaux Pratiques>>
+. Build
+* <<tp/maven.adoc#,Travaux Pratiques>>
+. Testing
+* <<tp/testing.adoc#,Travaux Pratiques>>
+. Sonar
+* <<tp/sonar.adoc#,Travaux Pratiques>>
+. Intégration Continue
+* <<tp/ci.adoc#,Travaux Pratiques>>
