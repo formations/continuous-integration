@@ -12,6 +12,7 @@ before_install:
   - cp common/stylesheets/asciidoctor.css output/asciidoctor.css
 
 script:
+  - bundle exec asciidoctor-revealjs -D output/cours -a revealjs_history=true -a revealjs_theme=white -a revealjs_slideNumber=true -a linkcss -a customcss=style.css -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0 cours/*.adoc
   - bundle exec asciidoctor -D output README.adoc -a linkcss -a stylesheet=asciidoctor.css
   - bundle exec asciidoctor -D output/tp tp/*.adoc -a linkcss -a stylesheet=../asciidoctor.css
 

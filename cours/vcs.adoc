@@ -1,0 +1,331 @@
+= Système de Contrôle de Version
+
+// bundle exec asciidoctor-revealjs -a revealjs_history=true -a revealjs_theme=white -a revealjs_slideNumber=true -a linkcss -a customcss=../style.css -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0 cours/*.adoc
+
+:source-highlighter: highlightjs
+:imagesdir: ./images/vcs
+
+== Problématique
+
+* Vous avez livré la v1 de votre logiciel
+* Vous avez commencé à travailler sur la v2
+* Un bug est déclaré sur la v1
+
+=== Corriger le bug
+
+Comment revenir à la v1 du logiciel ?
+
+=== !
+
+image::versions.png[]
+
+=== Versionnage sémantique
+
+* X
+** Version majeure
+** Rétrocompatibilité non assurée
+* Y
+** Version mineure
+** Ajout de fonctionnalités
+* Z
+** Correction de bugs
+
+=== Processus recherché
+
+. Stocker l'état des sources v1
+. Stocker l'état courant
+. Revenir à la v1
+. Corriger le bug / livrer
+. Stocker l'état v1.0.1
+. Revenir à l'état courant
+
+=== Principe d'un système de contrôle de version
+
+image::tagging.png[]
+
+== Équipe de développement
+
+Un logiciel est réalisé par une équipe de développement
+
+=== Travailler avec un VCS
+
+image::vcs.png[]
+
+=== ÉquipeS de développement
+
+* Pour les gros projets
+** Plusieurs équipes de développement
+* Chaque équipe travaille sur une fonctionnalité
+** Hébergée sur une branche dédiée
+
+=== Branch et merge
+
+image::branching.png[]
+
+== Type de VCS
+
+* VCS centralisés
+** CVS
+** Subversion – SVN
+* VCS décentralisés - DCVS
+** Git
+** Mercurial
+
+=== Travailler avec un DCVS
+
+image::dcvs.png[]
+
+== Git
+
+* Logiciel OpenSource
+** GNU v2
+* Créé par Linus Torvald
+** Aussi auteur du noyau Linux
+
+=== !
+
+[.stretch]
+image::xkcd.png[]
+
+== Dépot
+
+Ensemble des sources pour un projet particulier
+
+=== Gestion de dépôt
+
+[options="header,autowidth"]
+|===
+
+| Commande | Description
+
+| `git init <name>`
+| Initialise un dépôt local dans le répertoire courant
+
+| `git clone <url>`
+| Copie un dépôt dans le répertoire courant
+
+|===
+
+=== Commande de gestion de configuration
+
+[options="header,autowidth"]
+|===
+
+| Commande | Configure
+
+| `git config user.name "<A name>"`
+| Nom d'utilisateur
+
+| `git config user.email <me@name.com>`
+| Email
+
+|===
+
+== Index
+
+Espace de travail pour le prochain commit
+
+=== Cycle de vie d'un fichier local
+
+image::lifecycle.png[]
+
+=== Commandes de base
+
+[options="header,autowidth"]
+|===
+
+| Commande | Description
+
+| `git add <path/to/file>`
+| Ajoute le fichier(s) à l'index
+
+| `git status`
+| Affiche la liste des fichiers modifiés/créés depuis le dernier commit
+
+|===
+
+=== Commandes de base
+
+[options="header,autowidth"]
+|===
+
+| Commande | Description
+
+| `git diff <path>`
+| Affiche les différences entre l'état actuel et l'index
+
+| `git commit`
+| Commite les fichiers de l'index
+
+|===
+
+== Récupération des changements distants
+
+* Commits
+* Branches
+* Tags
+
+=== Synchronisation
+
+[options="header,autowidth"]
+|===
+
+| Commande | Description
+
+| `git fetch`
+| Récupère les changements distants
+
+| `git pull`
+| Récupère les changements distants et les intègre
+
+|===
+
+=== Synchronisation
+
+[options="header,autowidth"]
+|===
+
+| Commande | Description
+
+| `git merge`
+| Intègre les changements
+
+| `git push`
+| Pousse les commits locaux
+
+|===
+
+=== Vue d'ensemble
+
+image::overview.png[]
+
+== Gestion des branches
+
+[options="header,autowidth"]
+|===
+
+| Commande | Description
+
+| `git branch`
+| Liste les branches
+
+| `git branch <name>`
+| Crée une branche
+
+| `git checkout <name>`
+| Change de branche
+
+|===
+
+=== Tag
+
+Libellé sur un commit particulier
+
+=== Gestion des tag
+
+[options="header,autowidth"]
+|===
+
+| Commande | Description
+
+| `git tag`
+| Liste les tags
+
+| `git tag <name>`
+| Crée un tag
+
+|===
+
+=== Sémantique
+
+`master`::
+Branche principale
+`HEAD`::
+Pointeur sur le commit courant
+
+=== Créer une branche
+
+image::branch.png[]
+
+=== HEAD
+
+image::head.png[]
+
+=== Commiter sur une branche
+
+image::commit.png[]
+
+== Merge fast-forward
+
+image::merge-step1.png[]
+
+=== Résultat
+
+image::merge-step2.png[]
+
+=== !
+
+[source]
+----
+git checkout master
+git merge hotfix
+----
+
+=== 3-ways merge
+
+image::merge-3ways-step1.png[]
+
+=== Résultat
+
+image::merge-3ways-step2.png[]
+
+=== !
+
+[source]
+----
+git checkout master
+git merge iss53
+----
+
+=== Conflits
+
+* Merge effectué "ligne par ligne"
+* Deux lignes différentes modifiées dans le même fichier => merge automatique
+* Même ligne = conflit => merge manuel nécessaire
+
+=== Merges manuels
+
+* Editeur de texte pour les merges simples
+* Outils spécifiques pour les merges plus complexes
+** P4Merge par exemple
+** git mergetool
+
+== Bonnes pratiques
+
+* Ne pas committer sur `master`
+* Faire une branche par fonctionnalité
+** Revue avant de merger sur `master`
+
+=== Git Flow
+
+image::gitflow.png[]
+
+=== Github
+
+* Service d’hébergement basé sur Git
+* "Social"
+* Basé sur le _Fork_
+** Copie du dépôt
+
+=== Collaborer sur Github
+
+. Copier le dépôt voulu dans l’interface Github ("forker")
+. Cloner le dépôt copié
+. Faire les modifications souhaitées
+. Committer/pousser
+. Faire une _Pull Request_ dans l’interface Github
+
+=== Alternatives
+
+* https://bitbucket.org/[Atlassian Bitbucket^]
+* https://gitlab.com/[GitLab^]

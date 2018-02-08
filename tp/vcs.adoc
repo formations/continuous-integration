@@ -23,6 +23,7 @@ L'objectif de ce _workshop_ est de se familiariser avec Git, un système de cont
 
 En français : ::
 +
+* <<../cours/vcs.adoc#,Slides>>
 * https://git-scm.com/book/fr/v2[Pro Git^]
 * http://liris.cnrs.fr/~pchampin/enseignement/intro-git[Introduction à Git^]
 +

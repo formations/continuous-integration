@@ -9,6 +9,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 include::common/license.adoc[]
 
 . Système de Contrôle de Version
+* <<cours/vcs.adoc#,Cours>>
 * <<tp/vcs.adoc#,Travaux Pratiques>>
 . Build
 * <<tp/maven.adoc#,Travaux Pratiques>>
