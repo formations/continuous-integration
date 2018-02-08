@@ -74,4 +74,5 @@ Par défaut, l'analyse est envoyée au serveur SonarQube local.
 
 Les résultats sont disponibles à http://localhost:9000.
 
-Corriger les violations par ordre de priorité, re-lancer l'analyse. Répéter autant de fois que nécessaire.
+Corriger les violations par ordre de priorité, re-lancer l'analyse.
+Répéter autant de fois que nécessaire.

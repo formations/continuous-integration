@@ -43,37 +43,52 @@ En anglais : ::
 
 Cette section est dédiée au passage d'un projet sous Github.
 
-NOTE: Github ne doit *pas* être confondu avec Git. Il s'agit uniquement d'une de ses implémentations (propriétaire). Il en https://bitbucket.org/[existe^] https://gitlab.com/users/sign_in[d'autres^]. Toutefois, Github reste le service Git le plus répandu actuellement, notamment grâce à son orientation sociale.
+NOTE: Github ne doit *pas* être confondu avec Git.
+Il s'agit uniquement d'une de ses implémentations (propriétaire).
+Il en https://bitbucket.org/[existe^] https://gitlab.com/users/sign_in[d'autres^].
+Toutefois, Github reste le service Git le plus répandu actuellement, notamment grâce à son orientation sociale.
 
 Les étapes à exécuter sont les suivantes :
 
 === Créer un compte Github
 
-Cette étape est optionnelle si un compte Github est déjà existant. Dans le cas contraire, accéder au site https://github.com/[Github].
+Cette étape est optionnelle si un compte Github est déjà existant.
+Dans le cas contraire, accéder au site https://github.com/[Github].
 
 image::signup.png[Sign up]
     
-Cliquer sur le bouton btn:[Sign up] pour créer un nouveau compte. Remplir les champs de manière adéquate.
+Cliquer sur le bouton btn:[Sign up] pour créer un nouveau compte.
+Remplir les champs de manière adéquate.
     
 image::join.png[Join Github]
     
-Cliquer sur btn:[Create an account] Le plan sélectionné par défaut est gratuit ; il est suffisant dans le cadre de ce _workshop_. La limitation principale d'un tel plan est que tous les dépôts sont nécessairement publics et donc consultables par tous. Il est toujours possible d'en changer par la suite.
+Cliquer sur btn:[Create an account] Le plan sélectionné par défaut est gratuit ;
+il est suffisant dans le cadre de ce _workshop_.
+La limitation principale d'un tel plan est que tous les dépôts sont nécessairement publics et donc consultables par tous.
+Il est toujours possible d'en changer par la suite.
     
 image::welcome.png[Welcome to Github]
     
-Cliquer sur btn:[Finish sign up] pour terminer la création du compte. Bravo, le compte Github est maintenant créé.
+Cliquer sur btn:[Finish sign up] pour terminer la création du compte.
+Bravo, le compte Github est maintenant créé.
     
 image::learn.png[Learn Github]
     
-Pour passer à l'étape suivante, il est avant tout nécessaire de valider l'adresse électronique : se référer au courriel qui a été envoyé.
+Pour passer à l'étape suivante, il est avant tout nécessaire de valider l'adresse électronique :
+se référer au courriel qui a été envoyé.
 
 === Créer un dépôt sur Github
 
-Un dépôt est un dépôt pour le code. En général, la cardinalité entre un dépôt et un projet est de 1 pour 1. On se contentera de ce cas général : un dépôt permettra de stocker les sources d'un unique projet.
+Un dépôt est un dépôt pour le code.
+En général, la cardinalité entre un dépôt et un projet est de 1 pour 1.
+On se contentera de ce cas général :
+un dépôt permettra de stocker les sources d'un unique projet.
 
-Cliquer sur le bouton btn:[+ New repository] de l'écran précédent. Si un autre écran est affiché, il est possible de créer un nouveau dépôt à l'aide du bouton btn:[+] dans la barre de tâches affichée sur le site (une fois connecté).
+Cliquer sur le bouton btn:[+ New repository] de l'écran précédent.
+Si un autre écran est affiché, il est possible de créer un nouveau dépôt à l'aide du bouton btn:[+] dans la barre de tâches affichée sur le site (une fois connecté).
     
-Sélectionner un nom de projet et la description. Laisser les autres valeurs inchangées.
+Sélectionner un nom de projet et la description.
+Laisser les autres valeurs inchangées.
     
 image::newrepo.png[Create a new repository]
     
@@ -83,7 +98,8 @@ image::setuprepo.png[Quick setup]
 
 [[infos-utiles]]Conserver cette page ouverte, elle contient des informations utiles pour la suite.
     
-Cette étape conclut la configuration de Github via l'interface graphique. La suite est identique quel que soit le fournisseur de service Git.
+Cette étape conclut la configuration de Github via l'interface graphique.
+La suite est identique quel que soit le fournisseur de service Git.
 
 === Initialiser un dépôt local
 
@@ -94,7 +110,8 @@ L'initialisation d'un dépôt git local se fait via la commande `init` :
 git init
 ----
 
-Vérifier qu'après exécution de cette commande, un nouveau répertoire `.git` a été ajouté à la racine du répertoire dans lequel il a été exécuté. Notamment, regarder le contenu du fichier `.git/config` qui doit être similaire au contenu suivant :
+Vérifier qu'après exécution de cette commande, un nouveau répertoire `.git` a été ajouté à la racine du répertoire dans lequel il a été exécuté.
+Notamment, regarder le contenu du fichier `.git/config` qui doit être similaire au contenu suivant :
 
 [source]
 .git/config
@@ -110,7 +127,8 @@ Vérifier qu'après exécution de cette commande, un nouveau répertoire `.git` 
 
 === Référencer un dépôt distant
 
-Aller sur Github pour visualiser la link:#infos-utiles[page d'information]. Recherchez la section intitulée "...or push an existing repository from the command line".
+Aller sur Github pour visualiser la link:#infos-utiles[page d'information].
+Recherchez la section intitulée "...or push an existing repository from the command line".
 
 L'exécution de la première ligne de commande permet de référencer le dépôt distant dans la configuration locale.
 
@@ -133,7 +151,8 @@ Chaque opération d'*écriture* dans le dépôt distant nécessite une authentif
 
 Dans la link:#trueajouter_le_d_p_t_distant[section précédente], l'URL ajoutée est de la forme `git@github.com:user/repo.git`.
 
-Cette forme implique l'utilisation d'une communication SSH pour la synchronisation entre le dépôt local et le dépôt distant. L'authentification d'une telle communication se fait via un mécanisme asymétrique de type clé privé-clé publique.
+Cette forme implique l'utilisation d'une communication SSH pour la synchronisation entre le dépôt local et le dépôt distant.
+L'authentification d'une telle communication se fait via un mécanisme asymétrique de type clé privé-clé publique.
 
 [NOTE]
 ====
@@ -143,14 +162,19 @@ Si l'infrastructure décrite dans cette section se révèle trop lourde et qu'un
 En fonction du système d'exploitation, voici la marche à suivre :
 
 Pour Unix, Linux et Mac OSX::
-La documentation est disponible https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-mac-os-x[ici (EN)]. [NOTE]
+La documentation est disponible https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-mac-os-x[ici (EN)].
+
+[NOTE]
 ====
 L'article mentionne Mac OS X mais est également applicable aux autres systèmes d'exploitation de type *Nix.
 ====
-Pour Windows::
-Il est d'abord nécessaire d'installer http://www.putty.org/[Putty]. La documentation est disponible https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-windows[ici (EN)].
 
-Une fois la clé privée générée, il est nécessaire d'ajouter la clé publique dans votre compte Github. Pour cela, cliquer sur votre profil en haut à droite.
+Pour Windows::
+Il est d'abord nécessaire d'installer http://www.putty.org/[Putty].
+La documentation est disponible https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-windows[ici (EN)].
+
+Une fois la clé privée générée, il est nécessaire d'ajouter la clé publique dans votre compte Github.
+Pour cela, cliquer sur votre profil en haut à droite.
 
 image::profileandmore.png[Menu]
 
@@ -158,7 +182,9 @@ Puis cliquer sur l'élémént https://github.com/settings/profile[Settings] du m
 
 image::profile.png[Profil]
 
-Enfin, dans le menu de gauche, cliquer sur l'élément SSH. Dans l'écran, cliquer sur le bouton btn:[New SSH Key]. Ajouter la clé publique.
+Enfin, dans le menu de gauche, cliquer sur l'élément SSH.
+Dans l'écran, cliquer sur le bouton btn:[New SSH Key].
+Ajouter la clé publique.
 
 image::sshkeys.png[SSH Keys]
 
@@ -198,11 +224,14 @@ La liste exacte des fichiers est bien sûr dépendante du projet et de l'Atelier
     
 === Configurer les fichiers à exclure
 
-Certains fichiers n'ont pas vocation à être gérés par le Système de Gestion de Version. Parmi ceux-ci, on recense les fichier générés (par exemple, les fichiers minifiés produits par Grunt et les fichiers `.class` produits la compilation Java), les fichiers de configuration de l'AGL, etc. 
+Certains fichiers n'ont pas vocation à être gérés par le Système de Gestion de Version.
+Parmi ceux-ci, on recense les fichier générés (par exemple, les fichiers minifiés produits par Grunt et les fichiers `.class` produits la compilation Java), les fichiers de configuration de l'AGL, etc. 
 
-Cette exclusion se base sur le contenu de fichiers `.gitignore` dans le dépôt. Dans le cadre de ces travaux pratiques, nous nous bornerons à l'utilisation d'un unique fichier de ce type situé à la *racine* du dépôt local.
+Cette exclusion se base sur le contenu de fichiers `.gitignore` dans le dépôt.
+Dans le cadre de ces travaux pratiques, nous nous bornerons à l'utilisation d'un unique fichier de ce type situé à la *racine* du dépôt local.
 
-Le format du fichier est basé sur des modèles d'exclusion, un modèle par ligne. L'intégralité des règle de formation des modèles est disponible dans la https://git-scm.com/docs/gitignore#_pattern_format[documentation officielle].
+Le format du fichier est basé sur des modèles d'exclusion, un modèle par ligne.
+L'intégralité des règle de formation des modèles est disponible dans la https://git-scm.com/docs/gitignore#_pattern_format[documentation officielle].
 
 Par exemple, pour exclure les fichiers inutiles, le fichier `.gitignore` suivant peut être utilisé :
 
@@ -232,7 +261,8 @@ nothing added to commit but untracked files present (use "git add" to track)
 
 === Ajouter les fichiers à l'index
 
-Avant de committer les fichiers, il est nécessaire de les ajouter comme le montre la figure 1 ci-dessus. L'ajout se fait à l'aide de la commande `add` qui prend en paramètre un modèle de chemin.
+Avant de committer les fichiers, il est nécessaire de les ajouter comme le montre la figure 1 ci-dessus.
+L'ajout se fait à l'aide de la commande `add` qui prend en paramètre un modèle de chemin.
     
 Le premier ajout incluant tous les fichiers, on peut en général utiliser le modèle `*` :
 
@@ -241,7 +271,8 @@ Le premier ajout incluant tous les fichiers, on peut en général utiliser le mo
 git add *
 ----
 
-Les modifications ultérieures de l'index se font généralement en ajoutant un fichier particulier. Il est nécessaire d'indiquer le chemin du (des) fichier(s) à ajouter :
+Les modifications ultérieures de l'index se font généralement en ajoutant un fichier particulier.
+Il est nécessaire d'indiquer le chemin du (des) fichier(s) à ajouter :
 
 [source, bash]
 ----
@@ -252,7 +283,8 @@ git add *
 
 === Committer
 
-Une fois les fichiers ajoutés à l'index, il est alors possible de committer le lot des fichiers. Cela est géré par la commande `commit`.
+Une fois les fichiers ajoutés à l'index, il est alors possible de committer le lot des fichiers.
+Cela est géré par la commande `commit`.
 
 [source, bash]
 ----
@@ -266,7 +298,8 @@ La bonne granularité d'un commit est celle qui permet de revenir sur ce commit 
 
 === Pousser les commits locaux
 
-Dès lors qu'au moins un commit a été effectué dans le dépôt local, il est possible de pousser le(s) nouveau(x) commit(s) vers le dépôt distant. Cette action est possible via l'intermédiaire de la commande `push`:
+Dès lors qu'au moins un commit a été effectué dans le dépôt local, il est possible de pousser le(s) nouveau(x) commit(s) vers le dépôt distant.
+Cette action est possible via l'intermédiaire de la commande `push`:
 
 [source, bash]
 ----
@@ -275,18 +308,22 @@ git push
 
 [WARNING]
 ====
-Il existe un risque que les arbres de travail locaux et distants soient désynchronisés - par exemple si quelqu'un d'autre a déjà poussé des commits sur le même dépôt distant. Pour le moment, ce risque est nul car il s'agit du premier commit.
+Il existe un risque que les arbres de travail locaux et distants soient désynchronisés - par exemple si quelqu'un d'autre a déjà poussé des commits sur le même dépôt distant.
+Pour le moment, ce risque est nul car il s'agit du premier commit.
 ====
 
 == Pull requests
 
-Dans la première sections, il a été décrit comment réaliser des commits et pousser ceux-ci vers le dépôt distant. L'objectif de cette seconde section est d'apprendre à réaliser des _pull requests_.
+Dans la première sections, il a été décrit comment réaliser des commits et pousser ceux-ci vers le dépôt distant.
+L'objectif de cette seconde section est d'apprendre à réaliser des _pull requests_.
 
-Pour cela, il est nécessaire de travailler en binôme. Si le nombre d'étudiants est impair, un groupe de trois travaillera en permutation circulaire.
+Pour cela, il est nécessaire de travailler en binôme.
+Si le nombre d'étudiants est impair, un groupe de trois travaillera en permutation circulaire.
 
 === Fork
 
-La première étape pour réaliser une _pull request_ sur Github est de copier le dépôt de votre binôme dans votre propre compte. Allez sur l'URL du dépôt de votre binôme.
+La première étape pour réaliser une _pull request_ sur Github est de copier le dépôt de votre binôme dans votre propre compte.
+Allez sur l'URL du dépôt de votre binôme.
 
 image::fork.png[Fork]
 
@@ -308,11 +345,13 @@ Par rapport à `git init`, il n'est pas nécessaire d'ajouter un dépôt distant
 
 === Effectuer des modifications
 
-Effectuer maintenant des modifications pertinentes sur le dépôt local copié. Réaliser un enchaînement d'opérations de `commit` et de `push` comme dans la link:#trueajouter_les_fichiers_l_index[section précédente].
+Effectuer maintenant des modifications pertinentes sur le dépôt local copié.
+Réaliser un enchaînement d'opérations de `commit` et de `push` comme dans la link:#trueajouter_les_fichiers_l_index[section précédente].
 
 === Créer une pull request
 
-La création de la _pull request_ elle-même s'effectue via l'interface graphique de Github. Naviguer vers la page de la *copie* du dépôt - celle qui est sur votre compte.
+La création de la _pull request_ elle-même s'effectue via l'interface graphique de Github.
+Naviguer vers la page de la *copie* du dépôt - celle qui est sur votre compte.
 
 image::pullrequest.png[Créer une pull request]
 
@@ -320,15 +359,19 @@ Cliquer sur le bouton btn:[Pull Request] et suivre les instructions.
 
 === Traiter une pull request
 
-Une fois que son binôme a effectué la _pull request_, aller sur son dépôt via l'interface graphique de Github. Regarder l'onglet Pull Request. Une pastille doit indiquer qu'il y a une _pull request_ en attente.
+Une fois que son binôme a effectué la _pull request_, aller sur son dépôt via l'interface graphique de Github.
+Regarder l'onglet Pull Request.
+Une pastille doit indiquer qu'il y a une _pull request_ en attente.
 
 image::pullrequest2.png[Gérer une pull request]
 
-Cliquer sur l'onglet. La liste des _pull request_ en attente de traitement s'affiche.
+Cliquer sur l'onglet.
+La liste des _pull request_ en attente de traitement s'affiche.
 
 image::pullrequest3.png[Liste des pull request]
 
-Cliquer sur la _pull request_. Le détail de la pull request s'affiche.
+Cliquer sur la _pull request_.
+Le détail de la pull request s'affiche.
 
 image::pullrequest4.png[Détail de la pull request]
 
@@ -336,7 +379,8 @@ Si les permissions sont suffisantes *et* qu'il n'existe pas de conflits, cliquer
 
 == Récupération des commits distants
 
-Jusqu'à présent, l'hypothèse implicite est qu'il n'y avait pas eu de commits sur le dépôt distant et que celui-ci était uniquement modifiés par ses propres _push_. Malheureusement, ce cas de figure idéal n'est rencontré que rarement.
+Jusqu'à présent, l'hypothèse implicite est qu'il n'y avait pas eu de commits sur le dépôt distant et que celui-ci était uniquement modifiés par ses propres _push_.
+Malheureusement, ce cas de figure idéal n'est rencontré que rarement.
 
 === Récupérer les commits distants - cas simple
 
@@ -355,7 +399,9 @@ git merge
 
 === Récupérer les commits distantes - cas avancé
 
-Dans le cas où des commits ont été effectués sur le dépôt local, le dernier des commits distants et locaux n'est plus le même. Git fusionne cette divergence automatiquement avec la commande `pull` lorsque c'est possible. Malheureusement, cela rend l'historique non linéaire.
+Dans le cas où des commits ont été effectués sur le dépôt local, le dernier des commits distants et locaux n'est plus le même.
+Git fusionne cette divergence automatiquement avec la commande `pull` lorsque c'est possible.
+Malheureusement, cela rend l'historique non linéaire.
 
 image::https://gitmap.files.wordpress.com/2010/12/git-pull.png?w=620[git pull rebase]
 

@@ -79,7 +79,9 @@ Pour ce faire, il est nécessaire de créer un fichier `settings.xml` dans votre
 
 [NOTE]
 ====
-Le _home_ dépend du type et de la version du système d'exploitation. Il peut être recherché sur le web, ou bien récupéré depuis la propriété Java `user.home` :
+Le _home_ dépend du type et de la version du système d'exploitation.
+Il peut être recherché sur le web, ou bien récupéré depuis la propriété Java `user.home` :
+
 [source,java]
 ----
 System.getProperty("user.home");
@@ -116,7 +118,8 @@ Vérifier l'existence d'un JAR dans le répertoire `target` à la racine du proj
 
 === Configurer un plugin
 
-Cette section a pour objectif d'expérimenter avec la configuration des plugins afin de rendre son _jar_ exécutable. Un tel jar peut être lancé via la commande suivante (ou en double-cliquant dessus pour les systèmes graphiques) :
+Cette section a pour objectif d'expérimenter avec la configuration des plugins afin de rendre son _jar_ exécutable.
+Un tel jar peut être lancé via la commande suivante (ou en double-cliquant dessus pour les systèmes graphiques) :
 
 [source, bash]
 ----
@@ -132,13 +135,18 @@ Pour parvenir à ce résultat, un _jar_ doit remplir deux conditions :
 Main-Class: ch.hesge.monprojet.MaClasse
 ----
 
-* Cette classe référencée doit contenir une méthode dont la signature est exactement `public static void main(String... args)`. Cette méthode est le point d'entrée du _jar_ et sera exécutée lors du lancement.
+* Cette classe référencée doit contenir une méthode dont la signature est exactement `public static void main(String... args)`.
+Cette méthode est le point d'entrée du _jar_ et sera exécutée lors du lancement.
 
-La création du manifeste rentre exactement dans le cadre du processus d'automatisation de la construction. Le plugin considéré est le Maven JAR plugin. A l'aide de la  https://maven.apache.org/shared/maven-archiver/examples/classpath.html#Make[documentation], configurer votre projet pour rendre le JAR exécutable.
+La création du manifeste rentre exactement dans le cadre du processus d'automatisation de la construction.
+Le plugin considéré est le Maven JAR plugin
+ A l'aide de la  https://maven.apache.org/shared/maven-archiver/examples/classpath.html#Make[documentation], configurer votre projet pour rendre le JAR exécutable.
 
 [NOTE]
 ====
-Toujours spécifier *explicitement* la version des plugins utilisés. Si aucune version n'est indiquée, Maven utilisera la dernière version disponible et celle-ci pourra donc changer au cours du cycle de vie du projet. Une version différente peut engendrer des différences de comportement et représente donc un risque important pour la stabilité du _build_.
+Toujours spécifier *explicitement* la version des plugins utilisés.
+Si aucune version n'est indiquée, Maven utilisera la dernière version disponible et celle-ci pourra donc changer au cours du cycle de vie du projet.
+Une version différente peut engendrer des différences de comportement et représente donc un risque important pour la stabilité du _build_.
 ====
 
 === Lier un nouveau plugin
@@ -153,7 +161,9 @@ Cette section a pour objectif d'apprendre à manipuler la configuration des dép
 
 === Ajouter une dépendance simple
 
-Consulter la https://github.com/akullpp/awesome-java[liste] des librairies Java utiles. L'utiliser dans votre projet en concertation avec l'enseignant. Par exemple :
+Consulter la https://github.com/akullpp/awesome-java[liste] des librairies Java utiles.
+L'utiliser dans votre projet en concertation avec l'enseignant.
+Par exemple :
 
 * Gérer les dates avec http://www.joda.org/joda-time[joda-time]
 * Utiliser une des nombreuses fonctionnalités de https://github.com/google/guava[Guava]
@@ -162,7 +172,8 @@ Consulter la https://github.com/akullpp/awesome-java[liste] des librairies Java 
 
 === Ajouter les dépendances de test
 
-Pour préparer le cours suivant, ajouter la dépendance envers la dernière version de http://testng.org/[TestNG]. Les coordonnées Maven de cette librairie sont `org.testng:testng`.
+Pour préparer le cours suivant, ajouter la dépendance envers la dernière version de http://testng.org/[TestNG].
+Les coordonnées Maven de cette librairie sont `org.testng:testng`.
 
 [WARNING]
 ====
@@ -194,14 +205,18 @@ logger.info("Ecrire quelque chose d'utile");
 
 [TIP]
 ====
-Les versions de l'API et de l'implémentation doivent être les mêmes. Pour cela, il est conseillé d'utiliser la balise `properties` du POM.
+Les versions de l'API et de l'implémentation doivent être les mêmes.
+Pour cela, il est conseillé d'utiliser la balise `properties` du POM.
 ====
 
 == Déployer un artéfact
 
-Afin de mettre son artéfact à disposition, il est nécessaire de le déployer sur un dépôt distant, soit public, soit privé. Cette section sera dédiée à cela.
+Afin de mettre son artéfact à disposition, il est nécessaire de le déployer sur un dépôt distant, soit public, soit privé.
+Cette section sera dédiée à cela.
 
-Dans le cadre de ces travaux pratiques, le dépôt choisi sera https://bintray.com/[Bintray]. Bintray est un dépôt Maven (mais accepte également d'autres types d'artéfacts) https://www.jfrog.com/open-source/[Artifactory] dans le _cloud_. L'utilisation gratuite offre la possibilité de déployer des artéfacts Maven sur un dépôt public.
+Dans le cadre de ces travaux pratiques, le dépôt choisi sera https://bintray.com/[Bintray].
+Bintray est un dépôt Maven (mais accepte également d'autres types d'artéfacts) https://www.jfrog.com/open-source/[Artifactory] dans le _cloud_.
+L'utilisation gratuite offre la possibilité de déployer des artéfacts Maven sur un dépôt public.
 
 [NOTE]
 ====
@@ -222,7 +237,9 @@ Cliquer maintenant sur le bouton btn:[Sign Up]
 
 image::registration.png[Enregistrement]
 
-Il est possible de créer un compte dédié, mais il est plus pratique d'utiliser l'identification de son compte Github. Cliquer sur l'icône Github en bas de la fenêtre. Vous êtes alors redirigés vers Github.
+Il est possible de créer un compte dédié, mais il est plus pratique d'utiliser l'identification de son compte Github.
+Cliquer sur l'icône Github en bas de la fenêtre.
+Vous êtes alors redirigés vers Github.
 
 image::modifyauth.png[Permission Bintray]
 
@@ -240,7 +257,8 @@ Naviguer vers la page d'accueil.
 
 image::repositories.png[Liste des dépôts]
 
-Cliquer sur le dépôt Maven. La liste des _packages_ Maven existants s'affiche.
+Cliquer sur le dépôt Maven.
+La liste des _packages_ Maven existants s'affiche.
 
 image::mvnrepo.png[Liste des packages]
 
@@ -250,11 +268,15 @@ image::createpackage.png[Création d'un package]
 
 Renseigner les informations obligatoires suivantes :
 
-* Le nom du package. Il est vivement conseillé d'utiliser l' `artifactId` du projet Maven pour des raisons de référencement.
-* Le type de license. Par défaut, choisir Apache-2.0.
-* L'URL du dépôt de source. Indiquer l'URL du dépôt Github correspondant.
+* Le nom du package.
+Il est vivement conseillé d'utiliser l' `artifactId` du projet Maven pour des raisons de référencement.
+* Le type de license.
+Par défaut, choisir Apache-2.0.
+* L'URL du dépôt de source.
+Indiquer l'URL du dépôt Github correspondant.
 
-Finaliser la création en cliquant sur le bouton btn:[Create Package]. La page de détail du _package_ s'affiche avec un message d'information qui indique que l'opération s'est déroulée avec succès.
+Finaliser la création en cliquant sur le bouton btn:[Create Package].
+La page de détail du _package_ s'affiche avec un message d'information qui indique que l'opération s'est déroulée avec succès.
 
 === Configurer le dépôt de déploiement pour le projet Maven
 
@@ -280,10 +302,13 @@ Nom du _package_ Bintray, c'est-à-dire le libellé utilisé lors de la link:htt
 
 === Configurer l'authentification pour le déploiement
 
-Avant de pouvoir déployer sur Bintray, il est nécessaire de s'authentifier. En effet, il n'est pas permis à n'importe qui de déployer ses artifacts sur les dépôts d'un utilisateur.
+Avant de pouvoir déployer sur Bintray, il est nécessaire de s'authentifier.
+En effet, il n'est pas permis à n'importe qui de déployer ses artifacts sur les dépôts d'un utilisateur.
 
 Connaître sa clé d'API::
-L'authentification pour la publication d'artéfacts sur Bintray est basé sur le couple nom d'utilisateur Bintray/clé d'API. Afin de connaître cette dernière, survoler votre nom de profil en haut à droite. Un menu déroulant apparaît.
+L'authentification pour la publication d'artéfacts sur Bintray est basé sur le couple nom d'utilisateur Bintray/clé d'API.
+Afin de connaître cette dernière, survoler votre nom de profil en haut à droite.
+Un menu déroulant apparaît.
 +
 image::scrollingmenu.png[Menu de profil]
 +
@@ -302,7 +327,8 @@ image::apikey.png[API Key]
 Enfin, pour afficher la clé d'API, cliquer sur le bouton btn:[Show].
 +
 Utiliser sa clé d'API::
-Dans votre répertoire `$HOME/.m2`, créer un fichier `settings.xml`. Ce fichier respecte un format standard décrit dans la https://maven.apache.org/settings.html:[documentation Maven].
+Dans votre répertoire `$HOME/.m2`, créer un fichier `settings.xml`.
+Ce fichier respecte un format standard décrit dans la https://maven.apache.org/settings.html:[documentation Maven].
 +
 Votre fichier doit ressembler à l'extrait suivant :
 +
@@ -344,14 +370,16 @@ try (InputStream stream = new FileInputStream("application.properties")) {
 
 [NOTE]
 ====
-L'approche naïve pour afficher la version de l'application est de https://maven.apache.org/shared/maven-archiver/examples/manifest.html[configurer] l'_archiver_ du Maven JAR plugin pour écrire celle-ci comme valeur de la clé `Implementation-Version` du fichier de manifeste. Toutefois, dès lors qu'il existe plus d'un unique JAR dans le _classpath_ (_p.e._ lorsqu'on utilise des librairies tierces), les limitations inhérentes du _classloader_ se manifestent (_cf._ https://stackoverflow.com/questions/1272648/reading-my-own-jars-manifest[StackOverflow]).
+L'approche naïve pour afficher la version de l'application est de https://maven.apache.org/shared/maven-archiver/examples/manifest.html[configurer] l'_archiver_ du Maven JAR plugin pour écrire celle-ci comme valeur de la clé `Implementation-Version` du fichier de manifeste.
+Toutefois, dès lors qu'il existe plus d'un unique JAR dans le _classpath_ (_p.e._ lorsqu'on utilise des librairies tierces), les limitations inhérentes du _classloader_ se manifestent (_cf._ https://stackoverflow.com/questions/1272648/reading-my-own-jars-manifest[StackOverflow]).
 ====
 
 == Effectuer une release
 
 Utiliser le https://maven.apache.org/maven-release/maven-release-plugin/[Maven release plugin] pour effectuer une release de votre projet sur Bintray.
 
-Pour cela, la section `scm` doit être renseignée. Voici un exemple d'une telle section :
+Pour cela, la section `scm` doit être renseignée.
+Voici un exemple d'une telle section :
 
 [source, xml]
 ----

@@ -23,14 +23,17 @@ Cette section est dédiée au développement de tests *unitaires*.
 
 === Concevoir un code testable
 
-Afin de pouvoir tester le code, il faut que celui-ci soit conçu pour cela. Supprimer les obstacles qui s'opposent au tests :
+Afin de pouvoir tester le code, il faut que celui-ci soit conçu pour cela.
+Supprimer les obstacles qui s'opposent au tests :
 
 * Supprimer les méthodes statiques
-* Implémenter les principes link:https://fr.wikipedia.org/wiki/SOLID_(informatique)[SOLID], plus précisement l'link:https://fr.wikipedia.org/wiki/Inversion_des_d%C3%A9pendances[inversion des dépendances]. Le code métier ne doit finalement pas comporter de `new()`.
+* Implémenter les principes link:https://fr.wikipedia.org/wiki/SOLID_(informatique)[SOLID], plus précisement l'link:https://fr.wikipedia.org/wiki/Inversion_des_d%C3%A9pendances[inversion des dépendances].
+Le code métier ne doit finalement pas comporter de `new()`.
 
 === Tester les classes sans dépendances
 
-Les tests les plus simples à implémenter sont ceux qui testent les classes qui n'ont pas de dépendances. Commencer par développer ces tests.
+Les tests les plus simples à implémenter sont ceux qui testent les classes qui n'ont pas de dépendances.
+Commencer par développer ces tests.
 
 1. Ajouter la dernière version de TestNG comme dépendance Maven de test au projet.
 1. Implémenter les tests dans le répertoire Maven adapté.
@@ -53,18 +56,21 @@ Un bon test unitaire isole la classe à tester de ses dépendances.
 
 == Vérifier la qualité des tests
 
-Une fois les tests développés, il est nécessaire de s'assurer de leur utilité. Ceci passe par la mesure du _code coverage_ et du _mutation coverage_.
+Une fois les tests développés, il est nécessaire de s'assurer de leur utilité.
+Ceci passe par la mesure du _code coverage_ et du _mutation coverage_.
 
 === Calculer le _code coverage_
 
-Il existe plusieurs outils en Java pour calculer le _code coverage_. Dans le cadre de ce TP, l'outil recommandé est link:http://eclemma.org/jacoco/[Jacoco].
+Il existe plusieurs outils en Java pour calculer le _code coverage_.
+Dans le cadre de ce TP, l'outil recommandé est link:http://eclemma.org/jacoco/[Jacoco].
 
 Configurer le link:http://eclemma.org/jacoco/trunk/doc/maven.html[plugin Jacoco] dans le projet, notamment :
 
 * les _goals_ à exécuter
 * si nécessaire, les classes à ignorer
 
-Générer le rapport Jacoco puis en fonction des résultats, améliorer la couverture de test. Exécuter ces étapes jusqu'à ce que la métrique soit acceptable.
+Générer le rapport Jacoco puis en fonction des résultats, améliorer la couverture de test.
+Exécuter ces étapes jusqu'à ce que la métrique soit acceptable.
 
 [NOTE]
 ====
@@ -81,4 +87,5 @@ Configurer le link:http://pitest.org/quickstart/maven/[plugin Pit] pour le proje
 * génération les formats HTML et XML
 * utilisation de l'link:http://pitest.org/quickstart/incremental_analysis/[analyse incrémentale]
 
-Comme pour Jacoco, générer le rapport Pit et améliorer la couverture de mutation. Exécuter de manière continue ces étapes pour atteindre le résultat souhaité.
+Comme pour Jacoco, générer le rapport Pit et améliorer la couverture de mutation.
+Exécuter de manière continue ces étapes pour atteindre le résultat souhaité.
