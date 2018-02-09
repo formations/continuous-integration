@@ -1,0 +1,483 @@
+= Build
+
+// bundle exec asciidoctor-revealjs -a revealjs_history=true -a revealjs_theme=white -a revealjs_slideNumber=true -a linkcss -a customcss=../style.css -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0 cours/*.adoc
+
+:imagesdir: ./images/maven
+
+== Description
+
+Processus pour créer un livrable à partir de sources
+
+=== Exigences
+
+. Reproductible
+. Automatisé
+. (Portable)
+
+=== Historique
+
+* Make
+* Ant
+* Maven
+* Gradle
+* etc.
+
+=== Make
+
+* Lié aux OS *Nix
+* Non portable
+
+=== Apache Ant
+
+* "Another Neat Tool"
+* Premier outil de build _cross-OS_ pour Java
+* Basé sur un fichier de définition
+** `build.xml`
+** Notion de _task_
+** Configuration des dépendances entre les _tasks_
+
+=== Gradle
+
+* Pour Java (JVM ou Android)
+* Script Groovy (ou Kotlin)
+** Notion de _task_
+** Notion de phases
+** Déclaration des librairies
+** Dépendances entre les phases
+** Possibilité de définir des _tasks_ dans le fichier de build
+
+=== Autres outils
+
+[options="header,autowidth"]
+|===
+
+| Outil | Description
+
+| Ivy
+| Ajoute la gestion des dépendances à Ant
+
+| sbt
+| Dédié à Scala
+
+| Leiningen
+| Dédié à Closure
+
+| Rake
+| Dédié à Ruby
+
+|===
+
+== !
+
+image::2000px-Maven_logo.svg.png[]
+
+=== Pourquoi ?
+
+* Outil de build très répandu
+* Précurseur de nombreuses bonnes pratiques
+* Strict
+
+=== Apports Maven
+
+* "Convention Over Configuration"
+* Coordonnées d'artéfact
+* Cycle de vie
+* Architecture en plugins
+* Dépendances déclaratives (et transitives)
+
+=== Convention de structure
+
+image::structure.png[]
+
+== Project Object Model
+
+* Fichier de configuration d'un projet Maven
+* `pom.xml` à la racine
+
+=== Coordonnées
+
+* Identifie de manière unique un artéfact
+** `groupId`
+** `artifactId`
+** `version`
+** (`packaging`)
+
+=== Packaging
+
+* Par défaut : `jar`
+* Standard :
+** `war`
+** `ejb-jar`
+** `pom`
+** etc.
+* Possibilité d'en ajouter via des extensions
+
+=== Un POM basique
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ch.hesge.frankel.ci</groupId>
+  <artifactId>continuous-integration</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+</project>
+----
+
+=== Properties
+
+* Balise `<properties>` à la racine
+** Paires clé/valeur 
+* Résolution de n’importe quelle clé via `${key}`
+* Propriétés par défaut :
+** _p.e._ `${project.artifactId}`
+* Rendent la configuration _DRY_
+
+=== !
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<project ...>
+  ...
+  <properties>
+    <key>value</key>
+  </properties>
+  <name>Mon projet ${key}</name>
+</project>
+----
+
+== Cycles de vie
+
+* Ensemble de phases prédéfinies
+* *Chaque phase n’est exécutée que si la phase précédente l’a été*
+
+=== Cycles de vie disponibles
+
+* `clean`
+* `site`
+* _default_
+
+=== Condensé des phases disponibles
+
+image::lifecycle.png[]
+
+=== Dépendance des étapes
+
+* Une étape n dépend de l’étape n-1
+* _p.e._ `test` dépend de `compile`
+
+=== Lancement d’une phase
+
+* `mvn <phase>`
+** `mvn test`
+** `mvn install`
+** etc.
+
+== Plugins Maven
+
+* Architecture basée sur les _plugins_
+* Fonctionnalité qui ajoute/modifie le processus de _build_
+** Au sens large
+
+=== Qu'est-ce qu'un _plugin_ ?
+
+* Artéfact Maven
+** JAR
+* Structure spécifique
+* Configurable dans le POM
+* Notion de _goal_
+** Point(s) d’entrée dans le _plugin_
+
+=== Architecture plugins/dépendances
+
+* Tous les _plugins_/dépendances sont en-ligne
+** Maven les télécharge
+** *Il faut configurer le proxy*
+
+=== Lancement d’un goal
+
+* `mvn [<groupId>:]<artifactId>:<goal>`
+** `mvn compiler:compile`
+** `mvn surefire:test`
+** `mvn org.pitest:pitest-maven:mutationCoverage`
+
+=== Liaison implicite
+
+* Par défaut, certains _goals_ sont liés à une étape
+* Dépend du packaging configuré dans le POM
+
+=== Liaisons pour JAR
+
+image::jar.png[]
+
+=== Configuration de plugin
+
+[source,xml]
+----
+<project ...>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.2</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+----
+
+=== !
+
+. Le `groupId` peut être omis si celui-ci est `org.apache.maven.plugins`
+. *Toujours* spécifier la version
+
+=== Liaison explicite
+
+* Il est possible de lier un nouveau goal à une étape
+** Pour ajouter de nouvelles fonctionnalités au build
+
+=== !
+
+[source,xml]
+----
+<project ...>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>1.1.6</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>mutationCoverage</goal>
+            </goals>
+            <phase>test</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+----
+=== Plugins utiles
+
+* Source
+* Javadoc
+* Assembly
+* Uberjar
+
+=== Gestion des dépendances
+
+* L’API Java n’est pas suffisante
+* Besoin de librairies annexes :
+** _p.e._ pour les tests
+
+=== Alternatives
+
+* Répertoire partagé
+** Sur le réseau local
+* VCS
+** Risque de modifications
+* Référentiel d’artéfacts
+
+=== Référentiels d’artéfacts
+
+* Dans le _cloud_ :
+** repo1 : dépôt par défaut
+** Bintray : à configurer
+* Au sein de l'entreprise :
+** Sonatype Nexus
+** JFrog Artifactory
+
+== Téléchargement des plugins/dépendances
+
+. Vérification dans le dépôt local
+** `~/.m2/repository`
+. Si non, téléchargement depuis le dépôt distant
+** repo1
+** Autres dépôts paramétrés
+
+=== Dépendances transitives
+
+* _SI_ le project dépend de A
+* _ET_ A dépend de B
+* _ALORS_ le projet dépend de B
+* _ET_ B sera téléchargé
+
+=== Dépôt d’entreprise
+
+image::proxy.png[]
+
+== Phase de déploiement
+
+`package`::
+Crée l’artéfact _p.e._ JAR
+`install`::
+Stocke l’artéfact dans le dépôt local
+`deploy`::
+Uploade l’artéfact dans le dépôt distant
+
+=== Configuration du déploiement
+
+* Dépôt distant commun
+* Dépôt d’entreprise
+
+=== Configuration du déploiement
+
+* Coordonnées de l’artéfact
+** Section `<distributionManagement>` du POM
+* Authentification
+** `settings.xml` dans le `$HOME`
+
+=== Configuration des dépendances
+
+Déclaration des coordonnées de la librairie
+
+=== !
+
+[source,xml]
+----
+<project ...>
+  <dependencies>
+    <dependency>
+      <groupId>com.thoughtworks.xstream</groupId>
+      <artifactId>xstream</artifactId>
+      <version>1.4.8</version>
+    </dependency>
+  </dependencies>
+</project>
+----
+
+=== Portée des dépendances
+
+* Les dépendances n’ont pas toutes le même usage
+** Les librairies de test n’ont pas besoin d’être sur le _classpath_ du package final
+
+=== Portée des dépendances
+
+* `compile`
+** Par défaut
+* `test`
+* `runtime`
+* `provided`
+
+=== !
+
+[source,xml]
+----
+<project ...>
+  <dependencies>
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>6.8.8</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
+----
+
+== Gestion des versions
+
+Instantané::
+`x.y.z-SNAPSHOT`
+Release::
+`x.y.z`
+
+=== Gestion des versions
+
+_Snapshot_::
+* En cours de développement
+* n versions possibles
+* Maven utilise la dernière version
+_Release_::
+Version unique
+
+=== Principe de fonctionnement
+
+* Travail sur une version `-SNAPSHOT`
+* Le `maven-release-plugin` effectue la _release_
+** `mvn release:prepare`
+** `mvn release:perform`
+
+=== Goal release:prepare
+
+. Vérifie qu’il n’y a pas de fichiers non committés dans les sources
+. Vérifie qu’il n’y a pas de dépendances `SNAPSHOT`
+. Change la version du POM de `x–SNAPSHOT` à une nouvelle version
+. Modifie les informations de VCS du POM pour référencer le tag final
+. Exécute les tests
+. Commit le POM modifié
+. Crée un tag dans le VCS
+. Modifie la version du POM à `y–SNAPSHOT`
+. Commit à nouveau le POM modifié
+
+=== Goal release:perform
+
+* Checkout des sources
+* Exécute le goal Maven par défaut pour la _release_
+** `mvn deploy`
+
+== Filtrage
+
+Lire des informations du POM pour l’écrire dans des ressources générées
+
+=== Configuration du filtrage
+
+[source,xml]
+----
+<build>
+  <resources>
+    <resource>
+      <directory>src/main/resources</directory>
+      <filtering>true</filtering>
+    </resource>
+  </resources>
+</build>
+----
+
+=== !
+
+[source]
+.app.properties
+----
+version=${project.version}
+----
+
+=== Profils Maven
+
+* Un profil est section du POM qui peut être activée (ou non)
+* L’activation se fait via l’option `–P` de la ligne de commande
+
+=== !
+
+[source,xml]
+----
+<profiles>
+  <profile>
+    <id>production</id>
+    <build>
+      <plugins>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.3</version>
+          <configuration>
+            <debug>false</debug>
+            <optimize>true</optimize>
+          </configuration>
+        </plugin>
+      </plugins>
+    </build>
+  </profile>
+</profiles>
+----
+

@@ -12,6 +12,7 @@ include::common/license.adoc[]
 * <<cours/vcs.adoc#,Cours>>
 * <<tp/vcs.adoc#,Travaux Pratiques>>
 . Build
+* <<cours/maven.adoc#,Cours>>
 * <<tp/maven.adoc#,Travaux Pratiques>>
 . Testing
 * <<tp/testing.adoc#,Travaux Pratiques>>
