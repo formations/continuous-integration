@@ -21,4 +21,5 @@ include::common/license.adoc[]
 * <<cours/sonar.adoc#,Cours>>
 * <<tp/sonar.adoc#,Travaux Pratiques>>
 . Intégration Continue
+* <<cours/ci.adoc#,Cours>>
 * <<tp/ci.adoc#,Travaux Pratiques>>

@@ -1,0 +1,98 @@
+= Intégration continue
+
+// bundle exec asciidoctor-revealjs -a revealjs_history=true -a revealjs_theme=white -a revealjs_slideNumber=true -a linkcss -a customcss=../style.css -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0 cours/*.adoc
+
+:imagesdir: ./images/ci
+
+== Pratiques continues
+
+* _Continuous Integration_
+* _Continuous Delivery_
+* _Continuous Deployment_
+
+=== Intégration continue
+
+[quote]
+Ensemble de pratiques utilisées en génie logiciel consistant à vérifier à chaque modification de code source que le résultat des modifications ne produit pas de régression dans l'application développée
+
+=== Exécution automatisée
+
+. Récupération du code
+. Compilation
+. Analyse statique
+. Test
+. Code coverage
+. Packaging
+. Stockage dans un dépôt
+
+=== !
+
+image::principle.png[]
+
+== Livraison continue
+
+[quote]
+Approche d’ingénierie logiciel dans laquelle les équipes produisent des logiciels dans des cycles courts, ce qui permet de le mettre à disposition à n’importe quel moment. Le but est de construire, tester et diffuser un logiciel plus rapidement
+
+=== Déploiement continu
+
+[quote]
+Etape suivant la livraison continue : chaque changement qui passe les tests automatisés est déployé automatiquement
+
+=== !
+
+image::continuous-delivery-deployment.png[]
+
+== Serveurs de CI
+
+[options="headers,autowidth]
+|===
+
+| Produit | Fournisseur | Langage | |
+
+| http://hudson-ci.org/[Hudson^]
+| Eclipse
+| Java
+| OpenSource
+| Sur site
+
+| https://jenkins.io/[Jenkins^]
+| CloudBees
+| Java
+| OpenSource
+a|
+* Sur site
+* SaaS
+
+| https://travis-ci.org/[Travis^]
+| Travis
+| Ruby
+| -
+| SaaS
+
+|===
+
+=== Serveurs de CI
+
+[options="headers,autowidth]
+|===
+
+| Produit | Fournisseur | Langage | |
+
+| (https://gitlab.com/[GitLab^])
+| GitLab
+| Ruby
+| OpenSource
+a|
+* Sur site
+* SaaS
+
+| (https://bitbucket.org/[Bitbucket^])
+| Atlassian
+| Java?
+| -
+| SaaS
+
+|===
+
+
