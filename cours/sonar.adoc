@@ -1,0 +1,62 @@
+= Sonar et la dette technique
+
+// bundle exec asciidoctor-revealjs -a revealjs_history=true -a revealjs_theme=white -a revealjs_slideNumber=true -a linkcss -a customcss=../style.css -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0 cours/*.adoc
+
+:imagesdir: ./images/sonar
+
+== Qualité du code
+
+* Bugs
+* Conception
+** Par exemple, les dépendances cycliques
+* Conventions de codage
+* Ensemble de bonnes pratiques reconnues par les professionnels
+
+=== Types d’analyse
+
+* Entrée
+** Source ou binaire
+* Sortie
+** HTML/XML ou en base
+* Type
+** Statique ou dynamique
+
+=== Outils d’analyse de code
+
+* http://checkstyle.sourceforge.net/[Checkstyle^]
+* https://pmd.github.io/[PMD^]
+* http://findbugs.sourceforge.net/[Findbugs^]
+* http://tattletale.jboss.org/[Tattletale^]
+* https://www.sonarqube.org/[SonarQube^]
+* etc.
+
+== Sonarqube, outil de gestion de la qualité logicielle
+
+image::sonarqube1.png[]
+
+=== !
+
+image::sonarqube2.png[]
+
+=== Fonctionnalités
+
+* Multi-langages
+* Configurable
+* Architecture en plugins
+* Build breaker
+* Historisation
+* Interface web
+
+=== sonarcloud.io
+
+image::project-overview.png[]
+
+== SonarLint
+
+* Intégration de SonarQube avec l'IDE :
+** Eclipse
+** IntelliJ IDEA
+
+=== !
+
+image::sonarlint.png[]

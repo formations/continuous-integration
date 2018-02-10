@@ -26,7 +26,18 @@ En anglais: ::
 * http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Maven[Analyzing with SonarQube Scanner for Maven^]
 * https://about.sonarcloud.io/[SonarCloud^]
 
+<<<<<<< HEAD
 == SonarCloud
+=======
+== Utilisation de SonarQube
+
+Dans cette section, choisir de réaliser :
+
+* Soit <<SonarCloud>>
+* Soit <<Sonar local>>
+
+=== SonarCloud
+>>>>>>> 622a7d4... Rebase on sonar
 
 SonarCloud est une offre de SonarSource qui propose une offre Sonar en mode _Software-as-a-Service_.
 
