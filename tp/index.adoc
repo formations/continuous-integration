@@ -1,0 +1,21 @@
+= Liste des travaux pratiques
+Nicolas Frankel
+:doctype: article
+:encoding: utf-8
+:lang: fr
+:toc:
+:toc-placement!:
+:numbered:
+:experimental:
+:sectanchors:
+:icons: font
+
+include::../common/license.adoc[]
+
+toc::[]
+
+. <<vcs.adoc#,Système de Contrôle de Version>>
+. <<maven.adoc#,Build>>
+. <<testing.adoc#,Testing>>
+. <<sonar.adoc#,Sonar>>
+. <<ci.adoc#,Intégration Continue>>
