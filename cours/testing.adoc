@@ -1,0 +1,540 @@
+= Testing
+
+// bundle exec asciidoctor-revealjs -a revealjs_history=true -a revealjs_theme=white -a revealjs_slideNumber=true -a linkcss -a customcss=../style.css -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0 cours/*.adoc
+
+:imagesdir: ./images/testing
+
+== Définition
+
+[quote, Wikipédia]
+Procédure de vérification partielle d'un système.
+Son objectif principal est d'identifier un nombre maximum de comportements problématiques du logiciel.
+
+=== Comportements problématiques
+
+* +++<u>Anomalies</u>+++
+* Performance
+* Sécurité
+* Tests
+
+=== Anomalie
+
+[quote]
+Ecart entre les spécifications fonctionnelles et le comportement du logiciel
+
+=== Types de test
+
+* Tests unitaires
+* Tests d’intégration
+* Tests end-to-end
+* Tests de performance
+* Tests de pénétration
+* Tests exploratoires
+* etc.
+
+=== Grilles de lecture
+
+* Manuel/automatisé
+* Non-régression
+* etc.
+
+=== Etapes de test
+
+image::steps.png[]
+
+==  Test unitaire
+
+* En +++<u>isolation</u>+++
+* Généralement, l’unité est la méthode/classe
+
+=== Une méthode (très) simple 
+
+[source,java]
+----
+public class Math {
+    public int add(int i, int j) {
+        return i + j;
+    }
+}
+----
+
+=== Protocole de test
+
+image::protocol.png[]
+
+=== Exemple de test
+
+[source,java]
+----
+Math m = new Math();
+int r1 = m.add(1, 1);
+if (r1 == 2) {
+    System.out.println("OK");
+} else {
+    System.err.println("KO");
+}
+
+// etc.
+int r2 = m.add(2, 1);
+int r3 = m.add(3, 1);
+----
+
+=== Problèmes du code précédent
+
+* O&ugrave; le placer ?
+* Quand l’appeler ?
+** Comment l’automatiser ?
+
+== Frameworks de test
+
+* https://junit.org/junit5/[JUnit^]
+** Framework historique
+* http://testng.org/doc/[TestNG^]
+* http://spockframework.org/[Spock^]
+** En Groovy
+
+=== TestNG
+
+* `@Test` identifie une méthode comme un test
+* Lancée par :
+. L’IDE
+. L’outil de build
+. (La ligne de commande)
+
+=== Utilisation de TestNG
+
+[source,java]
+----
+public class MathTest {
+
+    @Test
+    public void one_plus_one_should_equal_two() {
+        Math m = new Math();
+        int sum= m.add(1, 1);
+        if (sum == 2) {
+            System.out.println("OK");
+        } else {
+            System.err.println("KO");
+        }
+    }
+}
+----
+
+=== Problème du code précédent
+
+* Ecrire dans la log ?
+** Et devoir la lire à chaque fois ?
+* Plutôt échouer le test !
+
+=== Utilisation de fail()
+
+[source,java]
+----
+public class MathTest {
+
+    @Test
+    public void one_plus_one_should_equal_two() {
+        Math m = new Math();
+        int sum= m.add(1, 1);
+        if (sum == 2) {
+            System.out.println("OK");
+        } else {
+            fail("KO");
+        }
+    }
+}
+----
+
+=== Echouer le build
+
+image::fail.svg[]
+
+=== Méthodes d’assertion
+
+* Lancent une `AssertionError` (gérée par TestNG)
+** `fail()` → à chaque invocation
+** `assertXXX()` → si l’évaluation échoue
+
+=== Réécriture avec les assertions
+
+[source,java]
+----
+import static org.testng.Assert.assertEquals;
+
+public static class MathTest {
+
+    @Test
+    public void one_plus_one_should_equal_two() {
+        Math m = new Math();
+        int sum = m.add(1, 1);
+        assertEquals(sum, 2);
+    }
+}
+----
+
+== Trop simple ?
+
+Un seul test ne suffit pas à valider le comportement
+
+=== Plus de tests
+
+[source,java]
+----
+public class MathTest {
+
+    @Test
+    public void one_plus_one_should_equal_two() { ... }
+  
+    @Test
+    public void one_plus_two_should_equal_three() { ... }
+  
+    @Test
+    public void three_plus_two_should_equal_five() { ... }
+}
+----
+
+=== DRY : Initialisation et nettoyage
+
+[options="headers,autowidth"]
+|===
+
+| | Avant | Après
+
+| Méthode de test
+| `@BeforeMethod`
+| `@AfterMethod`
+
+| Classe
+| `@BeforeClass`
+| `@AfterClass`
+
+| etc.
+| `@BeforeXXX`
+| `@AfterXXX`
+
+|===
+
+=== !
+
+[source,java]
+----
+public class MathTest {
+
+    private Math m;
+
+    @BeforeMethod
+    public void setUp() {
+        m = new Math();
+    }
+
+    @Test
+    public void one_plus_one_should_equal_two() { ... }
+
+    @Test
+    public void one_plus_two_should_equal_three() { ... }
+
+    @Test
+    public void three_plus_two_should_equal_five() { ... }
+}
+----
+
+=== DRY : Fournisseurs de données
+
+* Même méthode de test et paramètres différents
+* `@DataProvider`
+** Méthode qui renvoie `Object[][]`
+
+=== !
+
+[options="headers,autowidth"]
+|===
+
+| | Param 1 | Param 2 | Valeur de retour
+
+| Méthode 1
+| 1
+| 1
+| 2
+
+| Méthode 2
+| 1
+| 2
+| 3
+
+| Méthode 3
+| 3
+| 2
+| 5
+
+|===
+
+=== !
+
+[source,java]
+----
+public class MathTest {
+
+    private Math m;
+
+    @BeforeMethod
+    public void setUp() {
+        m = new Math();
+    }
+
+    @DataProvider(name = "data")
+    public Object[][] data() {
+        Object[][] data = new Object[3][3];
+        data[0] = new Object[] { 1, 1, 2 };
+        data[1] = new Object[] { 1, 2, 3 };
+        data[2] = new Object[] { 3, 2, 5 };
+        return data;
+    }
+
+    @Test(dataProvider = "data")
+    public void add_should_add(int i, int j, int k) {
+        int sum = m.add(i, j);
+        Assert.assertEquals(k, sum);
+    }
+}
+----
+
+== De meilleures assertions
+
+* Les assertions TestNG sont limitées
+* Plus d’options avec :
+** http://hamcrest.org/[Hamcrest^]
+** http://joel-costigliola.github.io/assertj/[AssertJ^]
+** https://github.com/google/truth[Google Truth^]
+
+=== Assertions avec TestNG
+
+[source,java]
+----
+File xFile = ...;
+
+assertTrue(xFile.exists());
+assertTrue(xFile.isFile());
+assertNotEquals(xFile.getAbsolutePath(), xFile.getPath());
+----
+
+=== Assertions avec AssertJ
+
+[source,java]
+----
+assertThat(xFile)
+  .exists()
+  .isFile()
+  .isRelative();
+
+assertThat(contentOf(xFile))
+  .startsWith("The Truth")
+  .contains("Is Out")
+  .endsWith("There");
+----
+
+=== Tester les exceptions
+
+[source,java]
+----
+public class MathTest {
+
+  @Test
+  public void one_divide_0_should_fail() {
+    try {
+      new Math().divide(1, 0);
+      fail("Division par 0 est interdite");
+    } catch (ArithmeticException e) {
+      // Ca marche !
+    }
+  }
+}
+----
+
+=== Problème de l’approche naïve
+
+* Verbeux
+* Sémantique catastrophique
+* Tester d’autres exceptions ?
+
+=== Tester les exceptions avec TestNG
+
+`@Test(expectedExceptions = Exception.class)`
+
+=== !
+
+[source,java]
+----
+public class MathTest {
+
+  @Test(expectedExceptions = ArithmeticException.class)
+  public void one_divide_0_should_fail() {
+    new Math().divide(1, 0);
+  }
+}
+----
+
+== Toujours trop simple ?
+
+* Le cas précédent existe rarement
+** Aucune dépendance envers d’autres classes
+
+=== Pour isoler
+
+* Injection de dépendances
+* Pas de méthodes statiques
+* _Test-Driven Development_
+
+=== Un simple diagramme de classes
+
+image::delegate.svg[]
+
+=== Tentative de conception
+
+image::first-design.svg[]
+
+=== !
+
+[source,java]
+----
+public class B {
+
+  private C c = new C();
+
+  public int foo() {
+    int bar = bar();
+    return c.delegate(bar);
+  }
+
+  private int bar() { ... }
+}
+----
+
+=== Une autre tentative
+
+image::second-design.svg[]
+
+=== !
+
+[source,java]
+----
+public class B {
+
+  private C c;
+
+  public B(C c) {
+    this.c = c;
+  }
+
+
+  public int foo() {
+    int bar = bar();
+    return c.delegate(bar);
+  }
+
+  private int bar() { ... }
+}
+----
+
+=== Possibilité de conception
+
+image::inherit.svg[]
+
+=== Mock
+
+Les mocks sont des objets "pré-programmés" avec un comportement connu
+
+=== Rappel du protocole de test
+
+image::protocol-mock.png[]
+
+=== Standard "de fait"
+
+image::mockito-new-logo-2x.png[]
+
+=== Fonctionnalités de Mockito
+
+* Création de mocks
+* Implémentation de comportement de mocks
+* Vérification d’interaction avec les mocks
+* Et d’autres...
+
+=== !
+
+image::mockito-classes.svg[]
+
+=== Création de mocks
+
+
+[source,java]
+List list = Mockito.mock(List.class)
+
+ou
+
+[source,java]
+----
+public class Test {
+    @Mock
+    private List list;
+    @BeforeMethod
+    protected void setUp() {
+        MockitoAnnotations.initMocks(this);
+    }
+} 
+----
+
+=== Implémentation du comportement
+
+[source,java]
+----
+when(list.get(0)).thenReturn("Zero");
+when(list.get(1)).thenReturn("Un");
+when(list.get(2)).thenThrow(new IndexOutOfBoundsException());
+----
+
+=== Arguments génériques
+
+image::matchers.svg[]
+
+=== !
+
+[source,java]
+----
+when(list.get(anyInt())).thenReturn("A value");
+----
+
+=== Vérification d’interactions
+
+Un cas d’utilisation : cache
+
+=== Scénario : comment tester ?
+
+image::scenario-cache.svg[]
+
+=== Comment tester le cache ?
+
+En vérifiant qu’il n’y a pas d’interactions avec le DAO 
+
+== Couverture de tests
+
+* Taux de code testé
+** Nombre de lignes exécutées durant les tests
+** (Ou de branchements)
+* Utilise http://www.jacoco.org/jacoco/[JaCoCo^]
+* Très limitée
+
+=== Couverture de mutations
+
+* Vérifie la pertinence des tests
+* http://pitest.org/[Pit^]
+
+=== Mockito est limité a dessein
+
+* Pas de méthodes privées
+* Pas de méthodes statiques
+
+=== Tester un code intestable
+
+* Mettre en place https://github.com/powermock/powermock[PowerMock^]
+* Réaliser les tests
+* Refactorer le code
+* Refactorer les tests pour supprimer PowerMock

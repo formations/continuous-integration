@@ -15,6 +15,7 @@ include::common/license.adoc[]
 * <<cours/maven.adoc#,Cours>>
 * <<tp/maven.adoc#,Travaux Pratiques>>
 . Testing
+* <<cours/testing.adoc#,Cours>>
 * <<tp/testing.adoc#,Travaux Pratiques>>
 . Sonar
 * <<tp/sonar.adoc#,Travaux Pratiques>>
