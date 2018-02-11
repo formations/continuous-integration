@@ -209,6 +209,33 @@ Les versions de l'API et de l'implémentation doivent être les mêmes.
 Pour cela, il est conseillé d'utiliser la balise `properties` du POM.
 ====
 
+== Afficher la version de l'application
+
+Afin d'afficher la version dans une application graphique (client lourd ou client web), les étapes suivantes sont nécessaires :
+
+. Activer le filtrage Maven
+. Créer un fichier de _properties_ à la racine du répertoire de ressources, _p.e._ `application.properties`
+. Créer une propriété avec une clé définie, _p.e._ `application.version`
+. Lui affecter une valeur de telle sorte que le filtrage Maven la remplace par la version de l'application pendant le build
+. Développer une fonctionnalité de l'application pour lire cette valeur. Voici un exemple d'un tel code :
++
+[source,java]
+----
+try (InputStream stream = new FileInputStream("application.properties")) {
+    properties.load(stream);
+    String version = properties.getProperty("application.version");
+} catch (Exception e) {
+    // Do something meaningful here
+}
+----
+. Finalement, afficher cette valeur à l'écran
+
+[NOTE]
+====
+L'approche naïve pour afficher la version de l'application est de https://maven.apache.org/shared/maven-archiver/examples/manifest.html[configurer] l'_archiver_ du Maven JAR plugin pour écrire celle-ci comme valeur de la clé `Implementation-Version` du fichier de manifeste.
+Toutefois, dès lors qu'il existe plus d'un unique JAR dans le _classpath_ (_p.e._ lorsqu'on utilise des librairies tierces), les limitations inhérentes du _classloader_ se manifestent (_cf._ https://stackoverflow.com/questions/1272648/reading-my-own-jars-manifest[StackOverflow]).
+====
+
 == Déployer un artéfact
 
 Afin de mettre son artéfact à disposition, il est nécessaire de le déployer sur un dépôt distant, soit public, soit privé.
@@ -346,33 +373,6 @@ Votre fichier doit ressembler à l'extrait suivant :
   </servers>
 </settings>
 ----
-
-== Afficher la version de l'application
-
-Afin d'afficher la version dans une application graphique (client lourd ou client web), les étapes suivantes sont nécessaires :
-
-. Activer le filtrage Maven
-. Créer un fichier de _properties_ à la racine du répertoire de ressources, _p.e._ `application.properties`
-. Créer une propriété avec une clé définie, _p.e._ `application.version`
-. Lui affecter une valeur de telle sorte que le filtrage Maven la remplace par la version de l'application pendant le build
-. Développer une fonctionnalité de l'application pour lire cette valeur. Voici un exemple d'un tel code :
-+
-[source,java]
-----
-try (InputStream stream = new FileInputStream("application.properties")) {
-    properties.load(stream);
-    String version = properties.getProperty("application.version");
-} catch (Exception e) {
-    // Do something meaningful here
-}
-----
-. Finalement, afficher cette valeur à l'écran
-
-[NOTE]
-====
-L'approche naïve pour afficher la version de l'application est de https://maven.apache.org/shared/maven-archiver/examples/manifest.html[configurer] l'_archiver_ du Maven JAR plugin pour écrire celle-ci comme valeur de la clé `Implementation-Version` du fichier de manifeste.
-Toutefois, dès lors qu'il existe plus d'un unique JAR dans le _classpath_ (_p.e._ lorsqu'on utilise des librairies tierces), les limitations inhérentes du _classloader_ se manifestent (_cf._ https://stackoverflow.com/questions/1272648/reading-my-own-jars-manifest[StackOverflow]).
-====
 
 == Effectuer une release
 
