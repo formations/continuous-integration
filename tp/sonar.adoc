@@ -9,7 +9,7 @@ Nicolas Frankel
 :experimental:
 :sectanchors:
 :icons: font
-:imagesdir: images/vcs
+:imagesdir: images/sonar
 
 include::../common/license.adoc[]
 
@@ -26,9 +26,6 @@ En anglais: ::
 * http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Maven[Analyzing with SonarQube Scanner for Maven^]
 * https://about.sonarcloud.io/[SonarCloud^]
 
-<<<<<<< HEAD
-== SonarCloud
-=======
 == Utilisation de SonarQube
 
 Dans cette section, choisir de réaliser :
@@ -37,7 +34,6 @@ Dans cette section, choisir de réaliser :
 * Soit <<Sonar local>>
 
 === SonarCloud
->>>>>>> 622a7d4... Rebase on sonar
 
 SonarCloud est une offre de SonarSource qui propose une offre Sonar en mode _Software-as-a-Service_.
 
@@ -48,7 +44,15 @@ NOTE: Pour un projet dont le code source est libre, la fonctionnalité est gratu
 * Sélectionner btn:[Configure & Sign up]
 * Suivre les étapes proposées
 
-== Sonar local
+Voici un exemple de résultats obtenus :
+
+image::sonarcloud1.png[Vue générale d'un projet sur sonarcloud.io,1152,706,align="center"]
+image::sonarcloud2.png[Vue des issues d'un projet sur sonarcloud.io,1163,730,align="center"]
+
+Corriger les violations par ordre de priorité, re-lancer l'analyse.
+Répéter autant de fois que nécessaire.
+
+=== Sonar local
 
 Il est nécessaire de disposer d'un serveur SonarQube local.
 
@@ -68,7 +72,7 @@ $SONAR_QUBE_HOME/bin/[OS]/sonar.sh start
 Sans configuration plus poussée, la base de données utilisée par défaut est http://www.h2database.com/html/main.html[H2], qui n'est pas destinée à un usge en production.
 ====
 
-=== Lancement de l'analyse SonarQube
+==== Lancement de l'analyse SonarQube
 
 Configurer le POM pour disposer de la dernière version du plugin SonarQube pour Maven.
 
@@ -81,9 +85,158 @@ mvn sonar:sonar
 
 Par défaut, l'analyse est envoyée au serveur SonarQube local.
 
-=== Consultation des résultats
+==== Consultation des résultats
 
 Les résultats sont disponibles à http://localhost:9000.
 
 Corriger les violations par ordre de priorité, re-lancer l'analyse.
 Répéter autant de fois que nécessaire.
+
+== SonarLint
+
+En fonction de votre IDE, consulter la section adaptée.
+
+=== SonarLint pour IntelliJ IDEA
+
+==== Installation
+
+. Aller dans le menu menu:Preferences
+. Dans la _popup_, sélectionner menu:Plugins
+. Cliquer sur btn:[Browse repositories...]
+. Dans la _popup_, chercher le terme "sonar"
++
+image::idea-repositories.png[Recherche du plugin SonarLint dans IntelliJ IDEA,708,528,align="center"]
+. Cliquer sur le bouton vert btn:[Install]
+. Accepter le redémarrage de l'IDE en cliquant sur btn:[Restart]
++
+image::idea-restart.png[Redémarrage d'IntelliJ IDEA,401,145,align="center"]
+
+==== Mode autonome
+
+Le mode autonome permet d'utiliser SonarLint sans instance SonarQube.
+
+. Ouvrir la vue SonarLint en allant dans le menu menu:View[Tool Windows > SonarLint]
+. L'onglet par défaut est _Current file_.
+Naviguer à l'onglet _Project file_.
+. Dans le menu déroulant, sélectionner "All project files"
+. Cliquer sur le bouton de démarrage de l'analyse
+. Accepter la confirmation en cliquant sur btn:[Proceed]
++
+image::idea-confirmation.png[Confirmation de l'analyse,402,161,align="center"]
++
+. Le résultat de l'analyse s'affiche
++
+image::idea-sonarlint.png[Résultats de l'analyse SonarLint,910,378,align="center"]
+
+==== Mode connecté
+
+Le mode connecté permet de connecter SonarLint à une instance SonarQube spécifique
+
+NOTE: Dans un contexte d'Intégration Continue, cette approche permet de bénéficier des résultats de l'analyse côté serveur sans impact au niveau de l'IDE.
+
+. Dans la vue SonarLint, cliquer sur le bouton btn:[Configure SonarLint]
+. Dans la _popup_ SonarLint, cocher "Enable bindings to remote SonarQube server"
++
+image::idea-bind-sonarlint.png[Connection à un serveur SonarQube,685,300,align="center"]
++
+. Cliquer sur le bouton btn:[Configure servers...]
+. Dans le _popup_ "SonarLint general settings", cliquer sur btn:[+]
++
+image::idea-settings-sonarlint-server.png[Paramètres de configuration généraux,685,379,align="center"]
++
+. Une _popup_ "New SonarQube Server Configuration" apparait
++
+image::idea-new-sonarqube-config-sonarlint.png[Configuration d'un nouveau serveur SonarQube pour SonarLint,862,380,align="center"]
++
+. Donner un nom à la configuration, par exemple "sonarcloud"
+. Puis cliquer sur btn:[Next]
+. Dans l'étape suivante, remplir le champ avec le jeton qui a été affecté lors du tutoriel
++
+[WARNING]
+.Jeton oublié
+====
+Si le jeton a été égaré, il est possible d'en générer un autre en cliquant sur btn:[Generate Token]
+====
++
+. Puis cliquer sur btn:[Next]
+. Sélectionner l'organisation à laquelle le projet analysé a été associé
++
+image::idea-sonarlint-organizations.png[Choix de l'organisation du serveur SonarQube,862,380,align="center"]
++
+[TIP]
+====
+En fonction du profil, commencer à taper le nom de l'organisation (par défaut, <nom du profil Github>-github. 
+====
+. Cliquer btn:[Next]
+. Cliquer sur le bouton btn:[Finish]
+. Fermer les _popups_ en cliquant sur btn:[OK]
++
+[WARNING]
+====
+Ne pas oublier de sélectionner le serveur créé :
+
+image::idea-sonarlint-bound.png[Serveur SonarQube connecté,685,300,align="center"]
+====
+. Vérifier si la configuration est correcte en affichant un fichier comportant des problèmes.
++
+L'onglet "Current File" de la vue SonarLint doit afficher les problèmes, et l'heure de mise à jour doit être celle de la dernière analyse côté serveur
+
+=== SonarLint pour Eclipse
+
+==== Installation
+
+. Aller dans le menu menu:Help[Eclipse Marketplace...]
+. Dans le champ _Find_, indiquer "sonar"
+. Cliquer sur btn:[Go] 
++
+image::eclipse-marketplace.png[Recherche du plugin SonarLint dans la Marketplace Eclipse,689,535,align="center"]
++
+. Dans l'élément SonarLint, cliquer sur btn:[Install]
+. Accepter les termes de la license
++
+image::eclipse-sonarlint-license.png[Acceptation des termes de la license du plugin SonarLint,689,326,align="center"]
++
+. Cliquer sur btn:[Finish]
+. Dans la _popup_, cliquer sur btn:[Restart now] pour redémarrer Eclipse
+
+==== Mode autonome
+
+. Cliquer-droit sur le projet et sélectionner le menu menu:Sonar Lint[Analyze]
+. Accepter la confirmation en cliquant sur btn:[Proceed]
++
+image::eclipse-confirmation.png[Confirmation de l'analyse,518,144,align="center"]
++
+. La vue SonarLint s'affiche
++
+image::eclipse-sonarlint.png[Résultats de l'analyse SonarLint,596,245,align="center"]
+
+==== Mode connecté
+
+. Cliquer-droit sur le projet et sélectionner le menu menu:Sonar Lint[Bind to a SonarQube server...]
++
+image::eclipse-bind-sonarlint.png[Connection d'un projet Eclipse à un serveur SonarQube,750,318,align="center"]
++
+. Cliquer sur btn:[Connect to a SonarQube server...]
+. Dans la _popup_, sélectionner "sonarcloud"
++
+image::eclipse-new-sonarqube-config-sonarlint.png[Connection à un serveur SonarQube,596,300,align="center"]
+. Cliquer sur btn:[Next >]
+. La suite des instructions est similaire aux instructions pour link:#_mode_connect[IntelliJ IDEA], étape 7
+
+== Industrialisation
+
+Le tutoriel SonarCloud indique de lancer la ligne de commande suivante :
+
+[source,shell]
+mvn sonar:sonar -Dsonar.organization=<organization> \
+                -Dsonar.host.url=https://sonarcloud.io \
+                -Dsonar.login=<token>
+
+Intégrer les paramètres système de la ligne commande en propriétés Maven.
+
+=== Amélioration de la sécurité
+
+La propriété `sonar.login` ne peut pas être stockée dans le POM, pour d'évidentes raisons de sécurité :
+aucun identifiant, mot de passe ou jeton ne doit jamais être stocké avec le projet.
+                
+A l'aide de la https://maven.apache.org/ref/current/maven-settings/settings.html#class_profile[documentation^], déplacer cette propriété dans un profil activé par défaut.
