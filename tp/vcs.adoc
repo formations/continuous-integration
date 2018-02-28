@@ -35,6 +35,14 @@ En anglais : ::
 * https://www.atlassian.com/git/tutorials/[Tutorials Git par Atlassian^]
 * https://try.github.io/[Apprentissage interactif^]
 
+== Cours Udemy gratuits
+
+* https://www.udemy.com/git-quick-start/?siteID=JVFxdTr9V80-lgTV3HjmuOge62Ip64WrTw[Getting Started With Git: Key Concepts for Beginners^]
+* https://www.udemy.com/git-started-with-github/?siteID=JVFxdTr9V80-FrHJKYtTHFhoYCnYqfYHTw[Git Started with GitHub^]
+* https://www.udemy.com/the-ultimate-git-5-day-challenge/?siteID=JVFxdTr9V80-07AuhR9PpgOdAf1SJMLeZg[The Ultimate GIT 5-day Challenge^]
+* https://www.udemy.com/git-bash/?siteID=JVFxdTr9V80-OdtlZwOjC1kipgHGFY_csw[Command Line Essentials: Git Bash for Windows^]
+* https://www.udemy.com/short-and-sweet-get-started-with-git-and-github-right-now/?siteID=JVFxdTr9V80-w2NoQqAClNOh2Ko5CGHtMg[Short and Sweet: Get Started with Git and GitHub Right Now^]
+
 == Outillage
 
 * https://www.sourcetreeapp.com/[SourceTree^]
