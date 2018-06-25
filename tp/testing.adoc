@@ -17,6 +17,12 @@ toc::[]
 
 L'objectif de cette fiche est d'améliorer la qualité du code par la mise en place de tests et d'analyse du code.
 
+== Références
+
+En français: ::
++
+* https://blog.octo.com/la-pyramide-des-tests-par-la-pratique-1-5/[La pyramide des tests par la pratique (1/5)^]
+
 == Implémenter des tests unitaires
 
 Cette section est dédiée au développement de tests *unitaires*.
