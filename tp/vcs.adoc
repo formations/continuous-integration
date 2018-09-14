@@ -32,6 +32,7 @@ En anglais : ::
 * https://git-scm.com/[Git - documentation officielle^]
 * https://training.github.com/kit/downloads/github-git-cheat-sheet.pdf[Aide-mémoire Git^]
 * http://zeroturnaround.com/wp-content/uploads/2016/02/Git-Cheat-Sheet.png[Un autre aide-mémoire Git Cheat Sheet^]
+* https://ndpsoftware.com/git-cheatsheet.html#loc=index;[Un aide-mémoire interactif]
 * https://www.atlassian.com/git/tutorials/[Tutorials Git par Atlassian^]
 * https://try.github.io/[Apprentissage interactif^]
 
