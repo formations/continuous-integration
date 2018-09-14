@@ -1,0 +1,190 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Build</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/theme/white.css" id="theme"><link href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/print/pdf.css" : "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/html5shiv.js"></script><![endif]--><link rel="stylesheet" href="style.css"></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Build</h1></section><section><section id="description"><h2>Description</h2><div class="paragraph"><p>Processus pour créer un livrable à partir de sources</p></div></section><section id="exigences"><h2>Exigences</h2><div class="olist arabic"><ol class="arabic"><li><p>Reproductible</p></li><li><p>Automatisé</p></li><li><p>(Portable)</p></li></ol></div></section><section id="historique"><h2>Historique</h2><div class="ulist"><ul><li><p>Make</p></li><li><p>Ant</p></li><li><p>Maven</p></li><li><p>Gradle</p></li><li><p>etc.</p></li></ul></div></section><section id="make"><h2>Make</h2><div class="ulist"><ul><li><p>Lié aux OS *Nix</p></li><li><p>Non portable</p></li></ul></div></section><section id="apache_ant"><h2>Apache Ant</h2><div class="ulist"><ul><li><p>"Another Neat Tool"</p></li><li><p>Premier outil de build <em>cross-OS</em> pour Java</p></li><li><p>Basé sur un fichier de définition</p><div class="ulist"><ul><li><p><code>build.xml</code></p></li><li><p>Notion de <em>task</em></p></li><li><p>Configuration des dépendances entre les <em>tasks</em></p></li></ul></div></li></ul></div></section><section id="gradle"><h2>Gradle</h2><div class="ulist"><ul><li><p>Pour Java (JVM ou Android)</p></li><li><p>Script Groovy (ou Kotlin)</p><div class="ulist"><ul><li><p>Notion de <em>task</em></p></li><li><p>Notion de phases</p></li><li><p>Déclaration des librairies</p></li><li><p>Dépendances entre les phases</p></li><li><p>Possibilité de définir des <em>tasks</em> dans le fichier de build</p></li></ul></div></li></ul></div></section><section id="autres_outils"><h2>Autres outils</h2><table class="tableblock frame-all grid-all" style=""><colgroup><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top">Outil</th><th class="tableblock halign-left valign-top">Description</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Ivy</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Ajoute la gestion des dépendances à Ant</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">sbt</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Dédié à Scala</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Leiningen</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Dédié à Closure</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Rake</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Dédié à Ruby</p></td></tr></table></section></section>
+<section><section><div class="imageblock" style=""><img src="./images/maven/2000px-Maven_logo.svg.png" alt="2000px Maven logo.svg"></div></section><section id="pourquoi"><h2>Pourquoi ?</h2><div class="ulist"><ul><li><p>Outil de build très répandu</p></li><li><p>Précurseur de nombreuses bonnes pratiques</p></li><li><p>Strict</p></li></ul></div></section><section id="apports_maven"><h2>Apports Maven</h2><div class="ulist"><ul><li><p>"Convention Over Configuration"</p></li><li><p>Coordonnées d&#8217;artéfact</p></li><li><p>Cycle de vie</p></li><li><p>Architecture en plugins</p></li><li><p>Dépendances déclaratives (et transitives)</p></li></ul></div></section><section id="convention_de_structure"><h2>Convention de structure</h2><div class="imageblock" style=""><img src="./images/maven/structure.png" alt="structure"></div></section></section>
+<section><section id="project_object_model"><h2>Project Object Model</h2><div class="ulist"><ul><li><p>Fichier de configuration d&#8217;un projet Maven</p></li><li><p><code>pom.xml</code> à la racine</p></li></ul></div></section><section id="coordonnes"><h2>Coordonnées</h2><div class="ulist"><ul><li><p>Identifie de manière unique un artéfact</p><div class="ulist"><ul><li><p><code>groupId</code></p></li><li><p><code>artifactId</code></p></li><li><p><code>version</code></p></li><li><p>(<code>packaging</code>)</p></li></ul></div></li></ul></div></section><section id="packaging"><h2>Packaging</h2><div class="ulist"><ul><li><p>Par défaut : <code>jar</code></p></li><li><p>Standard :</p><div class="ulist"><ul><li><p><code>war</code></p></li><li><p><code>ejb-jar</code></p></li><li><p><code>pom</code></p></li><li><p>etc.</p></li></ul></div></li><li><p>Possibilité d&#8217;en ajouter via des extensions</p></li></ul></div></section><section id="un_pom_basique"><h2>Un POM basique</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="xml language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+  &lt;groupId&gt;ch.hesge.frankel.ci&lt;/groupId&gt;
+  &lt;artifactId&gt;continuous-integration&lt;/artifactId&gt;
+  &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+&lt;/project&gt;</code></pre></div></div></section><section id="properties"><h2>Properties</h2><div class="ulist"><ul><li><p>Balise <code>&lt;properties&gt;</code> à la racine</p><div class="ulist"><ul><li><p>Paires clé/valeur</p></li></ul></div></li><li><p>Résolution de n’importe quelle clé via <code>${key}</code></p></li><li><p>Propriétés par défaut :</p><div class="ulist"><ul><li><p><em>p.e.</em> <code>${project.artifactId}</code></p></li></ul></div></li><li><p>Rendent la configuration <em>DRY</em></p></li></ul></div></section><section><div class="listingblock"><div class="content"><pre class="highlight"><code class="xml language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project ...&gt;
+  ...
+  &lt;properties&gt;
+    &lt;key&gt;value&lt;/key&gt;
+  &lt;/properties&gt;
+  &lt;name&gt;Mon projet ${key}&lt;/name&gt;
+&lt;/project&gt;</code></pre></div></div></section></section>
+<section><section id="cycles_de_vie"><h2>Cycles de vie</h2><div class="ulist"><ul><li><p>Ensemble de phases prédéfinies</p></li><li><p><strong>Chaque phase n’est exécutée que si la phase précédente l’a été</strong></p></li></ul></div></section><section id="cycles_de_vie_disponibles"><h2>Cycles de vie disponibles</h2><div class="ulist"><ul><li><p><code>clean</code></p></li><li><p><code>site</code></p></li><li><p><em>default</em></p></li></ul></div></section><section id="condens_des_phases_disponibles"><h2>Condensé des phases disponibles</h2><div class="imageblock" style=""><img src="./images/maven/lifecycle.png" alt="lifecycle"></div></section><section id="dpendance_des_tapes"><h2>Dépendance des étapes</h2><div class="ulist"><ul><li><p>Une étape n dépend de l’étape n-1</p></li><li><p><em>p.e.</em> <code>test</code> dépend de <code>compile</code></p></li></ul></div></section><section id="lancement_d_une_phase"><h2>Lancement d’une phase</h2><div class="ulist"><ul><li><p><code>mvn &lt;phase&gt;</code></p><div class="ulist"><ul><li><p><code>mvn test</code></p></li><li><p><code>mvn install</code></p></li><li><p>etc.</p></li></ul></div></li></ul></div></section></section>
+<section><section id="plugins_maven"><h2>Plugins Maven</h2><div class="ulist"><ul><li><p>Architecture basée sur les <em>plugins</em></p></li><li><p>Fonctionnalité qui ajoute/modifie le processus de <em>build</em></p><div class="ulist"><ul><li><p>Au sens large</p></li></ul></div></li></ul></div></section><section id="qu_est_ce_qu_un_em_plugin_em"><h2>Qu&#8217;est-ce qu&#8217;un <em>plugin</em> ?</h2><div class="ulist"><ul><li><p>Artéfact Maven</p><div class="ulist"><ul><li><p>JAR</p></li></ul></div></li><li><p>Structure spécifique</p></li><li><p>Configurable dans le POM</p></li><li><p>Notion de <em>goal</em></p><div class="ulist"><ul><li><p>Point(s) d’entrée dans le <em>plugin</em></p></li></ul></div></li></ul></div></section><section id="architecture_plugins_dpendances"><h2>Architecture plugins/dépendances</h2><div class="ulist"><ul><li><p>Tous les <em>plugins</em>/dépendances sont en-ligne</p><div class="ulist"><ul><li><p>Maven les télécharge</p></li><li><p><strong>Il faut configurer le proxy</strong></p></li></ul></div></li></ul></div></section><section id="lancement_d_un_goal"><h2>Lancement d’un goal</h2><div class="ulist"><ul><li><p><code>mvn [&lt;groupId&gt;:]&lt;artifactId&gt;:&lt;goal&gt;</code></p><div class="ulist"><ul><li><p><code>mvn compiler:compile</code></p></li><li><p><code>mvn surefire:test</code></p></li><li><p><code>mvn org.pitest:pitest-maven:mutationCoverage</code></p></li></ul></div></li></ul></div></section><section id="liaison_implicite"><h2>Liaison implicite</h2><div class="ulist"><ul><li><p>Par défaut, certains <em>goals</em> sont liés à une étape</p></li><li><p>Dépend du packaging configuré dans le POM</p></li></ul></div></section><section id="liaisons_pour_jar"><h2>Liaisons pour JAR</h2><div class="imageblock" style=""><img src="./images/maven/jar.png" alt="jar"></div></section><section id="configuration_de_plugin"><h2>Configuration de plugin</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="xml language-xml">&lt;project ...&gt;
+  &lt;build&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+        &lt;version&gt;3.2&lt;/version&gt;
+        &lt;configuration&gt;
+          &lt;source&gt;1.8&lt;/source&gt;
+          &lt;target&gt;1.8&lt;/target&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+&lt;/project&gt;</code></pre></div></div></section><section><div class="olist arabic"><ol class="arabic"><li><p>Le <code>groupId</code> peut être omis si celui-ci est <code>org.apache.maven.plugins</code></p></li><li><p><strong>Toujours</strong> spécifier la version</p></li></ol></div></section><section id="liaison_explicite"><h2>Liaison explicite</h2><div class="ulist"><ul><li><p>Il est possible de lier un nouveau goal à une étape</p><div class="ulist"><ul><li><p>Pour ajouter de nouvelles fonctionnalités au build</p></li></ul></div></li></ul></div></section><section><div class="listingblock"><div class="content"><pre class="highlight"><code class="xml language-xml">&lt;project ...&gt;
+  &lt;build&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.pitest&lt;/groupId&gt;
+        &lt;artifactId&gt;pitest-maven&lt;/artifactId&gt;
+        &lt;version&gt;1.1.6&lt;/version&gt;
+        &lt;executions&gt;
+          &lt;execution&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;mutationCoverage&lt;/goal&gt;
+            &lt;/goals&gt;
+            &lt;phase&gt;test&lt;/phase&gt;
+          &lt;/execution&gt;
+        &lt;/executions&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+&lt;/project&gt;</code></pre></div></div></section><section id="plugins_utiles"><h2>Plugins utiles</h2><div class="ulist"><ul><li><p>Source</p></li><li><p>Javadoc</p></li><li><p>Assembly</p></li><li><p>Uberjar</p></li></ul></div></section><section id="gestion_des_dpendances"><h2>Gestion des dépendances</h2><div class="ulist"><ul><li><p>L’API Java n’est pas suffisante</p></li><li><p>Besoin de librairies annexes :</p><div class="ulist"><ul><li><p><em>p.e.</em> pour les tests</p></li></ul></div></li></ul></div></section><section id="alternatives"><h2>Alternatives</h2><div class="ulist"><ul><li><p>Répertoire partagé</p><div class="ulist"><ul><li><p>Sur le réseau local</p></li></ul></div></li><li><p>VCS</p><div class="ulist"><ul><li><p>Risque de modifications</p></li></ul></div></li><li><p>Référentiel d’artéfacts</p></li></ul></div></section><section id="rfrentiels_d_artfacts"><h2>Référentiels d’artéfacts</h2><div class="ulist"><ul><li><p>Dans le <em>cloud</em> :</p><div class="ulist"><ul><li><p>repo1 : dépôt par défaut</p></li><li><p>Bintray : à configurer</p></li></ul></div></li><li><p>Au sein de l&#8217;entreprise :</p><div class="ulist"><ul><li><p>Sonatype Nexus</p></li><li><p>JFrog Artifactory</p></li></ul></div></li></ul></div></section></section>
+<section><section id="tlchargement_des_plugins_dpendances"><h2>Téléchargement des plugins/dépendances</h2><div class="olist arabic"><ol class="arabic"><li><p>Vérification dans le dépôt local</p><div class="ulist"><ul><li><p><code>~/.m2/repository</code></p></li></ul></div></li><li><p>Si non, téléchargement depuis le dépôt distant</p><div class="ulist"><ul><li><p>repo1</p></li><li><p>Autres dépôts paramétrés</p></li></ul></div></li></ol></div></section><section id="dpendances_transitives"><h2>Dépendances transitives</h2><div class="ulist"><ul><li><p><em>SI</em> le project dépend de A</p></li><li><p><em>ET</em> A dépend de B</p></li><li><p><em>ALORS</em> le projet dépend de B</p></li><li><p><em>ET</em> B sera téléchargé</p></li></ul></div></section><section id="dpt_d_entreprise"><h2>Dépôt d’entreprise</h2><div class="imageblock" style=""><img src="./images/maven/proxy.png" alt="proxy"></div></section></section>
+<section><section id="phase_de_dploiement"><h2>Phase de déploiement</h2><div class="dlist"><dl><dt class="hdlist1"><code>package</code></dt><dd><p>Crée l’artéfact <em>p.e.</em> JAR</p></dd><dt class="hdlist1"><code>install</code></dt><dd><p>Stocke l’artéfact dans le dépôt local</p></dd><dt class="hdlist1"><code>deploy</code></dt><dd><p>Uploade l’artéfact dans le dépôt distant</p></dd></dl></div></section><section id="configuration_du_dploiement"><h2>Configuration du déploiement</h2><div class="ulist"><ul><li><p>Dépôt distant commun</p></li><li><p>Dépôt d’entreprise</p></li></ul></div></section><section id="configuration_du_dploiement_2"><h2>Configuration du déploiement</h2><div class="ulist"><ul><li><p>Coordonnées de l’artéfact</p><div class="ulist"><ul><li><p>Section <code>&lt;distributionManagement&gt;</code> du POM</p></li></ul></div></li><li><p>Authentification</p><div class="ulist"><ul><li><p><code>settings.xml</code> dans le <code>$HOME</code></p></li></ul></div></li></ul></div></section><section id="configuration_des_dpendances"><h2>Configuration des dépendances</h2><div class="paragraph"><p>Déclaration des coordonnées de la librairie</p></div></section><section><div class="listingblock"><div class="content"><pre class="highlight"><code class="xml language-xml">&lt;project ...&gt;
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.thoughtworks.xstream&lt;/groupId&gt;
+      &lt;artifactId&gt;xstream&lt;/artifactId&gt;
+      &lt;version&gt;1.4.8&lt;/version&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+&lt;/project&gt;</code></pre></div></div></section><section id="porte_des_dpendances"><h2>Portée des dépendances</h2><div class="ulist"><ul><li><p>Les dépendances n’ont pas toutes le même usage</p><div class="ulist"><ul><li><p>Les librairies de test n’ont pas besoin d’être sur le <em>classpath</em> du package final</p></li></ul></div></li></ul></div></section><section id="porte_des_dpendances_2"><h2>Portée des dépendances</h2><div class="ulist"><ul><li><p><code>compile</code></p><div class="ulist"><ul><li><p>Par défaut</p></li></ul></div></li><li><p><code>test</code></p></li><li><p><code>runtime</code></p></li><li><p><code>provided</code></p></li></ul></div></section><section><div class="listingblock"><div class="content"><pre class="highlight"><code class="xml language-xml">&lt;project ...&gt;
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.testng&lt;/groupId&gt;
+      &lt;artifactId&gt;testng&lt;/artifactId&gt;
+      &lt;version&gt;6.8.8&lt;/version&gt;
+      &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+&lt;/project&gt;</code></pre></div></div></section></section>
+<section><section id="gestion_des_versions"><h2>Gestion des versions</h2><div class="dlist"><dl><dt class="hdlist1">Instantané</dt><dd><p><code>x.y.z-SNAPSHOT</code></p></dd><dt class="hdlist1">Release</dt><dd><p><code>x.y.z</code></p></dd></dl></div></section><section id="gestion_des_versions_2"><h2>Gestion des versions</h2><div class="dlist"><dl><dt class="hdlist1"><em>Snapshot</em></dt><dd><div class="ulist"><ul><li><p>En cours de développement</p></li><li><p>n versions possibles</p></li><li><p>Maven utilise la dernière version</p></li></ul></div></dd><dt class="hdlist1"><em>Release</em></dt><dd><p>Version unique</p></dd></dl></div></section><section id="principe_de_fonctionnement"><h2>Principe de fonctionnement</h2><div class="ulist"><ul><li><p>Travail sur une version <code>-SNAPSHOT</code></p></li><li><p>Le <code>maven-release-plugin</code> effectue la <em>release</em></p><div class="ulist"><ul><li><p><code>mvn release:prepare</code></p></li><li><p><code>mvn release:perform</code></p></li></ul></div></li></ul></div></section><section id="goal_release_prepare"><h2>Goal release:prepare</h2><div class="olist arabic"><ol class="arabic"><li><p>Vérifie qu’il n’y a pas de fichiers non committés dans les sources</p></li><li><p>Vérifie qu’il n’y a pas de dépendances <code>SNAPSHOT</code></p></li><li><p>Change la version du POM de <code>x–SNAPSHOT</code> à une nouvelle version</p></li><li><p>Modifie les informations de VCS du POM pour référencer le tag final</p></li><li><p>Exécute les tests</p></li><li><p>Commit le POM modifié</p></li><li><p>Crée un tag dans le VCS</p></li><li><p>Modifie la version du POM à <code>y–SNAPSHOT</code></p></li><li><p>Commit à nouveau le POM modifié</p></li></ol></div></section><section id="goal_release_perform"><h2>Goal release:perform</h2><div class="ulist"><ul><li><p>Checkout des sources</p></li><li><p>Exécute le goal Maven par défaut pour la <em>release</em></p><div class="ulist"><ul><li><p><code>mvn deploy</code></p></li></ul></div></li></ul></div></section></section>
+<section><section id="filtrage"><h2>Filtrage</h2><div class="paragraph"><p>Lire des informations du POM pour l’écrire dans des ressources générées</p></div></section><section id="configuration_du_filtrage"><h2>Configuration du filtrage</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="xml language-xml">&lt;build&gt;
+  &lt;resources&gt;
+    &lt;resource&gt;
+      &lt;directory&gt;src/main/resources&lt;/directory&gt;
+      &lt;filtering&gt;true&lt;/filtering&gt;
+    &lt;/resource&gt;
+  &lt;/resources&gt;
+&lt;/build&gt;</code></pre></div></div></section><section><div class="listingblock"><div class="title">app.properties</div><div class="content"><pre class="highlight"><code>version=${project.version}</code></pre></div></div></section><section id="profils_maven"><h2>Profils Maven</h2><div class="ulist"><ul><li><p>Un profil est section du POM qui peut être activée (ou non)</p></li><li><p>L’activation se fait via l’option <code>–P</code> de la ligne de commande</p></li></ul></div></section><section><div class="listingblock"><div class="content"><pre class="highlight"><code class="xml language-xml">&lt;profiles&gt;
+  &lt;profile&gt;
+    &lt;id&gt;production&lt;/id&gt;
+    &lt;build&gt;
+      &lt;plugins&gt;
+        &lt;plugin&gt;
+          &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+          &lt;version&gt;3.3&lt;/version&gt;
+          &lt;configuration&gt;
+            &lt;debug&gt;false&lt;/debug&gt;
+            &lt;optimize&gt;true&lt;/optimize&gt;
+          &lt;/configuration&gt;
+        &lt;/plugin&gt;
+      &lt;/plugins&gt;
+    &lt;/build&gt;
+  &lt;/profile&gt;
+&lt;/profiles&gt;</code></pre></div></div></section></section></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/head.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'white',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/zoom-js/zoom.js', async: true },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/notes/notes.js', async: true }
+  ]
+});</script></body></html>

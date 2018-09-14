@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Testing</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/theme/white.css" id="theme"><link href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/print/pdf.css" : "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/html5shiv.js"></script><![endif]--><link rel="stylesheet" href="style.css"></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Testing</h1></section><section><section id="dfinition"><h2>Définition</h2><div class="quoteblock"><blockquote>Procédure de vérification partielle d&#8217;un système.
+Son objectif principal est d&#8217;identifier un nombre maximum de comportements problématiques du logiciel.</blockquote><div class="attribution">&#8212; Wikipédia</div></div></section><section id="comportements_problmatiques"><h2>Comportements problématiques</h2><div class="ulist"><ul><li><p><u>Anomalies</u></p></li><li><p>Performance</p></li><li><p>Sécurité</p></li><li><p>Tests</p></li></ul></div></section><section id="anomalie"><h2>Anomalie</h2><div class="quoteblock"><blockquote>Ecart entre les spécifications fonctionnelles et le comportement du logiciel</blockquote></div></section><section id="types_de_test"><h2>Types de test</h2><div class="ulist"><ul><li><p>Tests unitaires</p></li><li><p>Tests d’intégration</p></li><li><p>Tests end-to-end</p></li><li><p>Tests de performance</p></li><li><p>Tests de pénétration</p></li><li><p>Tests exploratoires</p></li><li><p>etc.</p></li></ul></div></section><section id="grilles_de_lecture"><h2>Grilles de lecture</h2><div class="ulist"><ul><li><p>Manuel/automatisé</p></li><li><p>Non-régression</p></li><li><p>etc.</p></li></ul></div></section><section id="etapes_de_test"><h2>Etapes de test</h2><div class="imageblock" style=""><img src="./images/testing/steps.png" alt="steps"></div></section></section>
+<section><section id="test_unitaire"><h2>Test unitaire</h2><div class="ulist"><ul><li><p>En <u>isolation</u></p></li><li><p>Généralement, l’unité est la méthode/classe</p></li></ul></div></section><section id="une_mthode_trs_simple"><h2>Une méthode (très) simple</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Math {
+    public int add(int i, int j) {
+        return i + j;
+    }
+}</code></pre></div></div></section><section id="protocole_de_test"><h2>Protocole de test</h2><div class="imageblock" style=""><img src="./images/testing/protocol.png" alt="protocol"></div></section><section id="exemple_de_test"><h2>Exemple de test</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Math m = new Math();
+int r1 = m.add(1, 1);
+if (r1 == 2) {
+    System.out.println("OK");
+} else {
+    System.err.println("KO");
+}
+
+// etc.
+int r2 = m.add(2, 1);
+int r3 = m.add(3, 1);</code></pre></div></div></section><section id="problmes_du_code_prcdent"><h2>Problèmes du code précédent</h2><div class="ulist"><ul><li><p>O&ugrave; le placer ?</p></li><li><p>Quand l’appeler ?</p><div class="ulist"><ul><li><p>Comment l’automatiser ?</p></li></ul></div></li></ul></div></section></section>
+<section><section id="frameworks_de_test"><h2>Frameworks de test</h2><div class="ulist"><ul><li><p><a href="https://junit.org/junit5/" target="_blank">JUnit</a></p><div class="ulist"><ul><li><p>Framework historique</p></li></ul></div></li><li><p><a href="http://testng.org/doc/" target="_blank">TestNG</a></p></li><li><p><a href="http://spockframework.org/" target="_blank">Spock</a></p><div class="ulist"><ul><li><p>En Groovy</p></li></ul></div></li></ul></div></section><section id="testng"><h2>TestNG</h2><div class="ulist"><ul><li><p><code>@Test</code> identifie une méthode comme un test</p></li><li><p>Lancée par :</p><div class="olist arabic"><ol class="arabic"><li><p>L’IDE</p></li><li><p>L’outil de build</p></li><li><p>(La ligne de commande)</p></li></ol></div></li></ul></div></section><section id="utilisation_de_testng"><h2>Utilisation de TestNG</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class MathTest {
+
+    @Test
+    public void one_plus_one_should_equal_two() {
+        Math m = new Math();
+        int sum= m.add(1, 1);
+        if (sum == 2) {
+            System.out.println("OK");
+        } else {
+            System.err.println("KO");
+        }
+    }
+}</code></pre></div></div></section><section id="problme_du_code_prcdent"><h2>Problème du code précédent</h2><div class="ulist"><ul><li><p>Ecrire dans la log ?</p><div class="ulist"><ul><li><p>Et devoir la lire à chaque fois ?</p></li></ul></div></li><li><p>Plutôt échouer le test !</p></li></ul></div></section><section id="utilisation_de_fail"><h2>Utilisation de fail()</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class MathTest {
+
+    @Test
+    public void one_plus_one_should_equal_two() {
+        Math m = new Math();
+        int sum= m.add(1, 1);
+        if (sum == 2) {
+            System.out.println("OK");
+        } else {
+            fail("KO");
+        }
+    }
+}</code></pre></div></div></section><section id="echouer_le_build"><h2>Echouer le build</h2><div class="imageblock" style=""><img src="./images/testing/fail.svg" alt="fail"></div></section><section id="mthodes_d_assertion"><h2>Méthodes d’assertion</h2><div class="ulist"><ul><li><p>Lancent une <code>AssertionError</code> (gérée par TestNG)</p><div class="ulist"><ul><li><p><code>fail()</code> → à chaque invocation</p></li><li><p><code>assertXXX()</code> → si l’évaluation échoue</p></li></ul></div></li></ul></div></section><section id="rcriture_avec_les_assertions"><h2>Réécriture avec les assertions</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">import static org.testng.Assert.assertEquals;
+
+public static class MathTest {
+
+    @Test
+    public void one_plus_one_should_equal_two() {
+        Math m = new Math();
+        int sum = m.add(1, 1);
+        assertEquals(sum, 2);
+    }
+}</code></pre></div></div></section></section>
+<section><section id="trop_simple"><h2>Trop simple ?</h2><div class="paragraph"><p>Un seul test ne suffit pas à valider le comportement</p></div></section><section id="plus_de_tests"><h2>Plus de tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class MathTest {
+
+    @Test
+    public void one_plus_one_should_equal_two() { ... }
+
+    @Test
+    public void one_plus_two_should_equal_three() { ... }
+
+    @Test
+    public void three_plus_two_should_equal_five() { ... }
+}</code></pre></div></div></section><section id="dry_initialisation_et_nettoyage"><h2>DRY : Initialisation et nettoyage</h2><table class="tableblock frame-all grid-all" style=""><colgroup><col><col><col></colgroup><tbody><tr><td class="tableblock halign-left valign-top"></td><td class="tableblock halign-left valign-top"><p class="tableblock">Avant</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Après</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Méthode de test</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>@BeforeMethod</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>@AfterMethod</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Classe</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>@BeforeClass</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>@AfterClass</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">etc.</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>@BeforeXXX</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>@AfterXXX</code></p></td></tr></table></section><section><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class MathTest {
+
+    private Math m;
+
+    @BeforeMethod
+    public void setUp() {
+        m = new Math();
+    }
+
+    @Test
+    public void one_plus_one_should_equal_two() { ... }
+
+    @Test
+    public void one_plus_two_should_equal_three() { ... }
+
+    @Test
+    public void three_plus_two_should_equal_five() { ... }
+}</code></pre></div></div></section><section id="dry_fournisseurs_de_donnes"><h2>DRY : Fournisseurs de données</h2><div class="ulist"><ul><li><p>Même méthode de test et paramètres différents</p></li><li><p><code>@DataProvider</code></p><div class="ulist"><ul><li><p>Méthode qui renvoie <code>Object[][]</code></p></li></ul></div></li></ul></div></section><section><table class="tableblock frame-all grid-all" style=""><colgroup><col><col><col><col></colgroup><tbody><tr><td class="tableblock halign-left valign-top"></td><td class="tableblock halign-left valign-top"><p class="tableblock">Param 1</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Param 2</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Valeur de retour</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Méthode 1</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"> 1</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Méthode 2</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"> 1</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Méthode 3</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"> 3</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td></tr></table></section><section><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class MathTest {
+
+    private Math m;
+
+    @BeforeMethod
+    public void setUp() {
+        m = new Math();
+    }
+
+    @DataProvider(name = "data")
+    public Object[][] data() {
+        Object[][] data = new Object[3][3];
+        data[0] = new Object[] { 1, 1, 2 };
+        data[1] = new Object[] { 1, 2, 3 };
+        data[2] = new Object[] { 3, 2, 5 };
+        return data;
+    }
+
+    @Test(dataProvider = "data")
+    public void add_should_add(int i, int j, int k) {
+        int sum = m.add(i, j);
+        Assert.assertEquals(k, sum);
+    }
+}</code></pre></div></div></section></section>
+<section><section id="de_meilleures_assertions"><h2>De meilleures assertions</h2><div class="ulist"><ul><li><p>Les assertions TestNG sont limitées</p></li><li><p>Plus d’options avec :</p><div class="ulist"><ul><li><p><a href="http://hamcrest.org/" target="_blank">Hamcrest</a></p></li><li><p><a href="http://joel-costigliola.github.io/assertj/" target="_blank">AssertJ</a></p></li><li><p><a href="https://github.com/google/truth" target="_blank">Google Truth</a></p></li></ul></div></li></ul></div></section><section id="assertions_avec_testng"><h2>Assertions avec TestNG</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">File xFile = ...;
+
+assertTrue(xFile.exists());
+assertTrue(xFile.isFile());
+assertNotEquals(xFile.getAbsolutePath(), xFile.getPath());</code></pre></div></div></section><section id="assertions_avec_assertj"><h2>Assertions avec AssertJ</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">assertThat(xFile)
+  .exists()
+  .isFile()
+  .isRelative();
+
+assertThat(contentOf(xFile))
+  .startsWith("The Truth")
+  .contains("Is Out")
+  .endsWith("There");</code></pre></div></div></section><section id="tester_les_exceptions"><h2>Tester les exceptions</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class MathTest {
+
+  @Test
+  public void one_divide_0_should_fail() {
+    try {
+      new Math().divide(1, 0);
+      fail("Division par 0 est interdite");
+    } catch (ArithmeticException e) {
+      // Ca marche !
+    }
+  }
+}</code></pre></div></div></section><section id="problme_de_l_approche_nave"><h2>Problème de l’approche naïve</h2><div class="ulist"><ul><li><p>Verbeux</p></li><li><p>Sémantique catastrophique</p></li><li><p>Tester d’autres exceptions ?</p></li></ul></div></section><section id="tester_les_exceptions_avec_testng"><h2>Tester les exceptions avec TestNG</h2><div class="paragraph"><p><code>@Test(expectedExceptions = Exception.class)</code></p></div></section><section><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class MathTest {
+
+  @Test(expectedExceptions = ArithmeticException.class)
+  public void one_divide_0_should_fail() {
+    new Math().divide(1, 0);
+  }
+}</code></pre></div></div></section></section>
+<section><section id="toujours_trop_simple"><h2>Toujours trop simple ?</h2><div class="ulist"><ul><li><p>Le cas précédent existe rarement</p><div class="ulist"><ul><li><p>Aucune dépendance envers d’autres classes</p></li></ul></div></li></ul></div></section><section id="pour_isoler"><h2>Pour isoler</h2><div class="ulist"><ul><li><p>Injection de dépendances</p></li><li><p>Pas de méthodes statiques</p></li><li><p><em>Test-Driven Development</em></p></li></ul></div></section><section id="un_simple_diagramme_de_classes"><h2>Un simple diagramme de classes</h2><div class="imageblock" style=""><img src="./images/testing/delegate.svg" alt="delegate"></div></section><section id="tentative_de_conception"><h2>Tentative de conception</h2><div class="imageblock" style=""><img src="./images/testing/first-design.svg" alt="first design"></div></section><section><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class B {
+
+  private C c = new C();
+
+  public int foo() {
+    int bar = bar();
+    return c.delegate(bar);
+  }
+
+  private int bar() { ... }
+}</code></pre></div></div></section><section id="une_autre_tentative"><h2>Une autre tentative</h2><div class="imageblock" style=""><img src="./images/testing/second-design.svg" alt="second design"></div></section><section><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class B {
+
+  private C c;
+
+  public B(C c) {
+    this.c = c;
+  }
+
+
+  public int foo() {
+    int bar = bar();
+    return c.delegate(bar);
+  }
+
+  private int bar() { ... }
+}</code></pre></div></div></section><section id="possibilit_de_conception"><h2>Possibilité de conception</h2><div class="imageblock" style=""><img src="./images/testing/inherit.svg" alt="inherit"></div></section><section id="mock"><h2>Mock</h2><div class="paragraph"><p>Les mocks sont des objets "pré-programmés" avec un comportement connu</p></div></section><section id="rappel_du_protocole_de_test"><h2>Rappel du protocole de test</h2><div class="imageblock" style=""><img src="./images/testing/protocol-mock.png" alt="protocol mock"></div></section><section id="standard_de_fait"><h2>Standard "de fait"</h2><div class="imageblock" style=""><img src="./images/testing/mockito-new-logo-2x.png" alt="mockito new logo 2x"></div></section><section id="fonctionnalits_de_mockito"><h2>Fonctionnalités de Mockito</h2><div class="ulist"><ul><li><p>Création de mocks</p></li><li><p>Implémentation de comportement de mocks</p></li><li><p>Vérification d’interaction avec les mocks</p></li><li><p>Et d’autres&#8230;&#8203;</p></li></ul></div></section><section><div class="imageblock" style=""><img src="./images/testing/mockito-classes.svg" alt="mockito classes"></div></section><section id="cration_de_mocks"><h2>Création de mocks</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List list = Mockito.mock(List.class)</code></pre></div></div>
+<div class="paragraph"><p>ou</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Test {
+    @Mock
+    private List list;
+    @BeforeMethod
+    protected void setUp() {
+        MockitoAnnotations.initMocks(this);
+    }
+}</code></pre></div></div></section><section id="implmentation_du_comportement"><h2>Implémentation du comportement</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">when(list.get(0)).thenReturn("Zero");
+when(list.get(1)).thenReturn("Un");
+when(list.get(2)).thenThrow(new IndexOutOfBoundsException());</code></pre></div></div></section><section id="arguments_gnriques"><h2>Arguments génériques</h2><div class="imageblock" style=""><img src="./images/testing/matchers.svg" alt="matchers"></div></section><section><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">when(list.get(anyInt())).thenReturn("A value");</code></pre></div></div></section><section id="vrification_d_interactions"><h2>Vérification d’interactions</h2><div class="paragraph"><p>Un cas d’utilisation : cache</p></div></section><section id="scnario_comment_tester"><h2>Scénario : comment tester ?</h2><div class="imageblock" style=""><img src="./images/testing/scenario-cache.svg" alt="scenario cache"></div></section><section id="comment_tester_le_cache"><h2>Comment tester le cache ?</h2><div class="paragraph"><p>En vérifiant qu’il n’y a pas d’interactions avec le DAO</p></div></section></section>
+<section><section id="couverture_de_tests"><h2>Couverture de tests</h2><div class="ulist"><ul><li><p>Taux de code testé</p><div class="ulist"><ul><li><p>Nombre de lignes exécutées durant les tests</p></li><li><p>(Ou de branchements)</p></li></ul></div></li><li><p>Utilise <a href="http://www.jacoco.org/jacoco/" target="_blank">JaCoCo</a></p></li><li><p>Très limitée</p></li></ul></div></section><section id="couverture_de_mutations"><h2>Couverture de mutations</h2><div class="ulist"><ul><li><p>Vérifie la pertinence des tests</p></li><li><p><a href="http://pitest.org/" target="_blank">Pit</a></p></li></ul></div></section><section id="mockito_est_limit_a_dessein"><h2>Mockito est limité a dessein</h2><div class="ulist"><ul><li><p>Pas de méthodes privées</p></li><li><p>Pas de méthodes statiques</p></li></ul></div></section><section id="tester_un_code_intestable"><h2>Tester un code intestable</h2><div class="ulist"><ul><li><p>Mettre en place <a href="https://github.com/powermock/powermock" target="_blank">PowerMock</a></p></li><li><p>Réaliser les tests</p></li><li><p>Refactorer le code</p></li><li><p>Refactorer les tests pour supprimer PowerMock</p></li></ul></div></section></section></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/head.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'white',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/zoom-js/zoom.js', async: true },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/notes/notes.js', async: true }
+  ]
+});</script></body></html>

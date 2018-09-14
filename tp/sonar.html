@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.6.1">
+<meta name="author" content="Nicolas Frankel">
+<title>Travaux pratiques - SonarQube</title>
+<link rel="stylesheet" href="./../asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Travaux pratiques - SonarQube</h1>
+<div class="details">
+<span id="author" class="author">Nicolas Frankel</span><br>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image left"><a class="image" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" alt="Licence Creative Commons"></a></span></p>
+</div>
+<div class="paragraph">
+<p>Ce document est mis à disposition selon les termes de la <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International</a>.</p>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_objectif">1. Objectif</a></li>
+<li><a href="#_références">2. Références</a></li>
+<li><a href="#_utilisation_de_sonarqube">3. Utilisation de SonarQube</a>
+<ul class="sectlevel2">
+<li><a href="#_sonarcloud">3.1. SonarCloud</a></li>
+<li><a href="#_sonar_local">3.2. Sonar local</a></li>
+</ul>
+</li>
+<li><a href="#_sonarlint">4. SonarLint</a>
+<ul class="sectlevel2">
+<li><a href="#_sonarlint_pour_intellij_idea">4.1. SonarLint pour IntelliJ IDEA</a></li>
+<li><a href="#_sonarlint_pour_eclipse">4.2. SonarLint pour Eclipse</a></li>
+</ul>
+</li>
+<li><a href="#_industrialisation">5. Industrialisation</a>
+<ul class="sectlevel2">
+<li><a href="#_amélioration_de_la_sécurité">5.1. Amélioration de la sécurité</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_objectif"><a class="anchor" href="#_objectif"></a>1. Objectif</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>L&#8217;objectif de cette fiche est de paramétrer un projet Maven pour lancer une analyse SonarQube et envoyer les résultats à un serveur Sonar.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_références"><a class="anchor" href="#_références"></a>2. Références</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">En anglais: </dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Maven" target="_blank" rel="noopener">Analyzing with SonarQube Scanner for Maven</a></p>
+</li>
+<li>
+<p><a href="https://about.sonarcloud.io/" target="_blank" rel="noopener">SonarCloud</a></p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_utilisation_de_sonarqube"><a class="anchor" href="#_utilisation_de_sonarqube"></a>3. Utilisation de SonarQube</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Dans cette section, choisir de réaliser :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Soit <a href="#_sonarcloud">SonarCloud</a></p>
+</li>
+<li>
+<p>Soit <a href="#_sonar_local">Sonar local</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_sonarcloud"><a class="anchor" href="#_sonarcloud"></a>3.1. SonarCloud</h3>
+<div class="paragraph">
+<p>SonarCloud est une offre de SonarSource qui propose une offre Sonar en mode <em>Software-as-a-Service</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Pour un projet dont le code source est libre, la fonctionnalité est gratuite.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Aller sur l&#8217;interface <a href="https://about.sonarcloud.io/">SonarCloud</a></p>
+</li>
+<li>
+<p>Cliquer sur le lien <b class="button">Sign in</b> en haut à droite</p>
+</li>
+<li>
+<p>Sélectionner <b class="button">Configure &amp; Sign up</b></p>
+</li>
+<li>
+<p>Suivre les étapes proposées</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Voici un exemple de résultats obtenus :</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/sonar/sonarcloud1.png" alt="Vue générale d&#8217;un projet sur sonarcloud.io" width="1152" height="706">
+</div>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/sonar/sonarcloud2.png" alt="Vue des issues d&#8217;un projet sur sonarcloud.io" width="1163" height="730">
+</div>
+</div>
+<div class="paragraph">
+<p>Corriger les violations par ordre de priorité, re-lancer l&#8217;analyse.
+Répéter autant de fois que nécessaire.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sonar_local"><a class="anchor" href="#_sonar_local"></a>3.2. Sonar local</h3>
+<div class="paragraph">
+<p>Il est nécessaire de disposer d&#8217;un serveur SonarQube local.</p>
+</div>
+<div class="paragraph">
+<p>Pour cela, il est possible de télécharger le logiciel pour lancer une instance locale.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Télécharger la <a href="http://www.sonarqube.org/downloads/">dernière version de SonarQube</a></p>
+</li>
+<li>
+<p>Décompresser l&#8217;archive</p>
+</li>
+<li>
+<p>Lancer SonarQube</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$SONAR_QUBE_HOME/bin/[OS]/sonar.sh start</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Sans configuration plus poussée, la base de données utilisée par défaut est <a href="http://www.h2database.com/html/main.html">H2</a>, qui n&#8217;est pas destinée à un usge en production.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_lancement_de_l_analyse_sonarqube"><a class="anchor" href="#_lancement_de_l_analyse_sonarqube"></a>3.2.1. Lancement de l&#8217;analyse SonarQube</h4>
+<div class="paragraph">
+<p>Configurer le POM pour disposer de la dernière version du plugin SonarQube pour Maven.</p>
+</div>
+<div class="paragraph">
+<p>Puis, pour lancer l&#8217;analyse SonarQube, exécuter la commande suivante dans le répertoire du projet :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">mvn sonar:sonar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Par défaut, l&#8217;analyse est envoyée au serveur SonarQube local.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_consultation_des_résultats"><a class="anchor" href="#_consultation_des_résultats"></a>3.2.2. Consultation des résultats</h4>
+<div class="paragraph">
+<p>Les résultats sont disponibles à <a href="http://localhost:9000" class="bare">http://localhost:9000</a>.</p>
+</div>
+<div class="paragraph">
+<p>Corriger les violations par ordre de priorité, re-lancer l&#8217;analyse.
+Répéter autant de fois que nécessaire.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sonarlint"><a class="anchor" href="#_sonarlint"></a>4. SonarLint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>En fonction de votre IDE, consulter la section adaptée.</p>
+</div>
+<div class="sect2">
+<h3 id="_sonarlint_pour_intellij_idea"><a class="anchor" href="#_sonarlint_pour_intellij_idea"></a>4.1. SonarLint pour IntelliJ IDEA</h3>
+<div class="sect3">
+<h4 id="_installation"><a class="anchor" href="#_installation"></a>4.1.1. Installation</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Aller dans le menu menu:Preferences</p>
+</li>
+<li>
+<p>Dans la <em>popup</em>, sélectionner menu:Plugins</p>
+</li>
+<li>
+<p>Cliquer sur <b class="button">Browse repositories&#8230;&#8203;</b></p>
+</li>
+<li>
+<p>Dans la <em>popup</em>, chercher le terme "sonar"</p>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/sonar/idea-repositories.png" alt="Recherche du plugin SonarLint dans IntelliJ IDEA" width="708" height="528">
+</div>
+</div>
+</li>
+<li>
+<p>Cliquer sur le bouton vert <b class="button">Install</b></p>
+</li>
+<li>
+<p>Accepter le redémarrage de l&#8217;IDE en cliquant sur <b class="button">Restart</b></p>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/sonar/idea-restart.png" alt="Redémarrage d&#8217;IntelliJ IDEA" width="401" height="145">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_mode_autonome"><a class="anchor" href="#_mode_autonome"></a>4.1.2. Mode autonome</h4>
+<div class="paragraph">
+<p>Le mode autonome permet d&#8217;utiliser SonarLint sans instance SonarQube.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ouvrir la vue SonarLint en allant dans le menu <span class="menuseq"><b class="menu">View</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Tool Windows</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">SonarLint</b></span></p>
+</li>
+<li>
+<p>L&#8217;onglet par défaut est <em>Current file</em>.
+Naviguer à l&#8217;onglet <em>Project file</em>.</p>
+</li>
+<li>
+<p>Dans le menu déroulant, sélectionner "All project files"</p>
+</li>
+<li>
+<p>Cliquer sur le bouton de démarrage de l&#8217;analyse</p>
+</li>
+<li>
+<p>Accepter la confirmation en cliquant sur <b class="button">Proceed</b></p>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/sonar/idea-confirmation.png" alt="Confirmation de l&#8217;analyse" width="402" height="161">
+</div>
+</div>
+</li>
+<li>
+<p>Le résultat de l&#8217;analyse s&#8217;affiche</p>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/sonar/idea-sonarlint.png" alt="Résultats de l&#8217;analyse SonarLint" width="910" height="378">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_mode_connecté"><a class="anchor" href="#_mode_connecté"></a>4.1.3. Mode connecté</h4>
+<div class="paragraph">
+<p>Le mode connecté permet de connecter SonarLint à une instance SonarQube spécifique</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Dans un contexte d&#8217;Intégration Continue, cette approche permet de bénéficier des résultats de l&#8217;analyse côté serveur sans impact au niveau de l&#8217;IDE.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Dans la vue SonarLint, cliquer sur le bouton <b class="button">Configure SonarLint</b></p>
+</li>
+<li>
+<p>Dans la <em>popup</em> SonarLint, cocher "Enable bindings to remote SonarQube server"</p>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/sonar/idea-bind-sonarlint.png" alt="Connection à un serveur SonarQube" width="685" height="300">
+</div>
+</div>
+</li>
+<li>
+<p>Cliquer sur le bouton <b class="button">Configure servers&#8230;&#8203;</b></p>
+</li>
+<li>
+<p>Dans le <em>popup</em> "SonarLint general settings", cliquer sur <b class="button">+</b></p>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/sonar/idea-settings-sonarlint-server.png" alt="Paramètres de configuration généraux" width="685" height="379">
+</div>
+</div>
+</li>
+<li>
+<p>Une <em>popup</em> "New SonarQube Server Configuration" apparait</p>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/sonar/idea-new-sonarqube-config-sonarlint.png" alt="Configuration d&#8217;un nouveau serveur SonarQube pour SonarLint" width="862" height="380">
+</div>
+</div>
+</li>
+<li>
+<p>Donner un nom à la configuration, par exemple "sonarcloud"</p>
+</li>
+<li>
+<p>Puis cliquer sur <b class="button">Next</b></p>
+</li>
+<li>
+<p>Dans l&#8217;étape suivante, remplir le champ avec le jeton qui a été affecté lors du tutoriel</p>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="title">Jeton oublié</div>
+<div class="paragraph">
+<p>Si le jeton a été égaré, il est possible d&#8217;en générer un autre en cliquant sur <b class="button">Generate Token</b></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Puis cliquer sur <b class="button">Next</b></p>
+</li>
+<li>
+<p>Sélectionner l&#8217;organisation à laquelle le projet analysé a été associé</p>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/sonar/idea-sonarlint-organizations.png" alt="Choix de l&#8217;organisation du serveur SonarQube" width="862" height="380">
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>En fonction du profil, commencer à taper le nom de l&#8217;organisation (par défaut, &lt;nom du profil Github&gt;-github.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Cliquer <b class="button">Next</b></p>
+</li>
+<li>
+<p>Cliquer sur le bouton <b class="button">Finish</b></p>
+</li>
+<li>
+<p>Fermer les <em>popups</em> en cliquant sur <b class="button">OK</b></p>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Ne pas oublier de sélectionner le serveur créé :</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/sonar/idea-sonarlint-bound.png" alt="Serveur SonarQube connecté" width="685" height="300">
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Vérifier si la configuration est correcte en affichant un fichier comportant des problèmes.</p>
+<div class="paragraph">
+<p>L&#8217;onglet "Current File" de la vue SonarLint doit afficher les problèmes, et l&#8217;heure de mise à jour doit être celle de la dernière analyse côté serveur</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sonarlint_pour_eclipse"><a class="anchor" href="#_sonarlint_pour_eclipse"></a>4.2. SonarLint pour Eclipse</h3>
+<div class="sect3">
+<h4 id="_installation_2"><a class="anchor" href="#_installation_2"></a>4.2.1. Installation</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Aller dans le menu <span class="menuseq"><b class="menu">Help</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Eclipse Marketplace&#8230;&#8203;</b></span></p>
+</li>
+<li>
+<p>Dans le champ <em>Find</em>, indiquer "sonar"</p>
+</li>
+<li>
+<p>Cliquer sur <b class="button">Go</b></p>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/sonar/eclipse-marketplace.png" alt="Recherche du plugin SonarLint dans la Marketplace Eclipse" width="689" height="535">
+</div>
+</div>
+</li>
+<li>
+<p>Dans l&#8217;élément SonarLint, cliquer sur <b class="button">Install</b></p>
+</li>
+<li>
+<p>Accepter les termes de la license</p>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/sonar/eclipse-sonarlint-license.png" alt="Acceptation des termes de la license du plugin SonarLint" width="689" height="326">
+</div>
+</div>
+</li>
+<li>
+<p>Cliquer sur <b class="button">Finish</b></p>
+</li>
+<li>
+<p>Dans la <em>popup</em>, cliquer sur <b class="button">Restart now</b> pour redémarrer Eclipse</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_mode_autonome_2"><a class="anchor" href="#_mode_autonome_2"></a>4.2.2. Mode autonome</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Cliquer-droit sur le projet et sélectionner le menu <span class="menuseq"><b class="menu">Sonar Lint</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Analyze</b></span></p>
+</li>
+<li>
+<p>Accepter la confirmation en cliquant sur <b class="button">Proceed</b></p>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/sonar/eclipse-confirmation.png" alt="Confirmation de l&#8217;analyse" width="518" height="144">
+</div>
+</div>
+</li>
+<li>
+<p>La vue SonarLint s&#8217;affiche</p>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/sonar/eclipse-sonarlint.png" alt="Résultats de l&#8217;analyse SonarLint" width="596" height="245">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_mode_connecté_2"><a class="anchor" href="#_mode_connecté_2"></a>4.2.3. Mode connecté</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Cliquer-droit sur le projet et sélectionner le menu <span class="menuseq"><b class="menu">Sonar Lint</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Bind to a SonarQube server&#8230;&#8203;</b></span></p>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/sonar/eclipse-bind-sonarlint.png" alt="Connection d&#8217;un projet Eclipse à un serveur SonarQube" width="750" height="318">
+</div>
+</div>
+</li>
+<li>
+<p>Cliquer sur <b class="button">Connect to a SonarQube server&#8230;&#8203;</b></p>
+</li>
+<li>
+<p>Dans la <em>popup</em>, sélectionner "sonarcloud"</p>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/sonar/eclipse-new-sonarqube-config-sonarlint.png" alt="Connection à un serveur SonarQube" width="596" height="300">
+</div>
+</div>
+</li>
+<li>
+<p>Cliquer sur <b class="button">Next &gt;</b></p>
+</li>
+<li>
+<p>La suite des instructions est similaire aux instructions pour <a href="#_mode_connect">IntelliJ IDEA</a>, étape 7</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_industrialisation"><a class="anchor" href="#_industrialisation"></a>5. Industrialisation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Le tutoriel SonarCloud indique de lancer la ligne de commande suivante :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">mvn sonar:sonar -Dsonar.organization=&lt;organization&gt; \
+                -Dsonar.host.url=https://sonarcloud.io \
+                -Dsonar.login=&lt;token&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Intégrer les paramètres système de la ligne commande en propriétés Maven.</p>
+</div>
+<div class="sect2">
+<h3 id="_amélioration_de_la_sécurité"><a class="anchor" href="#_amélioration_de_la_sécurité"></a>5.1. Amélioration de la sécurité</h3>
+<div class="paragraph">
+<p>La propriété <code>sonar.login</code> ne peut pas être stockée dans le POM, pour d&#8217;évidentes raisons de sécurité :
+aucun identifiant, mot de passe ou jeton ne doit jamais être stocké avec le projet.</p>
+</div>
+<div class="paragraph">
+<p>A l&#8217;aide de la <a href="https://maven.apache.org/ref/current/maven-settings/settings.html#class_profile" target="_blank" rel="noopener">documentation</a>, déplacer cette propriété dans un profil activé par défaut.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2018-09-14 19:55:16 UTC
+</div>
+</div>
+</body>
+</html>

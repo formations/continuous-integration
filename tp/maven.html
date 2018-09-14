@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.6.1">
+<meta name="author" content="Nicolas Frankel">
+<title>Travaux pratiques - Build et Maven</title>
+<link rel="stylesheet" href="./../asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Travaux pratiques - Build et Maven</h1>
+<div class="details">
+<span id="author" class="author">Nicolas Frankel</span><br>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image left"><a class="image" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" alt="Licence Creative Commons"></a></span></p>
+</div>
+<div class="paragraph">
+<p>Ce document est mis à disposition selon les termes de la <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International</a>.</p>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_objectif">1. Objectif</a></li>
+<li><a href="#_références">2. Références</a></li>
+<li><a href="#_installation_de_maven">3. Installation de Maven</a></li>
+<li><a href="#_premier_pas">4. Premier pas</a></li>
+<li><a href="#_configurer_le_proxy">5. Configurer le proxy</a></li>
+<li><a href="#_gérer_les_plugins">6. Gérer les plugins</a>
+<ul class="sectlevel2">
+<li><a href="#_configurer_un_plugin">6.1. Configurer un plugin</a></li>
+<li><a href="#_lier_un_nouveau_plugin">6.2. Lier un nouveau plugin</a></li>
+</ul>
+</li>
+<li><a href="#_gérer_les_dépendances">7. Gérer les dépendances</a>
+<ul class="sectlevel2">
+<li><a href="#_ajouter_une_dépendance_simple">7.1. Ajouter une dépendance simple</a></li>
+<li><a href="#_ajouter_les_dépendances_de_test">7.2. Ajouter les dépendances de test</a></li>
+<li><a href="#_ajouter_une_dépendance_à_l_exécution">7.3. Ajouter une dépendance à l&#8217;exécution</a></li>
+</ul>
+</li>
+<li><a href="#_afficher_la_version_de_l_application">8. Afficher la version de l&#8217;application</a></li>
+<li><a href="#_déployer_un_artéfact">9. Déployer un artéfact</a>
+<ul class="sectlevel2">
+<li><a href="#_créer_un_compte_bintray">9.1. Créer un compte Bintray</a></li>
+<li><a href="#_créer_le_package_sur_bintray">9.2. Créer le package sur Bintray</a></li>
+<li><a href="#_configurer_le_dépôt_de_déploiement_pour_le_projet_maven">9.3. Configurer le dépôt de déploiement pour le projet Maven</a></li>
+<li><a href="#_configurer_l_authentification_pour_le_déploiement">9.4. Configurer l&#8217;authentification pour le déploiement</a></li>
+</ul>
+</li>
+<li><a href="#_effectuer_une_release">10. Effectuer une release</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_objectif"><a class="anchor" href="#_objectif"></a>1. Objectif</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>L&#8217;objectif de cette fiche est de porter un projet sous Maven pour automatiser le processus de <em>build</em>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_références"><a class="anchor" href="#_références"></a>2. Références</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://maven-guide-fr.erwan-alliaume.com/maven-guide-fr/site/reference/public-book.html">Maven, le guide final</a></p>
+</li>
+<li>
+<p><a href="https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference">Lifecycle Reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation_de_maven"><a class="anchor" href="#_installation_de_maven"></a>3. Installation de Maven</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Avant d&#8217;utiliser Maven, il est d&#8217;abord nécessaire de le mettre à disposition sur la machine locale.</p>
+</div>
+<div class="paragraph">
+<p>En fonction du système d&#8217;exploitation, les méthodes d&#8217;installation de Maven sont différentes mais il existe une méthode commune :</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://maven.apache.org/download.cgi">Télécharger</a> le zip de Maven</p>
+</li>
+<li>
+<p>Décompresser celui-ci dans le dossier standard des applications pour le système d&#8217;exploitation</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Pour Window, il est fortement conseillé que le chemin ne comporte pas d&#8217;espaces.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Si ce n&#8217;est pas le cas, ajouter une variable d&#8217;environnement <code>JAVA_HOME</code> et la faire pointer vers le répertoire d&#8217;installation de Java</p>
+</li>
+<li>
+<p>Ajouter le chemin de vers le répertoire d&#8217;installation de Maven à la variable d&#8217;environnement <code>PATH</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Une fois ces étapes réalisées, il est possible d&#8217;invoquer Maven depuis n&#8217;importe quel chemin du système de fichiers avec la commande <code>mvn</code> <em>p.e.</em> <code>mvn compile</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_premier_pas"><a class="anchor" href="#_premier_pas"></a>4. Premier pas</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Cette section permet de migrer son projet pour le rendre compatible avec le standard Maven.</p>
+</div>
+<div class="paragraph">
+<p>La première étape consiste à répartir les sources du projet existant dans la structure Maven standard:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>src/main/java</code> pour le code Java "de production" qui doit être compilé</p>
+</li>
+<li>
+<p><code>src/main/resources</code> pour les autres fichiers "de production"</p>
+</li>
+<li>
+<p><code>src/test/java</code> pour le code Java de test</p>
+</li>
+<li>
+<p><code>src/test/resources</code> pour les autres fichiers de test</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>La second étape consiste à créer un fichier <em>Project Object Model</em> nommé <code>pom.xml</code> et situé à la racine du projet.</p>
+</div>
+<div class="paragraph">
+<p>Le squelette du <code>pom.xml</code> doit avoir la structure suivante:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+   &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+   &lt;groupId&gt;ch.hesge.integrationcontinue&lt;/groupId&gt;
+   &lt;artifactId&gt;monprojet&lt;/artifactId&gt;
+   &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+&lt;/project&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Il est bien sûr nécessaire de modifier les informations de <code>groupId</code> et d'`artifactId` pour être spécifiques à votre projet.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configurer_le_proxy"><a class="anchor" href="#_configurer_le_proxy"></a>5. Configurer le proxy</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Dans la plupart des cas, la station de travail (ou le serveur) ne peuvent pas accéder à Internet directement mais uniquement via l&#8217;utilisation d&#8217;un serveur proxy.</p>
+</div>
+<div class="paragraph">
+<p>Pour ce faire, il est nécessaire de créer un fichier <code>settings.xml</code> dans votre <em>home</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Le <em>home</em> dépend du type et de la version du système d&#8217;exploitation.
+Il peut être recherché sur le web, ou bien récupéré depuis la propriété Java <code>user.home</code> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">System.getProperty("user.home");</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Le fichier de <em>settings</em> doit reproduire le modèle suivant :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">&lt;settings xmlns="http://maven.apache.org/SETTINGS/1.1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0
+    http://maven.apache.org/xsd/settings-1.1.0.xsd"&gt;
+  &lt;proxies&gt;
+    &lt;proxy&gt;
+      &lt;id&gt;heg&lt;/id&gt;
+      &lt;active&gt;true&lt;/active&gt;
+      &lt;protocol&gt;http&lt;/protocol&gt;
+      &lt;username&gt;identifiant&lt;/username&gt;
+      &lt;password&gt;motdepasse&lt;/password&gt;
+      &lt;port&gt;proxyhes.etat-ge.ch&lt;/port&gt;
+      &lt;host&gt;80&lt;/host&gt;
+    &lt;/proxy&gt;
+  &lt;/proxies&gt;
+&lt;/settings&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Si tout a été correctement réalisé, il est maintenant possible de construire votre projet à l&#8217;aide de la commande <code>mvn package</code>.</p>
+</div>
+<div class="paragraph">
+<p>Vérifier l&#8217;existence d&#8217;un JAR dans le répertoire <code>target</code> à la racine du projet.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_gérer_les_plugins"><a class="anchor" href="#_gérer_les_plugins"></a>6. Gérer les plugins</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_configurer_un_plugin"><a class="anchor" href="#_configurer_un_plugin"></a>6.1. Configurer un plugin</h3>
+<div class="paragraph">
+<p>Cette section a pour objectif d&#8217;expérimenter avec la configuration des plugins afin de rendre son <em>jar</em> exécutable.
+Un tel jar peut être lancé via la commande suivante (ou en double-cliquant dessus pour les systèmes graphiques) :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">java -jar monjar.jar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Pour parvenir à ce résultat, un <em>jar</em> doit remplir deux conditions :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Disposer d&#8217;un fichier de manifeste standard <code>META-INF/MANIFEST.MF</code> dont une entrée référence une classe spécifique :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Main-Class: ch.hesge.monprojet.MaClasse</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Cette classe référencée doit contenir une méthode dont la signature est exactement <code>public static void main(String&#8230;&#8203; args)</code>.
+Cette méthode est le point d&#8217;entrée du <em>jar</em> et sera exécutée lors du lancement.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>La création du manifeste rentre exactement dans le cadre du processus d&#8217;automatisation de la construction.
+Le plugin considéré est le Maven JAR plugin
+ A l&#8217;aide de la  <a href="https://maven.apache.org/shared/maven-archiver/examples/classpath.html#Make">documentation</a>, configurer votre projet pour rendre le JAR exécutable.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Toujours spécifier <strong>explicitement</strong> la version des plugins utilisés.
+Si aucune version n&#8217;est indiquée, Maven utilisera la dernière version disponible et celle-ci pourra donc changer au cours du cycle de vie du projet.
+Une version différente peut engendrer des différences de comportement et représente donc un risque important pour la stabilité du <em>build</em>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_lier_un_nouveau_plugin"><a class="anchor" href="#_lier_un_nouveau_plugin"></a>6.2. Lier un nouveau plugin</h3>
+<div class="paragraph">
+<p>Le plugin <a href="https://github.com/ktoso/maven-git-commit-id-plugin">git-commit-id-plugin</a> permet de créer un fichier contenant des informations sur l&#8217;état du dépôt Git local.</p>
+</div>
+<div class="paragraph">
+<p>Lire attentivement la documentation du plugin puis faire en sorte que chaque exécution <code>mvn prepare-package</code> crée un fichier <code>git.properties</code> contenant les informations demandées à la racine du répertoire <code>target/classes</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_gérer_les_dépendances"><a class="anchor" href="#_gérer_les_dépendances"></a>7. Gérer les dépendances</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Cette section a pour objectif d&#8217;apprendre à manipuler la configuration des dépendances.</p>
+</div>
+<div class="sect2">
+<h3 id="_ajouter_une_dépendance_simple"><a class="anchor" href="#_ajouter_une_dépendance_simple"></a>7.1. Ajouter une dépendance simple</h3>
+<div class="paragraph">
+<p>Consulter la <a href="https://github.com/akullpp/awesome-java">liste</a> des librairies Java utiles.
+L&#8217;utiliser dans votre projet en concertation avec l&#8217;enseignant.
+Par exemple :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Gérer les dates avec <a href="http://www.joda.org/joda-time">joda-time</a></p>
+</li>
+<li>
+<p>Utiliser une des nombreuses fonctionnalités de <a href="https://github.com/google/guava">Guava</a></p>
+</li>
+<li>
+<p>Offrir une interface REST très simple avec <a href="http://sparkjava.com/">Spark</a></p>
+</li>
+<li>
+<p>etc.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ajouter_les_dépendances_de_test"><a class="anchor" href="#_ajouter_les_dépendances_de_test"></a>7.2. Ajouter les dépendances de test</h3>
+<div class="paragraph">
+<p>Pour préparer le cours suivant, ajouter la dépendance envers la dernière version de <a href="http://testng.org/">TestNG</a>.
+Les coordonnées Maven de cette librairie sont <code>org.testng:testng</code>.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Ne pas oublier de configurer la porté adaptée.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Ajouter également les dépendances envers <a href="http://mockito.org/">Mockito</a> et <a href="https://joel-costigliola.github.io/assertj/">AssertJ</a> avec la même portée.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ajouter_une_dépendance_à_l_exécution"><a class="anchor" href="#_ajouter_une_dépendance_à_l_exécution"></a>7.3. Ajouter une dépendance à l&#8217;exécution</h3>
+<div class="paragraph">
+<p>Il existe une grande quantité de librairies de logs dans l&#8217;écosystème Java <em>p.e.</em> <a href="https://commons.apache.org/proper/commons-logging">Apache Commons Logging</a>, <a href="https://logging.apache.org/log4j">Log4J</a> sans oublier le package <code>java.util.logging</code> du JDK.</p>
+</div>
+<div class="paragraph">
+<p>Parmi toutes ces options, la solution <a href="http://www.slf4j.org">SLF4J</a> est particulièrement intéressante car elle offre une séparation claire entre l&#8217;API et les différentes implémentations disponibles.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://www.slf4j.org/images/concrete-bindings.png" alt="Principe de fonctionnement">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ajouter l&#8217;API SLF4J - <code>org.slf4j:slf4j-api</code>, comme dépendance simple</p>
+</li>
+<li>
+<p>Ajouter quelques logs à l&#8217;application, <em>p.e.</em> :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">Logger logger = LoggerFactory.getLogger(MaClass.class);
+logger.info("Ecrire quelque chose d'utile");</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajouter l&#8217;implémentation <code>org.slf4j:slf4j-simple</code> comme dépendance à l&#8217;exécution</p>
+</li>
+<li>
+<p>Exécuter l&#8217;application soit dans l&#8217;IDE, soit via l&#8217;exéuction du JAR packagé</p>
+</li>
+<li>
+<p>Vérifier le résultat dans la console pendant l&#8217;exécution</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Les versions de l&#8217;API et de l&#8217;implémentation doivent être les mêmes.
+Pour cela, il est conseillé d&#8217;utiliser la balise <code>properties</code> du POM.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_afficher_la_version_de_l_application"><a class="anchor" href="#_afficher_la_version_de_l_application"></a>8. Afficher la version de l&#8217;application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Afin d&#8217;afficher la version dans une application graphique (client lourd ou client web), les étapes suivantes sont nécessaires :</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Activer le filtrage Maven</p>
+</li>
+<li>
+<p>Créer un fichier de <em>properties</em> à la racine du répertoire de ressources, <em>p.e.</em> <code>application.properties</code></p>
+</li>
+<li>
+<p>Créer une propriété avec une clé définie, <em>p.e.</em> <code>application.version</code></p>
+</li>
+<li>
+<p>Lui affecter une valeur de telle sorte que le filtrage Maven la remplace par la version de l&#8217;application pendant le build</p>
+</li>
+<li>
+<p>Développer une fonctionnalité de l&#8217;application pour lire cette valeur. Voici un exemple d&#8217;un tel code :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">try (InputStream stream = new FileInputStream("application.properties")) {
+    properties.load(stream);
+    String version = properties.getProperty("application.version");
+} catch (Exception e) {
+    // Do something meaningful here
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Finalement, afficher cette valeur à l&#8217;écran</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>L&#8217;approche naïve pour afficher la version de l&#8217;application est de <a href="https://maven.apache.org/shared/maven-archiver/examples/manifest.html">configurer</a> l'<em>archiver</em> du Maven JAR plugin pour écrire celle-ci comme valeur de la clé <code>Implementation-Version</code> du fichier de manifeste.
+Toutefois, dès lors qu&#8217;il existe plus d&#8217;un unique JAR dans le <em>classpath</em> (<em>p.e.</em> lorsqu&#8217;on utilise des librairies tierces), les limitations inhérentes du <em>classloader</em> se manifestent (<em>cf.</em> <a href="https://stackoverflow.com/questions/1272648/reading-my-own-jars-manifest">StackOverflow</a>).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_déployer_un_artéfact"><a class="anchor" href="#_déployer_un_artéfact"></a>9. Déployer un artéfact</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Afin de mettre son artéfact à disposition, il est nécessaire de le déployer sur un dépôt distant, soit public, soit privé.
+Cette section sera dédiée à cela.</p>
+</div>
+<div class="paragraph">
+<p>Dans le cadre de ces travaux pratiques, le dépôt choisi sera <a href="https://bintray.com/">Bintray</a>.
+Bintray est un dépôt Maven (mais accepte également d&#8217;autres types d&#8217;artéfacts) <a href="https://www.jfrog.com/open-source/">Artifactory</a> dans le <em>cloud</em>.
+L&#8217;utilisation gratuite offre la possibilité de déployer des artéfacts Maven sur un dépôt public.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Bintray offre également une souscription payante qui permet de disposer de dépôts privés dans le <em>cloud</em>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_créer_un_compte_bintray"><a class="anchor" href="#_créer_un_compte_bintray"></a>9.1. Créer un compte Bintray</h3>
+<div class="paragraph">
+<p>Se rendre sur le site de <a href="https://bintray.com/">Bintray</a>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/maven/bintray.png" alt="Accueil">
+</div>
+</div>
+<div class="paragraph">
+<p>Cliquer sur le bouton <b class="button">Get Started for Free</b>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/maven/signinup.png" alt="Authentification">
+</div>
+</div>
+<div class="paragraph">
+<p>Cliquer maintenant sur le bouton <b class="button">Sign Up</b></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/maven/registration.png" alt="Enregistrement">
+</div>
+</div>
+<div class="paragraph">
+<p>Il est possible de créer un compte dédié, mais il est plus pratique d&#8217;utiliser l&#8217;identification de son compte Github.
+Cliquer sur l&#8217;icône Github en bas de la fenêtre.
+Vous êtes alors redirigés vers Github.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/maven/modifyauth.png" alt="Permission Bintray">
+</div>
+</div>
+<div class="paragraph">
+<p>Cliquer sur le bouton <b class="button">Authorize application</b></p>
+</div>
+<div class="paragraph">
+<p>Vous êtes finalement redirigés sur Bintray et êtes maintenant automatiquement authentifiés comme le montre la barre de menu.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/maven/authentified.png" alt="Authentifié">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_créer_le_package_sur_bintray"><a class="anchor" href="#_créer_le_package_sur_bintray"></a>9.2. Créer le package sur Bintray</h3>
+<div class="paragraph">
+<p>La seconde étape préalable au déploiement d&#8217;artéfacts sur Bintray est de créer un <em>package</em>, c&#8217;est-à-dire un emplacement pour le projet Maven désiré.</p>
+</div>
+<div class="paragraph">
+<p>Naviguer vers la page d&#8217;accueil.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/maven/repositories.png" alt="Liste des dépôts">
+</div>
+</div>
+<div class="paragraph">
+<p>Cliquer sur le dépôt Maven.
+La liste des <em>packages</em> Maven existants s&#8217;affiche.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/maven/mvnrepo.png" alt="Liste des packages">
+</div>
+</div>
+<div class="paragraph">
+<p>Cliquer sur le bouton <b class="button">Add New Package</b> en bas à droite.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/maven/createpackage.png" alt="Création d&#8217;un package">
+</div>
+</div>
+<div class="paragraph">
+<p>Renseigner les informations obligatoires suivantes :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Le nom du package.
+Il est vivement conseillé d&#8217;utiliser l' <code>artifactId</code> du projet Maven pour des raisons de référencement.</p>
+</li>
+<li>
+<p>Le type de license.
+Par défaut, choisir Apache-2.0.</p>
+</li>
+<li>
+<p>L&#8217;URL du dépôt de source.
+Indiquer l&#8217;URL du dépôt Github correspondant.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Finaliser la création en cliquant sur le bouton <b class="button">Create Package</b>.
+La page de détail du <em>package</em> s&#8217;affiche avec un message d&#8217;information qui indique que l&#8217;opération s&#8217;est déroulée avec succès.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configurer_le_dépôt_de_déploiement_pour_le_projet_maven"><a class="anchor" href="#_configurer_le_dépôt_de_déploiement_pour_le_projet_maven"></a>9.3. Configurer le dépôt de déploiement pour le projet Maven</h3>
+<div class="paragraph">
+<p>Il est maintenant nécessaire d&#8217;ajouter la section <code>distributionManagement</code> au projet Maven afin d&#8217;indiquer sur quel dépôt d&#8217;artéfacts déployer l&#8217;artéfact final.</p>
+</div>
+<div class="paragraph">
+<p>Voici un exemple d&#8217;une telle section pour Bintray.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;project...&gt;
+  &lt;distributionManagement&gt;
+    &lt;repository&gt;
+      &lt;id&gt;bintray&lt;/id&gt;
+      &lt;url&gt;https://api.bintray.com/maven/{BINTRAY_USER}/{BINTRAY_PACKAGE}&lt;/url&gt;
+    &lt;/repository&gt;
+  &lt;/distributionManagement&gt;
+&lt;/project&gt;</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>{BINTRAY_USER}</code></dt>
+<dd>
+<p>Nom d&#8217;utilisateur Bintray <em>p.e</em> nfrankel</p>
+</dd>
+<dt class="hdlist1"><code>{BINTRAY_PACKAGE}</code></dt>
+<dd>
+<p>Nom du <em>package</em> Bintray, c&#8217;est-à-dire le libellé utilisé lors de la <a href="http://localhost:60141/afx/resource/Users/i303869/projects/course/integrationcontinue/preview.html#truecr_er_le_package_sur_bintray">création</a></p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configurer_l_authentification_pour_le_déploiement"><a class="anchor" href="#_configurer_l_authentification_pour_le_déploiement"></a>9.4. Configurer l&#8217;authentification pour le déploiement</h3>
+<div class="paragraph">
+<p>Avant de pouvoir déployer sur Bintray, il est nécessaire de s&#8217;authentifier.
+En effet, il n&#8217;est pas permis à n&#8217;importe qui de déployer ses artifacts sur les dépôts d&#8217;un utilisateur.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Connaître sa clé d&#8217;API</dt>
+<dd>
+<p>L&#8217;authentification pour la publication d&#8217;artéfacts sur Bintray est basé sur le couple nom d&#8217;utilisateur Bintray/clé d&#8217;API.
+Afin de connaître cette dernière, survoler votre nom de profil en haut à droite.
+Un menu déroulant apparaît.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/maven/scrollingmenu.png" alt="Menu de profil">
+</div>
+</div>
+<div class="paragraph">
+<p>Cliquer sur le premier élément de menu libellé <b class="button">Your Profile</b>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/maven/profile.png" alt="Profil">
+</div>
+</div>
+<div class="paragraph">
+<p>Cliquer sur le bouton <b class="button">Edit</b></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/maven/profilemenu.png" alt="Menu d&#8217;édition de profil">
+</div>
+</div>
+<div class="paragraph">
+<p>Puis, dans le menu droit, cliquer sur le dernier élément de menu libellé <b class="button">API Key</b>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/maven/apikey.png" alt="API Key">
+</div>
+</div>
+<div class="paragraph">
+<p>Enfin, pour afficher la clé d&#8217;API, cliquer sur le bouton <b class="button">Show</b>.</p>
+</div>
+</dd>
+<dt class="hdlist1">Utiliser sa clé d&#8217;API</dt>
+<dd>
+<p>Dans votre répertoire <code>$HOME/.m2</code>, créer un fichier <code>settings.xml</code>.
+Ce fichier respecte un format standard décrit dans la <a href="https://maven.apache.org/settings.html:">documentation Maven</a>.</p>
+<div class="paragraph">
+<p>Votre fichier doit ressembler à l&#8217;extrait suivant :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd"&gt;
+  &lt;servers&gt;
+    &lt;server&gt;
+      &lt;id&gt;bintray&lt;/id&gt;
+      &lt;username&gt;nfrankel&lt;/username&gt;
+      &lt;password&gt;{API_KEY}&lt;/password&gt;
+    &lt;/server&gt;
+  &lt;/servers&gt;
+&lt;/settings&gt;</code></pre>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_effectuer_une_release"><a class="anchor" href="#_effectuer_une_release"></a>10. Effectuer une release</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Utiliser le <a href="https://maven.apache.org/maven-release/maven-release-plugin/">Maven release plugin</a> pour effectuer une release de votre projet sur Bintray.</p>
+</div>
+<div class="paragraph">
+<p>Pour cela, la section <code>scm</code> doit être renseignée.
+Voici un exemple d&#8217;une telle section :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;scm&gt;
+  &lt;url&gt;https://github.com/nfrankel/refactoring-example&lt;/url&gt;
+  &lt;connection&gt;scm:git:git@github.com:nfrankel/refactoring-example.git&lt;/connection&gt;
+  &lt;developerConnection&gt;scm:git:git@github.com:nfrankel/refactoring-example.git&lt;/developerConnection&gt;
+&lt;/scm&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Pour plus d&#8217;information, consulter la <a href="https://maven.apache.org/pom.html#SCM">documentation Maven afférente</a>.</p>
+</div>
+<div class="paragraph">
+<p>Lancer successivement les commandes <code>mvn release:prepare</code> et <code>mvn release:perform</code>.</p>
+</div>
+<div class="paragraph">
+<p>Vérifier le succès de l&#8217;opération :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Le package Bintray a été créé</p>
+</li>
+<li>
+<p>Le dépôt Github montre qu&#8217;un tag a été posé et le POM montre que la version a été modifiée</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2018-09-14 19:55:16 UTC
+</div>
+</div>
+</body>
+</html>

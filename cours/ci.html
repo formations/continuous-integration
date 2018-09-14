@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Intégration continue</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/theme/white.css" id="theme"><link href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/print/pdf.css" : "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/html5shiv.js"></script><![endif]--><link rel="stylesheet" href="style.css"></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Intégration continue</h1></section><section><section id="pratiques_continues"><h2>Pratiques continues</h2><div class="ulist"><ul><li><p><em>Continuous Integration</em></p></li><li><p><em>Continuous Delivery</em></p></li><li><p><em>Continuous Deployment</em></p></li></ul></div></section><section id="intgration_continue"><h2>Intégration continue</h2><div class="quoteblock"><blockquote>Ensemble de pratiques utilisées en génie logiciel consistant à vérifier à chaque modification de code source que le résultat des modifications ne produit pas de régression dans l&#8217;application développée</blockquote></div></section><section id="excution_automatise"><h2>Exécution automatisée</h2><div class="olist arabic"><ol class="arabic"><li><p>Récupération du code</p></li><li><p>Compilation</p></li><li><p>Analyse statique</p></li><li><p>Test</p></li><li><p>Code coverage</p></li><li><p>Packaging</p></li><li><p>Stockage dans un dépôt</p></li></ol></div></section><section><div class="imageblock" style=""><img src="./images/ci/principle.png" alt="principle"></div></section></section>
+<section><section id="livraison_continue"><h2>Livraison continue</h2><div class="quoteblock"><blockquote>Approche d’ingénierie logiciel dans laquelle les équipes produisent des logiciels dans des cycles courts, ce qui permet de le mettre à disposition à n’importe quel moment. Le but est de construire, tester et diffuser un logiciel plus rapidement</blockquote></div></section><section id="dploiement_continu"><h2>Déploiement continu</h2><div class="quoteblock"><blockquote>Etape suivant la livraison continue : chaque changement qui passe les tests automatisés est déployé automatiquement</blockquote></div></section><section><div class="imageblock" style=""><img src="./images/ci/continuous-delivery-deployment.png" alt="continuous delivery deployment"></div></section></section>
+<section><section id="serveurs_de_ci"><h2>Serveurs de CI</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Produit</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"> Fournisseur</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Langage</p></td><td class="tableblock halign-left valign-top"></td><td class="tableblock halign-left valign-top"></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://hudson-ci.org/" target="_blank">Hudson</a></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Eclipse</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">OpenSource</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Sur site</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://jenkins.io/" target="_blank">Jenkins</a></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">CloudBees</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">OpenSource</p></td><td class="tableblock halign-left valign-top"><div><div class="ulist"><ul><li><p>Sur site</p></li><li><p>SaaS</p></li></ul></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://travis-ci.org/" target="_blank">Travis</a></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Travis</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Ruby</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">SaaS</p></td></tr></table></section><section id="serveurs_de_ci_2"><h2>Serveurs de CI</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Produit</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"> Fournisseur</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Langage</p></td><td class="tableblock halign-left valign-top"></td><td class="tableblock halign-left valign-top"></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">(<a href="https://gitlab.com/" target="_blank">GitLab</a>)</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">GitLab</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Ruby</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">OpenSource</p></td><td class="tableblock halign-left valign-top"><div><div class="ulist"><ul><li><p>Sur site</p></li><li><p>SaaS</p></li></ul></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"> (<a href="https://bitbucket.org/" target="_blank">Bitbucket</a>)</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Atlassian</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Java?</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">SaaS</p></td></tr></table></section></section></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/head.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'white',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/zoom-js/zoom.js', async: true },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/notes/notes.js', async: true }
+  ]
+});</script></body></html>

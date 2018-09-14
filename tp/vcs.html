@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.6.1">
+<meta name="author" content="Nicolas Frankel">
+<title>Travaux pratiques - Système de Contrôle de Version</title>
+<link rel="stylesheet" href="./../asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Travaux pratiques - Système de Contrôle de Version</h1>
+<div class="details">
+<span id="author" class="author">Nicolas Frankel</span><br>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image left"><a class="image" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" alt="Licence Creative Commons"></a></span></p>
+</div>
+<div class="paragraph">
+<p>Ce document est mis à disposition selon les termes de la <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International</a>.</p>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_objectif">1. Objectif</a></li>
+<li><a href="#_références">2. Références</a></li>
+<li><a href="#_cours_udemy_gratuits">3. Cours Udemy gratuits</a></li>
+<li><a href="#_outillage">4. Outillage</a></li>
+<li><a href="#_premiers_pas_avec_git">5. Premiers pas avec Git</a>
+<ul class="sectlevel2">
+<li><a href="#_créer_un_compte_github">5.1. Créer un compte Github</a></li>
+<li><a href="#_créer_un_dépôt_sur_github">5.2. Créer un dépôt sur Github</a></li>
+<li><a href="#_initialiser_un_dépôt_local">5.3. Initialiser un dépôt local</a></li>
+<li><a href="#_référencer_un_dépôt_distant">5.4. Référencer un dépôt distant</a></li>
+<li><a href="#_gérer_l_authentification">5.5. Gérer l&#8217;authentification</a></li>
+<li><a href="#_visualiser_le_statut_des_fichiers">5.6. Visualiser le statut des fichiers</a></li>
+<li><a href="#_configurer_les_fichiers_à_exclure">5.7. Configurer les fichiers à exclure</a></li>
+<li><a href="#_ajouter_les_fichiers_à_l_index">5.8. Ajouter les fichiers à l&#8217;index</a></li>
+<li><a href="#_committer">5.9. Committer</a></li>
+<li><a href="#_pousser_les_commits_locaux">5.10. Pousser les commits locaux</a></li>
+</ul>
+</li>
+<li><a href="#_pull_requests">6. Pull requests</a>
+<ul class="sectlevel2">
+<li><a href="#_fork">6.1. Fork</a></li>
+<li><a href="#_cloner_le_dépôt">6.2. Cloner le dépôt</a></li>
+<li><a href="#_effectuer_des_modifications">6.3. Effectuer des modifications</a></li>
+<li><a href="#_créer_une_pull_request">6.4. Créer une pull request</a></li>
+<li><a href="#_traiter_une_pull_request">6.5. Traiter une pull request</a></li>
+</ul>
+</li>
+<li><a href="#_récupération_des_commits_distants">7. Récupération des commits distants</a>
+<ul class="sectlevel2">
+<li><a href="#_récupérer_les_commits_distants_cas_simple">7.1. Récupérer les commits distants - cas simple</a></li>
+<li><a href="#_récupérer_les_commits_distantes_cas_avancé">7.2. Récupérer les commits distantes - cas avancé</a></li>
+<li><a href="#_gérer_les_conflits">7.3. Gérer les conflits</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_objectif"><a class="anchor" href="#_objectif"></a>1. Objectif</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>L&#8217;objectif de ce <em>workshop</em> est de se familiariser avec Git, un système de contrôle de version distribué.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_références"><a class="anchor" href="#_références"></a>2. Références</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">En français : </dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../cours/vcs.html">Slides</a></p>
+</li>
+<li>
+<p><a href="https://git-scm.com/book/fr/v2" target="_blank" rel="noopener">Pro Git</a></p>
+</li>
+<li>
+<p><a href="http://liris.cnrs.fr/~pchampin/enseignement/intro-git" target="_blank" rel="noopener">Introduction à Git</a></p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">En anglais : </dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://git-scm.com/" target="_blank" rel="noopener">Git - documentation officielle</a></p>
+</li>
+<li>
+<p><a href="https://training.github.com/kit/downloads/github-git-cheat-sheet.pdf" target="_blank" rel="noopener">Aide-mémoire Git</a></p>
+</li>
+<li>
+<p><a href="http://zeroturnaround.com/wp-content/uploads/2016/02/Git-Cheat-Sheet.png" target="_blank" rel="noopener">Un autre aide-mémoire Git Cheat Sheet</a></p>
+</li>
+<li>
+<p><a href="https://ndpsoftware.com/git-cheatsheet.html#loc=index;">Un aide-mémoire interactif</a></p>
+</li>
+<li>
+<p><a href="https://www.atlassian.com/git/tutorials/" target="_blank" rel="noopener">Tutorials Git par Atlassian</a></p>
+</li>
+<li>
+<p><a href="https://try.github.io/" target="_blank" rel="noopener">Apprentissage interactif</a></p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cours_udemy_gratuits"><a class="anchor" href="#_cours_udemy_gratuits"></a>3. Cours Udemy gratuits</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.udemy.com/git-quick-start/?siteID=JVFxdTr9V80-lgTV3HjmuOge62Ip64WrTw" target="_blank" rel="noopener">Getting Started With Git: Key Concepts for Beginners</a></p>
+</li>
+<li>
+<p><a href="https://www.udemy.com/git-started-with-github/?siteID=JVFxdTr9V80-FrHJKYtTHFhoYCnYqfYHTw" target="_blank" rel="noopener">Git Started with GitHub</a></p>
+</li>
+<li>
+<p><a href="https://www.udemy.com/the-ultimate-git-5-day-challenge/?siteID=JVFxdTr9V80-07AuhR9PpgOdAf1SJMLeZg" target="_blank" rel="noopener">The Ultimate GIT 5-day Challenge</a></p>
+</li>
+<li>
+<p><a href="https://www.udemy.com/git-bash/?siteID=JVFxdTr9V80-OdtlZwOjC1kipgHGFY_csw" target="_blank" rel="noopener">Command Line Essentials: Git Bash for Windows</a></p>
+</li>
+<li>
+<p><a href="https://www.udemy.com/short-and-sweet-get-started-with-git-and-github-right-now/?siteID=JVFxdTr9V80-w2NoQqAClNOh2Ko5CGHtMg" target="_blank" rel="noopener">Short and Sweet: Get Started with Git and GitHub Right Now</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_outillage"><a class="anchor" href="#_outillage"></a>4. Outillage</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.sourcetreeapp.com/" target="_blank" rel="noopener">SourceTree</a></p>
+</li>
+<li>
+<p><a href="https://www.gitkraken.com/" target="_blank" rel="noopener">Git Kraken</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_premiers_pas_avec_git"><a class="anchor" href="#_premiers_pas_avec_git"></a>5. Premiers pas avec Git</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Cette section est dédiée au passage d&#8217;un projet sous Github.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Github ne doit <strong>pas</strong> être confondu avec Git.
+Il s&#8217;agit uniquement d&#8217;une de ses implémentations (propriétaire).
+Il en <a href="https://bitbucket.org/" target="_blank" rel="noopener">existe</a> <a href="https://gitlab.com/users/sign_in" target="_blank" rel="noopener">d&#8217;autres</a>.
+Toutefois, Github reste le service Git le plus répandu actuellement, notamment grâce à son orientation sociale.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Les étapes à exécuter sont les suivantes :</p>
+</div>
+<div class="sect2">
+<h3 id="_créer_un_compte_github"><a class="anchor" href="#_créer_un_compte_github"></a>5.1. Créer un compte Github</h3>
+<div class="paragraph">
+<p>Cette étape est optionnelle si un compte Github est déjà existant.
+Dans le cas contraire, accéder au site <a href="https://github.com/">Github</a>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/vcs/signup.png" alt="Sign up">
+</div>
+</div>
+<div class="paragraph">
+<p>Cliquer sur le bouton <b class="button">Sign up</b> pour créer un nouveau compte.
+Remplir les champs de manière adéquate.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/vcs/join.png" alt="Join Github">
+</div>
+</div>
+<div class="paragraph">
+<p>Cliquer sur <b class="button">Create an account</b> Le plan sélectionné par défaut est gratuit ;
+il est suffisant dans le cadre de ce <em>workshop</em>.
+La limitation principale d&#8217;un tel plan est que tous les dépôts sont nécessairement publics et donc consultables par tous.
+Il est toujours possible d&#8217;en changer par la suite.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/vcs/welcome.png" alt="Welcome to Github">
+</div>
+</div>
+<div class="paragraph">
+<p>Cliquer sur <b class="button">Finish sign up</b> pour terminer la création du compte.
+Bravo, le compte Github est maintenant créé.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/vcs/learn.png" alt="Learn Github">
+</div>
+</div>
+<div class="paragraph">
+<p>Pour passer à l&#8217;étape suivante, il est avant tout nécessaire de valider l&#8217;adresse électronique :
+se référer au courriel qui a été envoyé.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_créer_un_dépôt_sur_github"><a class="anchor" href="#_créer_un_dépôt_sur_github"></a>5.2. Créer un dépôt sur Github</h3>
+<div class="paragraph">
+<p>Un dépôt est un dépôt pour le code.
+En général, la cardinalité entre un dépôt et un projet est de 1 pour 1.
+On se contentera de ce cas général :
+un dépôt permettra de stocker les sources d&#8217;un unique projet.</p>
+</div>
+<div class="paragraph">
+<p>Cliquer sur le bouton <b class="button">+ New repository</b> de l&#8217;écran précédent.
+Si un autre écran est affiché, il est possible de créer un nouveau dépôt à l&#8217;aide du bouton <b class="button">+</b> dans la barre de tâches affichée sur le site (une fois connecté).</p>
+</div>
+<div class="paragraph">
+<p>Sélectionner un nom de projet et la description.
+Laisser les autres valeurs inchangées.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/vcs/newrepo.png" alt="Create a new repository">
+</div>
+</div>
+<div class="paragraph">
+<p>Cliquer sur "Create repository".</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/vcs/setuprepo.png" alt="Quick setup">
+</div>
+</div>
+<div class="paragraph">
+<p><a id="infos-utiles"></a>Conserver cette page ouverte, elle contient des informations utiles pour la suite.</p>
+</div>
+<div class="paragraph">
+<p>Cette étape conclut la configuration de Github via l&#8217;interface graphique.
+La suite est identique quel que soit le fournisseur de service Git.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_initialiser_un_dépôt_local"><a class="anchor" href="#_initialiser_un_dépôt_local"></a>5.3. Initialiser un dépôt local</h3>
+<div class="paragraph">
+<p>L&#8217;initialisation d&#8217;un dépôt git local se fait via la commande <code>init</code> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">git init</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Vérifier qu&#8217;après exécution de cette commande, un nouveau répertoire <code>.git</code> a été ajouté à la racine du répertoire dans lequel il a été exécuté.
+Notamment, regarder le contenu du fichier <code>.git/config</code> qui doit être similaire au contenu suivant :</p>
+</div>
+<div class="listingblock">
+<div class="title">git/config</div>
+<div class="content">
+<pre class="highlight"><code>[core]
+    repositoryformatversion = 0
+    filemode = true
+    bare = false
+    logallrefupdates = true
+    ignorecase = true
+    precomposeunicode = true</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_référencer_un_dépôt_distant"><a class="anchor" href="#_référencer_un_dépôt_distant"></a>5.4. Référencer un dépôt distant</h3>
+<div class="paragraph">
+<p>Aller sur Github pour visualiser la <a href="#infos-utiles">page d&#8217;information</a>.
+Recherchez la section intitulée "&#8230;&#8203;or push an existing repository from the command line".</p>
+</div>
+<div class="paragraph">
+<p>L&#8217;exécution de la première ligne de commande permet de référencer le dépôt distant dans la configuration locale.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">git remote add origin git@github.com:user/repo.git</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Dans le fichier <code>.git/config</code>, les lignes suivantes ont maintenant été ajoutées :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[remote "origin"]
+        url = git@github.com:xxx/yyy.git
+        fetch = +refs/heads/*:refs/remotes/origin/*</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_gérer_l_authentification"><a class="anchor" href="#_gérer_l_authentification"></a>5.5. Gérer l&#8217;authentification</h3>
+<div class="paragraph">
+<p>Chaque opération d'<strong>écriture</strong> dans le dépôt distant nécessite une authentification et l&#8217;autorisation en écriture - une vérification que l&#8217;utilisateur dispose de tels droits.</p>
+</div>
+<div class="paragraph">
+<p>Dans la <a href="#trueajouter_le_d_p_t_distant">section précédente</a>, l&#8217;URL ajoutée est de la forme <code>git@github.com:user/repo.git</code>.</p>
+</div>
+<div class="paragraph">
+<p>Cette forme implique l&#8217;utilisation d&#8217;une communication SSH pour la synchronisation entre le dépôt local et le dépôt distant.
+L&#8217;authentification d&#8217;une telle communication se fait via un mécanisme asymétrique de type clé privé-clé publique.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Si l&#8217;infrastructure décrite dans cette section se révèle trop lourde et qu&#8217;une authentification par login/mot de passe à <strong>chaque</strong> écriture est acceptable, utiliser plutôt HTTPS et une URL du type <code><a href="https://github.com/user/repo.git" class="bare">https://github.com/user/repo.git</a></code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>En fonction du système d&#8217;exploitation, voici la marche à suivre :</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Pour Unix, Linux et Mac OSX</dt>
+<dd>
+<p>La documentation est disponible <a href="https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-mac-os-x">ici (EN)</a>.</p>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>L&#8217;article mentionne Mac OS X mais est également applicable aux autres systèmes d&#8217;exploitation de type *Nix.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Pour Windows</dt>
+<dd>
+<p>Il est d&#8217;abord nécessaire d&#8217;installer <a href="http://www.putty.org/">Putty</a>.
+La documentation est disponible <a href="https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-windows">ici (EN)</a>.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Une fois la clé privée générée, il est nécessaire d&#8217;ajouter la clé publique dans votre compte Github.
+Pour cela, cliquer sur votre profil en haut à droite.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/vcs/profileandmore.png" alt="Menu">
+</div>
+</div>
+<div class="paragraph">
+<p>Puis cliquer sur l&#8217;élémént <a href="https://github.com/settings/profile">Settings</a> du menu déroulant.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/vcs/profile.png" alt="Profil">
+</div>
+</div>
+<div class="paragraph">
+<p>Enfin, dans le menu de gauche, cliquer sur l&#8217;élément SSH.
+Dans l&#8217;écran, cliquer sur le bouton <b class="button">New SSH Key</b>.
+Ajouter la clé publique.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/vcs/sshkeys.png" alt="SSH Keys">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_visualiser_le_statut_des_fichiers"><a class="anchor" href="#_visualiser_le_statut_des_fichiers"></a>5.6. Visualiser le statut des fichiers</h3>
+<div class="paragraph">
+<p>Pour mémoire, le schéma suivant résume les états possibles dans git :</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="https://git-scm.com/images/about/index1@2x.png" alt="Fig. 1 - Etats git"></span></p>
+</div>
+<div class="paragraph">
+<p>Pour vérifier l&#8217;état des fichiers du dépôt local, utilisez la commande <code>status</code> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">git status</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Voici un exemple de sortie d&#8217;une telle commande :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>On branch master
+
+Initial commit
+
+Untracked files:
+  (use "git add &lt;file&gt;..." to include in what will be committed)
+
+ .idea/
+ pom.xml
+ securitymanager-example.iml
+ src/
+ target/
+
+nothing added to commit but untracked files present (use "git add" to track)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>La liste exacte des fichiers est bien sûr dépendante du projet et de l&#8217;Atelier de Génie Logiciel (AGL) utilisé pour le développement.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configurer_les_fichiers_à_exclure"><a class="anchor" href="#_configurer_les_fichiers_à_exclure"></a>5.7. Configurer les fichiers à exclure</h3>
+<div class="paragraph">
+<p>Certains fichiers n&#8217;ont pas vocation à être gérés par le Système de Gestion de Version.
+Parmi ceux-ci, on recense les fichier générés (par exemple, les fichiers minifiés produits par Grunt et les fichiers <code>.class</code> produits la compilation Java), les fichiers de configuration de l&#8217;AGL, etc.</p>
+</div>
+<div class="paragraph">
+<p>Cette exclusion se base sur le contenu de fichiers <code>.gitignore</code> dans le dépôt.
+Dans le cadre de ces travaux pratiques, nous nous bornerons à l&#8217;utilisation d&#8217;un unique fichier de ce type situé à la <strong>racine</strong> du dépôt local.</p>
+</div>
+<div class="paragraph">
+<p>Le format du fichier est basé sur des modèles d&#8217;exclusion, un modèle par ligne.
+L&#8217;intégralité des règle de formation des modèles est disponible dans la <a href="https://git-scm.com/docs/gitignore#_pattern_format">documentation officielle</a>.</p>
+</div>
+<div class="paragraph">
+<p>Par exemple, pour exclure les fichiers inutiles, le fichier <code>.gitignore</code> suivant peut être utilisé :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>.idea
+*.iml
+target</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>La commande <code>status</code> renvoye alors un résultat différent du résultat précédent :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>On branch master
+
+Initial commit
+
+Untracked files:
+  (use "git add &lt;file&gt;..." to include in what will be committed)
+
+.gitignore
+pom.xml
+src/
+
+nothing added to commit but untracked files present (use "git add" to track)</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ajouter_les_fichiers_à_l_index"><a class="anchor" href="#_ajouter_les_fichiers_à_l_index"></a>5.8. Ajouter les fichiers à l&#8217;index</h3>
+<div class="paragraph">
+<p>Avant de committer les fichiers, il est nécessaire de les ajouter comme le montre la figure 1 ci-dessus.
+L&#8217;ajout se fait à l&#8217;aide de la commande <code>add</code> qui prend en paramètre un modèle de chemin.</p>
+</div>
+<div class="paragraph">
+<p>Le premier ajout incluant tous les fichiers, on peut en général utiliser le modèle <code>*</code> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">git add *</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Les modifications ultérieures de l&#8217;index se font généralement en ajoutant un fichier particulier.
+Il est nécessaire d&#8217;indiquer le chemin du (des) fichier(s) à ajouter :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">git add path/to/file
+git add path/to/directory/*.java
+git add *</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_committer"><a class="anchor" href="#_committer"></a>5.9. Committer</h3>
+<div class="paragraph">
+<p>Une fois les fichiers ajoutés à l&#8217;index, il est alors possible de committer le lot des fichiers.
+Cela est géré par la commande <code>commit</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">git commit</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>La bonne granularité d&#8217;un commit est celle qui permet de revenir sur ce commit avec le minimum d&#8217;impacts.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pousser_les_commits_locaux"><a class="anchor" href="#_pousser_les_commits_locaux"></a>5.10. Pousser les commits locaux</h3>
+<div class="paragraph">
+<p>Dès lors qu&#8217;au moins un commit a été effectué dans le dépôt local, il est possible de pousser le(s) nouveau(x) commit(s) vers le dépôt distant.
+Cette action est possible via l&#8217;intermédiaire de la commande <code>push</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">git push</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Il existe un risque que les arbres de travail locaux et distants soient désynchronisés - par exemple si quelqu&#8217;un d&#8217;autre a déjà poussé des commits sur le même dépôt distant.
+Pour le moment, ce risque est nul car il s&#8217;agit du premier commit.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pull_requests"><a class="anchor" href="#_pull_requests"></a>6. Pull requests</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Dans la première sections, il a été décrit comment réaliser des commits et pousser ceux-ci vers le dépôt distant.
+L&#8217;objectif de cette seconde section est d&#8217;apprendre à réaliser des <em>pull requests</em>.</p>
+</div>
+<div class="paragraph">
+<p>Pour cela, il est nécessaire de travailler en binôme.
+Si le nombre d&#8217;étudiants est impair, un groupe de trois travaillera en permutation circulaire.</p>
+</div>
+<div class="sect2">
+<h3 id="_fork"><a class="anchor" href="#_fork"></a>6.1. Fork</h3>
+<div class="paragraph">
+<p>La première étape pour réaliser une <em>pull request</em> sur Github est de copier le dépôt de votre binôme dans votre propre compte.
+Allez sur l&#8217;URL du dépôt de votre binôme.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/vcs/fork.png" alt="Fork">
+</div>
+</div>
+<div class="paragraph">
+<p>Cliquer sur le bouton <b class="button">Fork</b> en haut à droite pour copier le dépôt dans votre compte.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cloner_le_dépôt"><a class="anchor" href="#_cloner_le_dépôt"></a>6.2. Cloner le dépôt</h3>
+<div class="paragraph">
+<p>Maintenant qu&#8217;une copie du dépôt est associée à son propre compte, il est possible de le cloner en local en utilisant la commande <code>clone</code> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">git clone url_du_depot</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Par rapport à <code>git init</code>, il n&#8217;est pas nécessaire d&#8217;ajouter un dépôt distant avec <code>git remote add</code>, la commande <code>clone</code> ajoute le paramétrage du dépôt distant à la configuration locale.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_effectuer_des_modifications"><a class="anchor" href="#_effectuer_des_modifications"></a>6.3. Effectuer des modifications</h3>
+<div class="paragraph">
+<p>Effectuer maintenant des modifications pertinentes sur le dépôt local copié.
+Réaliser un enchaînement d&#8217;opérations de <code>commit</code> et de <code>push</code> comme dans la <a href="#trueajouter_les_fichiers_l_index">section précédente</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_créer_une_pull_request"><a class="anchor" href="#_créer_une_pull_request"></a>6.4. Créer une pull request</h3>
+<div class="paragraph">
+<p>La création de la <em>pull request</em> elle-même s&#8217;effectue via l&#8217;interface graphique de Github.
+Naviguer vers la page de la <strong>copie</strong> du dépôt - celle qui est sur votre compte.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/vcs/pullrequest.png" alt="Créer une pull request">
+</div>
+</div>
+<div class="paragraph">
+<p>Cliquer sur le bouton <b class="button">Pull Request</b> et suivre les instructions.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_traiter_une_pull_request"><a class="anchor" href="#_traiter_une_pull_request"></a>6.5. Traiter une pull request</h3>
+<div class="paragraph">
+<p>Une fois que son binôme a effectué la <em>pull request</em>, aller sur son dépôt via l&#8217;interface graphique de Github.
+Regarder l&#8217;onglet Pull Request.
+Une pastille doit indiquer qu&#8217;il y a une <em>pull request</em> en attente.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/vcs/pullrequest2.png" alt="Gérer une pull request">
+</div>
+</div>
+<div class="paragraph">
+<p>Cliquer sur l&#8217;onglet.
+La liste des <em>pull request</em> en attente de traitement s&#8217;affiche.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/vcs/pullrequest3.png" alt="Liste des pull request">
+</div>
+</div>
+<div class="paragraph">
+<p>Cliquer sur la <em>pull request</em>.
+Le détail de la pull request s&#8217;affiche.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/vcs/pullrequest4.png" alt="Détail de la pull request">
+</div>
+</div>
+<div class="paragraph">
+<p>Si les permissions sont suffisantes <strong>et</strong> qu&#8217;il n&#8217;existe pas de conflits, cliquer sur <b class="button">Merge Pull Request</b> pour fusionner l&#8217;intégralité des commits de la <em>pull request</em> dans le dépôt.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_récupération_des_commits_distants"><a class="anchor" href="#_récupération_des_commits_distants"></a>7. Récupération des commits distants</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Jusqu&#8217;à présent, l&#8217;hypothèse implicite est qu&#8217;il n&#8217;y avait pas eu de commits sur le dépôt distant et que celui-ci était uniquement modifiés par ses propres <em>push</em>.
+Malheureusement, ce cas de figure idéal n&#8217;est rencontré que rarement.</p>
+</div>
+<div class="sect2">
+<h3 id="_récupérer_les_commits_distants_cas_simple"><a class="anchor" href="#_récupérer_les_commits_distants_cas_simple"></a>7.1. Récupérer les commits distants - cas simple</h3>
+<div class="paragraph">
+<p>La première étape consiste à récupérer les commits distants dans le cas où aucune modification locale n&#8217;a eu lieu.</p>
+</div>
+<div class="paragraph">
+<p>Cela est effectuée à l&#8217;aide des commandes suivantes :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>fetch</code> récupère les modifications distantes dans une branche locale temporaire (appelée <code>FETCH_HEAD</code>)</p>
+</li>
+<li>
+<p>il suffit alors d&#8217;utiliser la commande <code>merge</code> pour fusionner cette branche temporaire dans la branche courante</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">git fetch
+git merge</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_récupérer_les_commits_distantes_cas_avancé"><a class="anchor" href="#_récupérer_les_commits_distantes_cas_avancé"></a>7.2. Récupérer les commits distantes - cas avancé</h3>
+<div class="paragraph">
+<p>Dans le cas où des commits ont été effectués sur le dépôt local, le dernier des commits distants et locaux n&#8217;est plus le même.
+Git fusionne cette divergence automatiquement avec la commande <code>pull</code> lorsque c&#8217;est possible.
+Malheureusement, cela rend l&#8217;historique non linéaire.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://gitmap.files.wordpress.com/2010/12/git-pull.png?w=620" alt="git pull rebase">
+</div>
+</div>
+<div class="paragraph">
+<p>Afin de réintégrer de manière linéaire l&#8217;ensemble des commits, Git permet d&#8217;appliquer en premier lieu les commits distants puis en second les commits locaux, en remontant jusqu&#8217;à l&#8217;ancêtre commun avec l&#8217;option <code>--rebase</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://gitmap.files.wordpress.com/2010/12/pull-rebase.png?w=620" alt="git pull rebase">
+</div>
+</div>
+<div class="paragraph">
+<p>Dans la vraie vie, il est conseillé d&#8217;exécuter la commande suivante dans tous les cas :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">git pull --rebase</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Récupérer les commits effectuées sur votre dépôt distant via la <em>pull request</em> dans la <a href="#truepull_requests">section précédente</a>.</p>
+</div>
+<div class="paragraph">
+<p>Ne pas oublier pas d&#8217;utiliser la commande <code>push</code> afin de pousser les commits locaux vers le dépôt distant après coup !</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_gérer_les_conflits"><a class="anchor" href="#_gérer_les_conflits"></a>7.3. Gérer les conflits</h3>
+<div class="paragraph">
+<p>Lorsqu&#8217;un conflit intervient lors de la fusion, Git l&#8217;indique sur la ligne de commande, avec la liste des fichiers qui comportent un tel conflit.</p>
+</div>
+<div class="paragraph">
+<p>Il faut alors :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Pour chaque fichier :</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Résoudre le conflit</p>
+</li>
+<li>
+<p>Ajouter le fichier ainsi modifié à l&#8217;index avec la commande <code>add</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Exécuter la commande <code>commit</code> lorsque tous les conflits ont été résolus <strong>et</strong> tous les fichiers corrigés ajoutés à l&#8217;index</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>En accord avec son binôme, introduire des conflits entre les dépôts local et distant puis s&#8217;entraîner à les résoudre.</p>
+</div>
+<div class="paragraph">
+<p>Ne pas oublier pas d&#8217;utiliser la commande <code>push</code> afin de pousser les commits locaux vers le dépôt distant après coup !</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2018-09-14 19:55:16 UTC
+</div>
+</div>
+</body>
+</html>

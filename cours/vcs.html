@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Système de Contrôle de Version</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/theme/white.css" id="theme"><link href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/print/pdf.css" : "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/html5shiv.js"></script><![endif]--><link rel="stylesheet" href="style.css"></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Système de Contrôle de Version</h1></section><section><section id="problmatique"><h2>Problématique</h2><div class="ulist"><ul><li><p>Vous avez livré la v1 de votre logiciel</p></li><li><p>Vous avez commencé à travailler sur la v2</p></li><li><p>Un bug est déclaré sur la v1</p></li></ul></div></section><section id="corriger_le_bug"><h2>Corriger le bug</h2><div class="paragraph"><p>Comment revenir à la v1 du logiciel ?</p></div></section><section><div class="imageblock" style=""><img src="./images/vcs/versions.png" alt="versions"></div></section><section id="versionnage_smantique"><h2>Versionnage sémantique</h2><div class="ulist"><ul><li><p>X</p><div class="ulist"><ul><li><p>Version majeure</p></li><li><p>Rétrocompatibilité non assurée</p></li></ul></div></li><li><p>Y</p><div class="ulist"><ul><li><p>Version mineure</p></li><li><p>Ajout de fonctionnalités</p></li></ul></div></li><li><p>Z</p><div class="ulist"><ul><li><p>Correction de bugs</p></li></ul></div></li></ul></div></section><section id="processus_recherch"><h2>Processus recherché</h2><div class="olist arabic"><ol class="arabic"><li><p>Stocker l&#8217;état des sources v1</p></li><li><p>Stocker l&#8217;état courant</p></li><li><p>Revenir à la v1</p></li><li><p>Corriger le bug / livrer</p></li><li><p>Stocker l&#8217;état v1.0.1</p></li><li><p>Revenir à l&#8217;état courant</p></li></ol></div></section><section id="principe_d_un_systme_de_contrle_de_version"><h2>Principe d&#8217;un système de contrôle de version</h2><div class="imageblock" style=""><img src="./images/vcs/tagging.png" alt="tagging"></div></section></section>
+<section><section id="quipe_de_dveloppement"><h2>Équipe de développement</h2><div class="paragraph"><p>Un logiciel est réalisé par une équipe de développement</p></div></section><section id="travailler_avec_un_vcs"><h2>Travailler avec un VCS</h2><div class="imageblock" style=""><img src="./images/vcs/vcs.png" alt="vcs"></div></section><section id="quipes_de_dveloppement"><h2>ÉquipeS de développement</h2><div class="ulist"><ul><li><p>Pour les gros projets</p><div class="ulist"><ul><li><p>Plusieurs équipes de développement</p></li></ul></div></li><li><p>Chaque équipe travaille sur une fonctionnalité</p><div class="ulist"><ul><li><p>Hébergée sur une branche dédiée</p></li></ul></div></li></ul></div></section><section id="branch_et_merge"><h2>Branch et merge</h2><div class="imageblock" style=""><img src="./images/vcs/branching.png" alt="branching"></div></section></section>
+<section><section id="type_de_vcs"><h2>Type de VCS</h2><div class="ulist"><ul><li><p>VCS centralisés</p><div class="ulist"><ul><li><p>CVS</p></li><li><p>Subversion – SVN</p></li></ul></div></li><li><p>VCS décentralisés - DCVS</p><div class="ulist"><ul><li><p>Git</p></li><li><p>Mercurial</p></li></ul></div></li></ul></div></section><section id="travailler_avec_un_dcvs"><h2>Travailler avec un DCVS</h2><div class="imageblock" style=""><img src="./images/vcs/dcvs.png" alt="dcvs"></div></section></section>
+<section><section id="git"><h2>Git</h2><div class="ulist"><ul><li><p>Logiciel OpenSource</p><div class="ulist"><ul><li><p>GNU v2</p></li></ul></div></li><li><p>Créé par Linus Torvald</p><div class="ulist"><ul><li><p>Aussi auteur du noyau Linux</p></li></ul></div></li></ul></div></section><section><div class="imageblock stretch" style=""><img src="./images/vcs/xkcd.png" alt="xkcd" height="100%"></div></section></section>
+<section><section id="dpot"><h2>Dépot</h2><div class="paragraph"><p>Ensemble des sources pour un projet particulier</p></div></section><section id="gestion_de_dpt"><h2>Gestion de dépôt</h2><table class="tableblock frame-all grid-all" style=""><colgroup><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top">Commande</th><th class="tableblock halign-left valign-top">Description</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>git init &lt;name&gt;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Initialise un dépôt local dans le répertoire courant</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>git clone &lt;url&gt;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Copie un dépôt dans le répertoire courant</p></td></tr></table></section><section id="commande_de_gestion_de_configuration"><h2>Commande de gestion de configuration</h2><table class="tableblock frame-all grid-all" style=""><colgroup><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top">Commande</th><th class="tableblock halign-left valign-top">Configure</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>git config user.name "&lt;A name&gt;"</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Nom d&#8217;utilisateur</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>git config user.email &lt;<a href="mailto:me@name.com">me@name.com</a>&gt;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Email</p></td></tr></table></section></section>
+<section><section id="index"><h2>Index</h2><div class="paragraph"><p>Espace de travail pour le prochain commit</p></div></section><section id="cycle_de_vie_d_un_fichier_local"><h2>Cycle de vie d&#8217;un fichier local</h2><div class="imageblock" style=""><img src="./images/vcs/lifecycle.png" alt="lifecycle"></div></section><section id="commandes_de_base"><h2>Commandes de base</h2><table class="tableblock frame-all grid-all" style=""><colgroup><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top">Commande</th><th class="tableblock halign-left valign-top">Description</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>git add &lt;path/to/file&gt;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Ajoute le fichier(s) à l&#8217;index</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>git status</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Affiche la liste des fichiers modifiés/créés depuis le dernier commit</p></td></tr></table></section><section id="commandes_de_base_2"><h2>Commandes de base</h2><table class="tableblock frame-all grid-all" style=""><colgroup><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top">Commande</th><th class="tableblock halign-left valign-top">Description</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>git diff &lt;path&gt;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Affiche les différences entre l&#8217;état actuel et l&#8217;index</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>git commit</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Commite les fichiers de l&#8217;index</p></td></tr></table></section></section>
+<section><section id="rcupration_des_changements_distants"><h2>Récupération des changements distants</h2><div class="ulist"><ul><li><p>Commits</p></li><li><p>Branches</p></li><li><p>Tags</p></li></ul></div></section><section id="synchronisation"><h2>Synchronisation</h2><table class="tableblock frame-all grid-all" style=""><colgroup><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top">Commande</th><th class="tableblock halign-left valign-top">Description</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>git fetch</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Récupère les changements distants</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>git pull</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Récupère les changements distants et les intègre</p></td></tr></table></section><section id="synchronisation_2"><h2>Synchronisation</h2><table class="tableblock frame-all grid-all" style=""><colgroup><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top">Commande</th><th class="tableblock halign-left valign-top">Description</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>git merge</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Intègre les changements</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>git push</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Pousse les commits locaux</p></td></tr></table></section><section id="vue_d_ensemble"><h2>Vue d&#8217;ensemble</h2><div class="imageblock" style=""><img src="./images/vcs/overview.png" alt="overview"></div></section></section>
+<section><section id="gestion_des_branches"><h2>Gestion des branches</h2><table class="tableblock frame-all grid-all" style=""><colgroup><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top">Commande</th><th class="tableblock halign-left valign-top">Description</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>git branch</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Liste les branches</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>git branch &lt;name&gt;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Crée une branche</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>git checkout &lt;name&gt;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Change de branche</p></td></tr></table></section><section id="tag"><h2>Tag</h2><div class="paragraph"><p>Libellé sur un commit particulier</p></div></section><section id="gestion_des_tag"><h2>Gestion des tag</h2><table class="tableblock frame-all grid-all" style=""><colgroup><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top">Commande</th><th class="tableblock halign-left valign-top">Description</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>git tag</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Liste les tags</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>git tag &lt;name&gt;</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Crée un tag</p></td></tr></table></section><section id="smantique"><h2>Sémantique</h2><div class="dlist"><dl><dt class="hdlist1"><code>master</code></dt><dd><p>Branche principale</p></dd><dt class="hdlist1"><code>HEAD</code></dt><dd><p>Pointeur sur le commit courant</p></dd></dl></div></section><section id="crer_une_branche"><h2>Créer une branche</h2><div class="imageblock" style=""><img src="./images/vcs/branch.png" alt="branch"></div></section><section id="head"><h2>HEAD</h2><div class="imageblock" style=""><img src="./images/vcs/head.png" alt="head"></div></section><section id="commiter_sur_une_branche"><h2>Commiter sur une branche</h2><div class="imageblock" style=""><img src="./images/vcs/commit.png" alt="commit"></div></section></section>
+<section><section id="merge_fast_forward"><h2>Merge fast-forward</h2><div class="imageblock" style=""><img src="./images/vcs/merge-step1.png" alt="merge step1"></div></section><section id="rsultat"><h2>Résultat</h2><div class="imageblock" style=""><img src="./images/vcs/merge-step2.png" alt="merge step2"></div></section><section><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape>git checkout master
+git merge hotfix</code></pre></div></div></section><section id="ways_merge"><h2>3-ways merge</h2><div class="imageblock" style=""><img src="./images/vcs/merge-3ways-step1.png" alt="merge 3ways step1"></div></section><section id="rsultat_2"><h2>Résultat</h2><div class="imageblock" style=""><img src="./images/vcs/merge-3ways-step2.png" alt="merge 3ways step2"></div></section><section><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape>git checkout master
+git merge iss53</code></pre></div></div></section><section id="conflits"><h2>Conflits</h2><div class="ulist"><ul><li><p>Merge effectué "ligne par ligne"</p></li><li><p>Deux lignes différentes modifiées dans le même fichier &#8658; merge automatique</p></li><li><p>Même ligne = conflit &#8658; merge manuel nécessaire</p></li></ul></div></section><section id="merges_manuels"><h2>Merges manuels</h2><div class="ulist"><ul><li><p>Editeur de texte pour les merges simples</p></li><li><p>Outils spécifiques pour les merges plus complexes</p><div class="ulist"><ul><li><p>P4Merge par exemple</p></li><li><p>git mergetool</p></li></ul></div></li></ul></div></section></section>
+<section><section id="bonnes_pratiques"><h2>Bonnes pratiques</h2><div class="ulist"><ul><li><p>Ne pas committer sur <code>master</code></p></li><li><p>Faire une branche par fonctionnalité</p><div class="ulist"><ul><li><p>Revue avant de merger sur <code>master</code></p></li></ul></div></li></ul></div></section><section id="git_flow"><h2>Git Flow</h2><div class="imageblock" style=""><img src="./images/vcs/gitflow.png" alt="gitflow"></div></section><section id="github"><h2>Github</h2><div class="ulist"><ul><li><p>Service d’hébergement basé sur Git</p></li><li><p>"Social"</p></li><li><p>Basé sur le <em>Fork</em></p><div class="ulist"><ul><li><p>Copie du dépôt</p></li></ul></div></li></ul></div></section><section id="collaborer_sur_github"><h2>Collaborer sur Github</h2><div class="olist arabic"><ol class="arabic"><li><p>Copier le dépôt voulu dans l’interface Github ("forker")</p></li><li><p>Cloner le dépôt copié</p></li><li><p>Faire les modifications souhaitées</p></li><li><p>Committer/pousser</p></li><li><p>Faire une <em>Pull Request</em> dans l’interface Github</p></li></ol></div></section><section id="alternatives"><h2>Alternatives</h2><div class="ulist"><ul><li><p><a href="https://bitbucket.org/" target="_blank">Atlassian Bitbucket</a></p></li><li><p><a href="https://gitlab.com/" target="_blank">GitLab</a></p></li></ul></div></section></section></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/head.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'white',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/zoom-js/zoom.js', async: true },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/notes/notes.js', async: true }
+  ]
+});</script></body></html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.6.1">
+<meta name="author" content="Nicolas Frankel">
+<title>Travaux pratiques - Intégration Continue</title>
+<link rel="stylesheet" href="./../asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Travaux pratiques - Intégration Continue</h1>
+<div class="details">
+<span id="author" class="author">Nicolas Frankel</span><br>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image left"><a class="image" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" alt="Licence Creative Commons"></a></span></p>
+</div>
+<div class="paragraph">
+<p>Ce document est mis à disposition selon les termes de la <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International</a>.</p>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_objectif">1. Objectif</a></li>
+<li><a href="#_références">2. Références</a></li>
+<li><a href="#_installation_de_jenkins">3. Installation de Jenkins</a></li>
+<li><a href="#_lancement">4. Lancement</a></li>
+<li><a href="#_configuration_générale">5. Configuration générale</a></li>
+<li><a href="#_création_d_un_nouveau_job">6. Création d&#8217;un nouveau job</a>
+<ul class="sectlevel2">
+<li><a href="#_configuration_du_dépôt_de_code">6.1. Configuration du dépôt de code</a></li>
+<li><a href="#_configuration_du_déclenchement">6.2. Configuration du déclenchement</a></li>
+<li><a href="#_configuration_de_la_construction">6.3. Configuration de la construction</a></li>
+</ul>
+</li>
+<li><a href="#_test_du_build">7. Test du build</a>
+<ul class="sectlevel2">
+<li><a href="#_build_manuel">7.1. Build manuel</a></li>
+<li><a href="#_build_automatique">7.2. Build automatique</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_objectif"><a class="anchor" href="#_objectif"></a>1. Objectif</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>L&#8217;objectif de cette fiche est d&#8217;utiliser le serveur d&#8217;Intégration Continue Jenkins pour automatiser le processus de construction.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_références"><a class="anchor" href="#_références"></a>2. Références</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://jenkins.io/doc/" target="_blank" rel="noopener">Jenkins Documentation</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation_de_jenkins"><a class="anchor" href="#_installation_de_jenkins"></a>3. Installation de Jenkins</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Avant d&#8217;utiliser Jenkins, il est nécessaire de le télécharger depuis le site :</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Télécharger l&#8217;<a href="https://jenkins.io/download/">archive</a> en fonction du système d&#8217;exploitation</p>
+</li>
+<li>
+<p>Décompresser celui-ci dans le dossier standard des applications pour le système d&#8217;exploitation</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Pour Window, il est fortement conseillé que le chemin ne comporte pas d&#8217;espaces.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Si ce n&#8217;est pas le cas, ajouter une variable d&#8217;environnement <code>JAVA_HOME</code> et la faire pointer vers le répertoire d&#8217;installation de Java</p>
+</li>
+<li>
+<p>Ajouter le chemin de vers le répertoire d&#8217;installation de Jenkins à la variable d&#8217;environnement <code>PATH</code></p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Sous OSX, le plus simple est d&#8217;utiliser <a href="https://brew.sh/">Homebrew</a> - <code>brew install jenkins</code></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lancement"><a class="anchor" href="#_lancement"></a>4. Lancement</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Une fois l&#8217;installation réalisée, il est possible de démarrer Jenkins depuis n&#8217;importe quel emplacement du système de fichiers avec la commande suivante :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">jenkins</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration_générale"><a class="anchor" href="#_configuration_générale"></a>5. Configuration générale</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Naviguer à la page de démarrage de Jenkins <a href="http://localhost:8080" class="bare">http://localhost:8080</a>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ci/welcome.png" alt="Page d&#8217;accueil de Jenkins">
+</div>
+</div>
+<div class="paragraph">
+<p>L&#8217;objectif de cette section consiste à configurer Maven, auquel Jenkins va déléguer la construction.</p>
+</div>
+<div class="paragraph">
+<p>Cliquer sur <b class="button">Administrer Jenkins</b>, puis sur <b class="button">Configuration globale des outils</b>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ci/configtools.png" alt="Configuration globale des outils">
+</div>
+</div>
+<div class="paragraph">
+<p>Localiser la section Maven (tout en bas), puis cliquer sur <b class="button">Installations Maven</b>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ci/maven.png" alt="Ajout d&#8217;une installation Maven">
+</div>
+</div>
+<div class="paragraph">
+<p>Normalement, Maven est déjà présent sur le système.
+Remplir les champs ainsi :</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">MAVEN_HOME</dt>
+<dd>
+<p>Chemin vers l&#8217;installation Maven locale <em>p.e.</em> <code>/usr/local/Cellar/maven/3.3.9/libexec</code></p>
+</dd>
+<dt class="hdlist1">Nom</dt>
+<dd>
+<p>Libellé unique, comprenant la version de Maven <em>p.e.</em> Maven 3.3.9</p>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Au moment de l&#8217;écriture du tutoriel, la version 3.5.0 de Maven n&#8217;est pas compatible avec Jenkins.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Cliquer sur <b class="button">Enregistrer</b>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_création_d_un_nouveau_job"><a class="anchor" href="#_création_d_un_nouveau_job"></a>6. Création d&#8217;un nouveau job</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Retourner à la page d&#8217;accueil. Cliquer sur <b class="button">Nouveau Item</b></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ci/newjob.png" alt="Nouvel item">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Remplir le champ Nom avec le nom du projet</p>
+</li>
+<li>
+<p>Sélectionner le Projet Maven</p>
+</li>
+<li>
+<p>Puis cliquer sur <b class="button">OK</b></p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ci/config.png" alt="Configuration du nouveau projet">
+</div>
+</div>
+<div class="paragraph">
+<p>Il faut maintenant configurer chaque section.</p>
+</div>
+<div class="sect2">
+<h3 id="_configuration_du_dépôt_de_code"><a class="anchor" href="#_configuration_du_dépôt_de_code"></a>6.1. Configuration du dépôt de code</h3>
+<div class="paragraph">
+<p>La première section concerne le dépôt de code pour indiquer à Jenkins où aller chercher le code.
+Il suffit d&#8217;indiquer l&#8217;URL du dépôt Github.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ci/coderepo.png" alt="Configuration du dépôt de code">
+</div>
+</div>
+<div class="paragraph">
+<p>Dans le champ Repository URL, indiquer l&#8217;URL <code>https</code> du dépôt <em>p.e.</em> <a href="https://github.com/nfrankel/&lt;repo&gt" class="bare">https://github.com/nfrankel/&lt;repo&gt</a>;</p>
+</div>
+<div class="paragraph">
+<p>Les valeurs par défaut des autres paramètres peuvent être conservées.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_du_déclenchement"><a class="anchor" href="#_configuration_du_déclenchement"></a>6.2. Configuration du déclenchement</h3>
+<div class="paragraph">
+<p>La section suivante indique à Jenkins quel est l&#8217;élément qui va déclencher la construction.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ci/trigger.png" alt="Configuration du déclenchement">
+</div>
+</div>
+<div class="paragraph">
+<p>Dans le contexte actuel :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Désélectionner Lance un build à chaque fois qu&#8217;une dépendance SNAPSHOT est construite</p>
+</li>
+<li>
+<p>Sélectionner Scrutation de l&#8217;outil de gestion de version</p>
+</li>
+<li>
+<p>Dans le champ Planning, indiquer <code>* * * * *</code> pour une scrutation chaque minute</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>De cette manière, Jenkins vérifiera toutes les minutes si un nouveau <em>commit</em> a été poussé.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_de_la_construction"><a class="anchor" href="#_configuration_de_la_construction"></a>6.3. Configuration de la construction</h3>
+<div class="paragraph">
+<p>Cette étape consiste à configurer la phase (ou le <em>goal</em> Maven) qui sera exécuté par Jenkins.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ci/build.png" alt="Configuration du build">
+</div>
+</div>
+<div class="paragraph">
+<p>Il suffit de remplir le champ Goals and options avec la valeur <code>package</code>.
+Puis, cliquer sur <b class="button">Sauver</b> pour créer le <em>job</em>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_test_du_build"><a class="anchor" href="#_test_du_build"></a>7. Test du build</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_build_manuel"><a class="anchor" href="#_build_manuel"></a>7.1. Build manuel</h3>
+<div class="paragraph">
+<p>Afin de tester la configuration, cliquer sur <b class="button">Lancer un build</b>.</p>
+</div>
+<div class="paragraph">
+<p>Une nouvelle ligne doit apparaître dans la section Historique des builds.
+Si le build a échoué, l&#8217;icône est rouge.
+Afin de diagnostiquer les raisons de l&#8217;échec, cliquer sur le build puis aller sur <b class="button">Console Output</b>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_build_automatique"><a class="anchor" href="#_build_automatique"></a>7.2. Build automatique</h3>
+<div class="paragraph">
+<p>Si l&#8217;intégralité de la procédure a été correctement réalisée, tout nouveau <em>commit</em> poussé sur <code>HEAD</code> (ou sur toute branche configurée) donnera lieu à un nouveau <em>build</em>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2018-09-14 19:55:16 UTC
+</div>
+</div>
+</body>
+</html>
